@@ -44,7 +44,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### Добавим запуск Docker при входе в систему.
 ```
 echo "sudo service docker start" >> ~/.profile
-
+```
 
 # Настройка окружения macOs & Ubuntu
 
@@ -52,16 +52,13 @@ echo "sudo service docker start" >> ~/.profile
 
 #### Предварительно необходимо установить docker-desktop по ссылке docker.com/products/docker-desktop/
 
-### Скачиваем проект из репозитория, подготвливаем конфигурационные файлы для запуска.
-#### Создаем копию для переменных окружения:
-```
-1. cp .env.example .env
-
-
-Создаем конфиг в /docker/nginx/default.conf, можно скопировать из файла /docker/nginx/default.conf.example
-подставив неоходимый domain и user
+## Скачиваем проект из репозитория, подготвливаем конфигурационные файлы для запуска.
+### Создаем копию для переменных окружения:
+#### 1. cp .env.example .env
+#### 2. Создаем конфиг в /docker/nginx/default.conf, можно скопировать из файла /docker/nginx/default.conf.example подставив неоходимый domain и user, в примере конфига
 
 ## Запуск и работа с Docker.
+## Для Desktop Docker необходимо зайти в само приложение -> Settings -> Advanced и поставить галочку "Allow the default Docker socket to be used (requires password)"
 ### Основные команды.
 Запуск происходит через команду (контейнеры запускаются в фоновом режиме).
 ```
@@ -89,7 +86,7 @@ docker exec -it php-fpm /bin/bash
 ```
 
 C **Docker** можно взаимодействовать и через интерфейс PHPSTORM.
-```
+
 ## Запускаем проект.
 ### Выкачиваем необходимые папки и собираем фронт.
 # TODO : Дописать про поднятие фронта
@@ -99,6 +96,30 @@ docker exec -it php-fpm /bin/bash
 ```
 Проходим в папку с проетом и выкачиваем с дева папки для работы.
 
+## Установка composer и зависимостей
+
+### 1. Установка composer
+#### macOS:
+```
+brew install wget
+```
+
+#### ubuntu:
+```
+apt install wget
+```
+
+#### После чего
+```
+wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
+```
+
+### 2. Делаем так, чтобы можно было использовать через команду **composer** глобально
+```
+sudo mv composer.phar /usr/local/bin/composer
+```
+
+### 3. Устанавливаем пакеты для symfony и backend приложения
 **Composer** необходимо использовать с опцией **--ignore-platform-reqs**.
 ```
 composer i --ignore-platform-reqs
