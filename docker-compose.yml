@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+
+  nginx:
+    build:
+      context: docker/nginx
+    container_name: nginx-upool
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./:/home/${USER}/${DOMAIN}
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      - '80:80'
+    networks:
+      - upool
+
+  php-fpm:
+    build:
+      context: docker/php-fpm
+      args:
+        - USER_ID
+        - GROUP_ID
+        - USER
+        - GROUP
+        - NODE_VERSION
+        - DOMAIN
+    container_name: php-fpm-upool
+    volumes:
+      - ./:/home/${USER}/${DOMAIN}
+      - ./logs/php:/var/log/php/
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+    environment:
+      - PHP_IDE_CONFIG=serverName=${DOMAIN}
+    depends_on:
+      - mysql
+    networks:
+      - upool
+    extra_hosts:
+      - "${DOMAIN}:${NGINX_INTERFACE}"
+
+  mysql:
+    build:
+      context: docker/mysql
+    container_name: mysql-upool
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./logs/mysql:/var/log/mysql
+      - ./docker/storage/mysql/:/var/lib/mysql
+      - ./docker/storage/backup:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - upool
+
+#  mailhog:
+#    image: mailhog/mailhog
+#    ports:
+#      - "1025:1025"
+#      - "8025:8025"
+#    networks:
+#      - upool
+
+networks:
+  upool:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.101.0.0/24
