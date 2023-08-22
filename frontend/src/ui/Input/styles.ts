@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { whiteColor } from 'ui/colors'
 
-
 export const InputStyled = styled.div`
   display: flex;
   flex-direction: column;
@@ -10,17 +9,29 @@ export const InputStyled = styled.div`
 
 export const InputContainer = styled.div`
   position: relative;
+  width: 300px;
+  height: 40px;
 `
-
 
 export const Field = styled.input`
   width: 100%;
   padding: 11px 14px;
-  height: 40px;
+  height: 100%;
   background: rgba(255, 255, 255, 0.08);
   color: ${whiteColor};
   font-size: 12px;
   font-weight: 500;
+  font-family: "GP Meduim", sans-serif;
+  line-height: 24px;
+  outline: none;
+  border: none;
+  &::placeholder {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    color: #A5A5A5;
+  }
+  
 `
 
 export const Label = styled.label`

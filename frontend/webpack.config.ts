@@ -1,30 +1,30 @@
-import path from 'path';
+import * as path from 'path'
 
 module.exports = {
   plugins: [
     {
       test: /\.(jpe?g|png|gif|svg)$/i,
-      loader: "file-loader?name=/public/icons/[name].[ext]"
+      loader: 'file-loader?name=/public/icons/[name].[ext]',
     },
     {
       test: /\.svg$/,
       use: [
         {
-          loader: "babel-loader"
+          loader: 'babel-loader',
         },
         {
-          loader: "react-svg-loader",
+          loader: 'react-svg-loader',
           options: {
-            jsx: true
-          }
-        }
+            jsx: false,
+          },
+        },
       ],
-    }
+    },
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      '@': path.resolve(__dirname, 'src/')
-    }
-  }
-};
+      '@': path.resolve(__dirname, 'src/'),
+    },
+  },
+}

@@ -1,4 +1,4 @@
 export type IText = {
-    text: string
-    type: string
+  text: string
+  type: string
 }
