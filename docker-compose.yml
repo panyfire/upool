@@ -54,7 +54,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - upool
-
+# TODO: Убрать коммент и протестировать когда релизним на сервак
 #  mailhog:
 #    image: mailhog/mailhog
 #    ports:
