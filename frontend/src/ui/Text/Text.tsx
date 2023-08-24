@@ -11,11 +11,15 @@ export const Text: FC<IText> = (props) => {
         default: type === 'default',
         h1: type === 'h1',
         h2: type === 'h2',
-        title: type === 'title',
+        h3: type === 'h3',
+        h4: type === 'h4',
         preTitle: type === 'pre-title',
         btn: type === 'btn',
         label: type === 'label',
         value: type === 'value',
+        alert: type === 'alert',
+        note: type === 'note',
+          card: type === 'card',
       })}
       {...other}
     >

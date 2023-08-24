@@ -3,6 +3,7 @@ import { whiteColor, brightBlueColor, blackColor } from 'ui/colors'
 
 export const TextCSS = styled.p`
   color: ${whiteColor};
+  font-style: normal;
   &.default {
     font-size: 16px;
     font-style: normal;
@@ -10,29 +11,31 @@ export const TextCSS = styled.p`
   }
   &.h1 {
     font-size: 55px;
-    font-style: normal;
     font-weight: 400;
     line-height: 44px;
     font-family: 'GP Bold', serif;
   }
   &.h2 {
-    font-size: 35px;
-    font-style: normal;
+    font-size: 40px;
     font-weight: 400;
-    line-height: 44px; /* 125.714% */
+    line-height: 44px;
     font-family: 'GP Bold', serif;
   }
-  &.title {
+  &.h3 {
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 44px;
+    font-family: 'GP Bold', serif;
+  }
+  &.h4 {
     color: ${brightBlueColor};
+    font-family: 'GP Bold', serif;
     font-size: 25px;
-    font-style: normal;
     font-weight: 700;
-    line-height: 44px; /* 176% */
-    font-family: 'GP Meduim', serif;
+    line-height: 44px;
   }
   &.preTitle {
     font-size: 18px;
-    font-style: normal;
     font-weight: 700;
     line-height: 44px; /* 244.444% */
     text-transform: uppercase;
@@ -51,7 +54,6 @@ export const TextCSS = styled.p`
     font-family: 'GP Meduim', serif;
     color: ${whiteColor};
     font-size: 12px;
-    font-style: normal;
     font-weight: 600;
     line-height: 24px;
   }
@@ -59,9 +61,34 @@ export const TextCSS = styled.p`
     color: ${brightBlueColor};
     font-family: 'GP Meduim', serif;
     font-size: 12px;
-    font-style: normal;
     font-weight: 700;
-    line-height: 24px; /* 200% */
+    line-height: 24px;
     text-transform: uppercase;
   }
+  &.alert {
+    color: #ff7337;
+    font-family: 'GP Meduim', sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14.5px;
+  }
+  &.note {
+    color: #A5A5A5;
+    font-family: 'GP Meduim', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    text-transform: capitalize;
+  }
+  &.card {
+    color: #55F8F1;
+    font-family: 'GP Meduim', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+  }
+  
 `

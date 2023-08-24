@@ -1,11 +1,7 @@
 import React, { FC } from 'react'
-import {IButtonProps} from './types'
+import { IButtonProps } from './types'
 import { Text } from 'ui'
-import {
-  ButtonStyled,
-  ButtonWrapper,
-  BackgroundAnimation,
-} from './styles'
+import { ButtonStyled, ButtonWrapper, BackgroundAnimation } from './styles'
 
 export const AnimatedButton: FC<IButtonProps> = (props) => {
   const { text, ...other } = props

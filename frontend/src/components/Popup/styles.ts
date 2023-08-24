@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import head from 'img/headPop.png'
 
 export const PopupStyled = styled.div`
   display: flex;
@@ -31,4 +32,34 @@ export const ChildrenWrapper = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 2;
+`
+
+export const PopupContainer = styled.div`
+  position: relative;
+  width: 387px;
+  height: calc(100% - 20px);
+  background: rgba(14, 13, 24, 0.9);
+  border-width: 1px;
+  border-style: solid;
+  border-image: linear-gradient(
+      to right,
+      rgba(154, 106, 255, 1),
+      rgba(251, 204, 114, 1)
+    )
+    1;
+`
+
+export const Head = styled.div`
+  padding-top: 70px;
+  width: 100%;
+  height: 62px;
+  content: '';
+  background: url(${head}) no-repeat;
+  background-size: contain;
+`
+
+export const FormWrapper = styled.div`
+  padding-top: 70px;
+  width: 100%;
+  height: 100%;
 `

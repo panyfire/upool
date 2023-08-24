@@ -29,7 +29,7 @@ export const device = {
 export { AnimatedButton } from './AnimatedButton'
 export { StakeButton } from './StakeButton'
 export { ConfirmButton } from './ConfirmButton'
-export { ToogleButton } from './ToogleButton'
+export { DropDown } from './DropDown'
 export { Text } from './Text'
 export { BorderContainer } from './Border'
 export { Input } from './Input'

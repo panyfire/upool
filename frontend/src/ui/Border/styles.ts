@@ -1,10 +1,7 @@
 import styled from 'styled-components'
-import { brightBlueColor, } from 'ui/colors'
+import { brightBlueColor } from 'ui/colors'
 
-export const BorderStyled = styled.div`
-    
-`
-
+export const BorderStyled = styled.div``
 
 export const Corner = styled.div`
   &::before {
@@ -27,4 +24,3 @@ export const Corner = styled.div`
     transform: rotate(135deg);
   }
 `
-

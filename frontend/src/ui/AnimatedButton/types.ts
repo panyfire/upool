@@ -1,5 +1,5 @@
 import React from 'react'
 
-export interface IButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  text: string;
-}
+export type IButtonProps = {
+  text: string
+} & React.ComponentPropsWithoutRef<'button'>

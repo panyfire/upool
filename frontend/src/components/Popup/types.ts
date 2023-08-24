@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
-export interface IconProperties {
+export type IconProperties = {
   children: ReactNode
   onClick?: () => void
+  title: string
 }

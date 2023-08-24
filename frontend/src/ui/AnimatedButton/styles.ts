@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import {grayColor, } from 'ui/colors'
+import { grayColor } from 'ui/colors'
+import wallet from 'img/wallet.png'
 
 export const BackgroundAnimation = styled.div`
   position: absolute;
@@ -12,16 +13,17 @@ export const BackgroundAnimation = styled.div`
 export const ButtonStyled = styled.button`
   width: 190px;
   height: 58px;
-  background: ${grayColor};
-  background: linear-gradient(135deg, transparent 0, #FBCC72 0) top left,
-  linear-gradient(-135deg, #9A6AFF 0px, #FBCC72 0) top right,
-  linear-gradient(-45deg, transparent 10px, #9A6AFF 0) bottom right,
-  linear-gradient(45deg, #9A6AFF 0, #9A6AFF 0) bottom left;
-  background-size: 50% 50%;
-  background-repeat: no-repeat;
-  position: relative;
-  border: none;
-  cursor: pointer;
+  background: url(${wallet});
+  // background: ${grayColor};
+  // background: linear-gradient(135deg, transparent 0, #FBCC72 0) top left,
+  // linear-gradient(-135deg, #9A6AFF 0px, #FBCC72 0) top right,
+  // linear-gradient(-45deg, transparent 10px, #9A6AFF 0) bottom right,
+  // linear-gradient(45deg, #9A6AFF 0, #9A6AFF 0) bottom left;
+  // background-size: 50% 50%;
+  // background-repeat: no-repeat;
+  // position: relative;
+  // border: none;
+  // cursor: pointer;
   &:hover ${BackgroundAnimation} {
     transform: translate(5%, 35%);
     transition: all 0.3s ease-in-out;

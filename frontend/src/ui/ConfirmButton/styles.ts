@@ -12,15 +12,16 @@ export const ButtonStyled = styled.button`
   align-items: center;
   justify-content: center;
   background: ${grayColor};
-  background: linear-gradient(135deg, transparent 0, ${grayColor} 0) top left,
-  linear-gradient(-135deg, #9A6AFF 0px, ${grayColor} 0) top right,
-  linear-gradient(-45deg, transparent 10px, ${grayColor} 0) bottom right,
-  linear-gradient(45deg, #9A6AFF 0, ${grayColor} 0) bottom left;
+  background:
+    linear-gradient(135deg, transparent 0, ${grayColor} 0) top left,
+    linear-gradient(-135deg, #9a6aff 0px, ${grayColor} 0) top right,
+    linear-gradient(-45deg, transparent 10px, ${grayColor} 0) bottom right,
+    linear-gradient(45deg, #9a6aff 0, ${grayColor} 0) bottom left;
   background-size: 50% 50%;
   background-repeat: no-repeat;
   p {
     color: ${whiteColor};
-    font-family: "GP Meduim" ,serif;
+    font-family: 'GP Meduim', serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;

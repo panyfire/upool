@@ -21,7 +21,7 @@ export const Field = styled.input`
   color: ${whiteColor};
   font-size: 12px;
   font-weight: 500;
-  font-family: "GP Meduim", sans-serif;
+  font-family: 'GP Meduim', sans-serif;
   line-height: 24px;
   outline: none;
   border: none;
@@ -29,9 +29,8 @@ export const Field = styled.input`
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
-    color: #A5A5A5;
+    color: #a5a5a5;
   }
-  
 `
 
 export const Label = styled.label`
