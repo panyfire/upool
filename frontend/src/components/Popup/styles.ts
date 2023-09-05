@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import head from 'img/headPop.png'
 
 export const PopupStyled = styled.div`
   display: flex;
@@ -54,7 +53,6 @@ export const Head = styled.div`
   width: 100%;
   height: 62px;
   content: '';
-  background: url(${head}) no-repeat;
   background-size: contain;
 `
 

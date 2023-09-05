@@ -1,24 +1,31 @@
 import styled from 'styled-components'
-import { grayColor, whiteColor } from 'ui/colors'
+import {  whiteColor } from 'ui/colors'
 
 export const ButtonStyled = styled.button`
   padding: 21px 22px;
   height: 58px;
-  position: relative;
-  border: none;
-  cursor: pointer;
   width: 308px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${grayColor};
-  background:
-    linear-gradient(135deg, transparent 0, ${grayColor} 0) top left,
-    linear-gradient(-135deg, #9a6aff 0px, ${grayColor} 0) top right,
-    linear-gradient(-45deg, transparent 10px, ${grayColor} 0) bottom right,
-    linear-gradient(45deg, #9a6aff 0, ${grayColor} 0) bottom left;
-  background-size: 50% 50%;
-  background-repeat: no-repeat;
+  --background-color: rgba(255, 255, 255, 0.08);;
+  --border-width: 0.5em;
+  --edge-size: 1.25em;
+  cursor: pointer;
+  background: var(--background-color);
+  border: 0;
+  position: relative;
+  isolation: isolate;
+  place-content: center;
+  clip-path: polygon(
+    var(--edge-size) -90%,
+    100% 0,
+    100% calc(100% - var(--edge-size)),
+    calc(100% - var(--edge-size)) 100%,
+    0 100%,
+    -10% var(--edge-size)
+  );
+  transition: color 250ms;
   p {
     color: ${whiteColor};
     font-family: 'GP Meduim', serif;

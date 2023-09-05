@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import { grayColor } from 'ui/colors'
-import wallet from 'img/wallet.png'
 
 export const BackgroundAnimation = styled.div`
   position: absolute;
@@ -11,23 +9,35 @@ export const BackgroundAnimation = styled.div`
 `
 
 export const ButtonStyled = styled.button`
-  width: 190px;
+  padding: 21px 22px;
   height: 58px;
-  background: url(${wallet});
-  // background: ${grayColor};
-  // background: linear-gradient(135deg, transparent 0, #FBCC72 0) top left,
-  // linear-gradient(-135deg, #9A6AFF 0px, #FBCC72 0) top right,
-  // linear-gradient(-45deg, transparent 10px, #9A6AFF 0) bottom right,
-  // linear-gradient(45deg, #9A6AFF 0, #9A6AFF 0) bottom left;
-  // background-size: 50% 50%;
-  // background-repeat: no-repeat;
-  // position: relative;
-  // border: none;
-  // cursor: pointer;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --background-color: linear-gradient(180deg, #F3C3C6 0%, #B0FEC7 100%); 
+  --border-width: 0.5em;
+  --edge-size: 1.25em;
+  cursor: pointer;
+  background: var(--background-color);
+  border: 0;
+  position: relative;
+  isolation: isolate;
+  place-content: center;
+  clip-path: polygon(
+          var(--edge-size) -90%,
+          100% 0,
+          100% calc(100% - var(--edge-size)),
+          calc(100% - var(--edge-size)) 100%,
+          0 100%,
+          -10% var(--edge-size)
+  );
+  transition: color 250ms;
   &:hover ${BackgroundAnimation} {
     transform: translate(5%, 35%);
     transition: all 0.3s ease-in-out;
     opacity: 1;
+    z-index: 10;
   }
 `
 

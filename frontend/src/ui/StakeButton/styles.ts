@@ -1,17 +1,30 @@
 import styled from 'styled-components'
-import img from 'img/stackbtn.png'
 
 export const ButtonStyled = styled.button`
   padding: 21px 22px;
   height: 58px;
-  position: relative;
-  border: none;
-  cursor: pointer;
   width: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url(${img}) center no-repeat;
+  --background-color: linear-gradient(180deg, #F3C3C6 0%, #B0FEC7 100%);
+  --border-width: 0.5em;
+  --edge-size: 1.25em;
+  cursor: pointer;
+  background: var(--background-color);
+  border: 0;
+  position: relative;
+  isolation: isolate;
+  place-content: center;
+  clip-path: polygon(
+    var(--edge-size) 0%,
+    100% 0,
+    100% calc(100% - var(--edge-size)),
+    calc(100% - var(--edge-size)) 100%,
+    0 100%,
+    0% var(--edge-size)
+  );
+  transition: color 250ms;
 `
 
 export const ButtonWrapper = styled.div`

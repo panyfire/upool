@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import {StakeButton, Text} from 'ui'
 import {CardMiddle, CardTop, CardWrapper} from './styles'
-import coin from 'img/color.png'
 
 export const StakeCard: FC = () => {
   return (
@@ -11,7 +10,6 @@ export const StakeCard: FC = () => {
                 <Text text={'ETH'} type={'h2'} />
                 <Text text={'Stake ETH'} type={'note'} />
             </div>
-            <img src={coin} alt=""/>
         </CardTop>
         <CardMiddle>
             <div>

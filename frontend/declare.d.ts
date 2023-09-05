@@ -18,3 +18,12 @@ declare module '*.json' {
   const content: string
   export default content
 }
+
+
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
+declare global {
+  interface Window{
+    ethereum?:MetaMaskInpageProvider
+  }
+}

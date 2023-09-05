@@ -4,7 +4,7 @@ module.exports = {
   plugins: [
     {
       test: /\.(jpe?g|png|gif|svg)$/i,
-      loader: 'file-loader?name=/public/icons/[name].[ext]',
+      loader: 'file-loader?name=/img/[name].[ext]',
     },
     {
       test: /\.svg$/,
