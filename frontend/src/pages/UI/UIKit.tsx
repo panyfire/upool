@@ -9,7 +9,7 @@ import {
   DropDown,
   Icon,
 } from 'ui'
-import { Alert, Popup, StakeCard } from 'components'
+import { Alert, Popup } from 'components'
 import { GradientBackground } from 'layouts/GradientBackground'
 
 export const UIKit: FC = () => {
@@ -65,11 +65,11 @@ export const UIKit: FC = () => {
           </Popup>
         )}
         <Alert />
-        <div style={{ display: 'flex', gap: 60, width: '100%' }}>
-          <StakeCard />
-          <StakeCard />
-          <StakeCard />
-        </div>
+        {/*<div style={{ display: 'flex', gap: 60, width: '100%' }}>*/}
+        {/*  <StakeCard />*/}
+        {/*  <StakeCard />*/}
+        {/*  <StakeCard />*/}
+        {/*</div>*/}
 
       </div>
     </GradientBackground>

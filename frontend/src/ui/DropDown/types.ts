@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 export type IButton = {
-  text: string
+  text?: string
   icon: ReactNode
   status?: boolean
 } & React.ComponentPropsWithoutRef<'button'>

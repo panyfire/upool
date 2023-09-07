@@ -18,12 +18,12 @@ export const ButtonStyled = styled.button`
   isolation: isolate;
   place-content: center;
   clip-path: polygon(
-          var(--edge-size) -90%,
+          var(--edge-size) 0,
           100% 0,
           100% calc(100% - var(--edge-size)),
           calc(100% - var(--edge-size)) 100%,
           0 100%,
-          -10% var(--edge-size)
+          0 var(--edge-size)
   );
   transition: color 250ms;
   &:before {

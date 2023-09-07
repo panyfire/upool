@@ -1,27 +1,40 @@
 import React, { FC } from 'react'
 import {StakeButton, Text} from 'ui'
-import {CardMiddle, CardTop, CardWrapper} from './styles'
+import {CardMiddle, CardTop, CardValues, CardWrapper} from './styles'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
+// @ts-ignore
+import img from 'img/ETC.png'
 
-export const StakeCard: FC = () => {
+type IStakeCard = {
+    tittle: string
+    preTittle: string
+    minAPR: string
+    maxAPR: string
+    onClick: () => void
+}
+
+export const StakeCard: FC<IStakeCard> = (props) => {
+    const {tittle,preTittle, minAPR, maxAPR , onClick} = props
   return (
     <CardWrapper>
         <CardTop>
             <div>
-                <Text text={'ETH'} type={'h2'} />
-                <Text text={'Stake ETH'} type={'note'} />
+                <Text text={tittle ?? ''} type={'h2'} />
+                <Text text={preTittle ?? ''} type={'note'} />
             </div>
+            <img src={img} alt="ETC"/>
         </CardTop>
         <CardMiddle>
-            <div>
+            <CardValues>
                 <Text text={'Min APR'} type={'card'} />
-                <Text text={'10%'} type={'card'} />
-            </div>
-            <div>
+                <Text text={`${minAPR}%`} type={'card'} />
+            </CardValues>
+            <CardValues>
                 <Text text={'Max APR'} type={'card'} />
-                <Text text={'88%'} type={'card'} />
-            </div>
+                <Text text={`${maxAPR}%`} type={'card'} />
+            </CardValues>
         </CardMiddle>
-        <StakeButton text={'Stake'} />
+        <StakeButton onClick={onClick} text={'Stake'} />
     </CardWrapper>
   )
 }
