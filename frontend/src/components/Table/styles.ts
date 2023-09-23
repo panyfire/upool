@@ -1,19 +1,31 @@
 import styled from 'styled-components'
 
-export const ButtonStyled = styled.button`
-  height: 58px;
-  position: relative;
-  width: 200px;
+export const TableWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  --background-color: #060606;
+  flex-direction: column;
+`
+
+export const TableBody = styled.div`
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  border: 1px solid;
+  border-top: none;
+`
+
+
+export const TableHead = styled.thead`
+  padding: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   --border-color: linear-gradient(to bottom right, #f3c3c6, #b0fec7);
   --border-width: 0.1em;
   --edge-size: 1em;
   cursor: pointer;
   background: var(--background-color);
-  padding: 0.5em 1.5em;
   border: 0;
   isolation: isolate;
   place-content: center;
@@ -59,36 +71,13 @@ export const ButtonStyled = styled.button`
   }
 `
 
-export const ButtonWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+export const TrHead = styled.tr`
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `
 
-export const IconWrapper = styled.div`
-  &.isActive {
-    transform: rotate(180deg);
-  }
-`
-
-export const Menu = styled.div`
-  position: absolute;
-  bottom: -140px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.08);
-`
-export const MeniList = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`
-
-export const MenuItem = styled.div`
-  padding: 15px 12px;
+export const CardValues = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `

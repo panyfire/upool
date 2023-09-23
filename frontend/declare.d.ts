@@ -19,11 +19,11 @@ declare module '*.json' {
   export default content
 }
 
-
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import { MetaMaskInpageProvider } from '@metamask/providers'
 
 declare global {
-  interface Window{
-    ethereum?:MetaMaskInpageProvider
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Window {
+    ethereum?: MetaMaskInpageProvider
   }
 }

@@ -1,1 +1,1 @@
-export {StakeListing} from './StakeListing'
+export { StakeListing } from './StakeListing'

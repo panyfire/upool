@@ -70,7 +70,6 @@ export const UIKit: FC = () => {
         {/*  <StakeCard />*/}
         {/*  <StakeCard />*/}
         {/*</div>*/}
-
       </div>
     </GradientBackground>
   )

@@ -24,5 +24,4 @@ export const ImgWprap = styled.img`
 
 export const BannerSection = styled.section`
   //background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 5.79%, rgba(255, 255, 255, 0.00) 100.64%);
-
 `

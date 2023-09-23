@@ -1,11 +1,11 @@
 export const formatBalance = (rawBalance: string) => {
-    return (parseInt(rawBalance) / 1000000000000000000).toFixed(2)
+  return (parseInt(rawBalance) / 1000000000000000000).toFixed(2)
 }
 
 export const formatChainAsNum = (chainIdHex: string) => {
-    return parseInt(chainIdHex)
+  return parseInt(chainIdHex)
 }
 
 export const formatAddress = (addr: string) => {
-    return `${addr.substring(0, 8)}...`
+  return `${addr.substring(0, 8)}...`
 }

@@ -30,10 +30,10 @@ export const DropDown: FC<IButton> = (props) => {
         <Menu>
           <MeniList>
             <Link to="profile">
-            <MenuItem>
-              <Text text={'My Wallet'} type={'default'} />
-              <Icon size={'32'} name={'user'} />
-            </MenuItem>
+              <MenuItem>
+                <Text text={'My Wallet'} type={'default'} />
+                <Icon size={'32'} name={'user'} />
+              </MenuItem>
             </Link>
             <MenuItem>
               <Text text={'Disconnect'} type={'default'} />

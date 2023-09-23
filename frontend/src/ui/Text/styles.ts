@@ -34,6 +34,13 @@ export const TextCSS = styled.p`
     font-weight: 700;
     line-height: 44px;
   }
+  &.h41 {
+    color: ${whiteColor};
+    font-family: 'GP Bold', serif;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 44px;
+  }
   &.preTitle {
     font-size: 18px;
     font-weight: 700;
@@ -74,7 +81,7 @@ export const TextCSS = styled.p`
     line-height: 14.5px;
   }
   &.note {
-    color: #A5A5A5;
+    color: #a5a5a5;
     font-family: 'GP Meduim', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -83,12 +90,20 @@ export const TextCSS = styled.p`
     text-transform: capitalize;
   }
   &.card {
-    color: #55F8F1;
+    color: #55f8f1;
     font-family: 'GP Meduim', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 150% */
   }
-  
+  &.popupTitle {
+    color: #1a1329;
+    font-family: 'GP Bold', serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+    text-transform: uppercase;
+  }
 `

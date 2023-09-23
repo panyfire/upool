@@ -9,7 +9,7 @@ export const InputStyled = styled.div`
 
 export const InputContainer = styled.div`
   position: relative;
-  width: 300px;
+  width: 100%;
   height: 40px;
 `
 

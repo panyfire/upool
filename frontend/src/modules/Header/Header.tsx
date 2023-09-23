@@ -5,6 +5,7 @@ import { useMetaMask } from 'hooks/useMetaMask'
 
 export const Header: FC = () => {
   const { wallet } = useMetaMask()
+  console.log('wallet', wallet)
   return (
     <HeaderStyled>
       <Text text={'LOGO'} type={'h2'} />

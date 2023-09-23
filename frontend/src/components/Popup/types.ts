@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export type IconProperties = {
-  children: ReactNode
+  children?: ReactNode | string
   onClick?: () => void
-  title: string
+  title?: string
 }

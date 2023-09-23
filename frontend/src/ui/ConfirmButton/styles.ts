@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {  whiteColor } from 'ui/colors'
+import { whiteColor } from 'ui/colors'
 
 export const ButtonStyled = styled.button`
   padding: 21px 22px;
@@ -8,7 +8,7 @@ export const ButtonStyled = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  --background-color: rgba(255, 255, 255, 0.08);;
+  --background-color: rgba(255, 255, 255, 0.08);
   --border-width: 0.5em;
   --edge-size: 1.25em;
   cursor: pointer;

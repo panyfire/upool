@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { AnimatedButton, Text } from 'ui'
-import { Layout } from 'components'
+import { Layout } from 'layouts/Layout'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { BannerContent, BannerSection, BannerWrapper, ImgWprap } from './styles'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

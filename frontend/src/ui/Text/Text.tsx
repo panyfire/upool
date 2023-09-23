@@ -13,13 +13,15 @@ export const Text: FC<IText> = (props) => {
         h2: type === 'h2',
         h3: type === 'h3',
         h4: type === 'h4',
+        h41: type === 'h41',
         preTitle: type === 'pre-title',
         btn: type === 'btn',
         label: type === 'label',
         value: type === 'value',
         alert: type === 'alert',
         note: type === 'note',
-          card: type === 'card',
+        card: type === 'card',
+        popupTitle: type === 'popupTitle',
       })}
       {...other}
     >

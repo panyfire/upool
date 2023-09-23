@@ -1,16 +1,18 @@
 import React from 'react'
 import { GradientBackground } from 'layouts/GradientBackground'
-import {Header, Banner, StakeListing} from 'modules'
+import { Banner, StakeListing } from 'modules'
 import { useMetaMask } from 'hooks/useMetaMask'
+import { HeaderLayout } from 'layouts/HeaderLayout'
 
 export const Home = () => {
   const { wallet } = useMetaMask()
   console.log(wallet)
   return (
     <GradientBackground>
-      <Header />
-      <Banner />
-      <StakeListing />
+      <HeaderLayout>
+        <Banner />
+        <StakeListing />
+      </HeaderLayout>
     </GradientBackground>
   )
 }
