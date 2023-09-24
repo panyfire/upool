@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Text } from 'ui'
 import { GradientBackground } from 'layouts/GradientBackground'
 import { HeaderLayout } from 'layouts/HeaderLayout'
@@ -7,8 +8,17 @@ import { Layout } from 'layouts/Layout'
 import { Table, WalletInfo } from 'components'
 import { WalletsContainer } from './styles'
 
+
 export const Profile = () => {
   const { wallet } = useMetaMask()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!wallet?.accounts.length) {
+      navigate('/')
+    }
+  }, [wallet])
+
   return (
     <HeaderLayout>
       <GradientBackground>

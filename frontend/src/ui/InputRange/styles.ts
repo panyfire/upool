@@ -10,7 +10,7 @@ export const RangeSlider = styled.input`
   width: 100%;
   -webkit-appearance: none;
   height: 7px;
-  background: grey;
+  
   border-radius: 5px;
   background-color: #86f3ff;
   background-repeat: no-repeat;

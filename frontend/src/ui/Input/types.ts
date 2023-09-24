@@ -4,7 +4,8 @@ export type InputProps = {
   value: string | number
   name: string
   placeholder: string
-  error: boolean
+  error?: boolean
   disabled?: boolean
-  onChange: (target: string) => void
+  onChange: any
+  helperText?: string | undefined | false
 }
