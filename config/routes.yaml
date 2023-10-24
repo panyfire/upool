@@ -1,4 +1,4 @@
-api_hello:
-    path:       /api/hello/
-    controller: App\Controller\HelloController::hello
+api_staking_list:
+    path:       /api/staking/
+    controller: App\Controller\StakingController::list
     methods:    GET|HEAD
