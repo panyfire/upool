@@ -1,10 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, ChangeEvent } from 'react'
 import { RangeSlider, RangeSliderValue, RangeSliderWrapper } from './styles'
 
 type RangeSlider = {
   min: number
   max: number
-  onChange: any
+  onChange: (e:  ChangeEvent<HTMLInputElement> ) => void,
   value: number | string
   name: string
 }
@@ -33,7 +33,7 @@ export const InputRange: FC<RangeSlider> = (props) => {
         style={getBackgroundSize()}
         {...other}
       />
-      <RangeSliderValue>{`${Number(value)}`}</RangeSliderValue>
+      <RangeSliderValue>{`${Number(value)}%`}</RangeSliderValue>
     </RangeSliderWrapper>
   )
 }

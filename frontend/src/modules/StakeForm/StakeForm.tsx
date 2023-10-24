@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { Tab, Tabs, TabList } from 'react-tabs'
 import { Form, Formik, FormikProps } from 'formik'
-import { Icon, Input, Text, InputRange } from 'ui'
+import { Icon, Input, Text, InputRange, ConfirmButton } from 'ui'
 import {
   FormBalance,
   FormCoinInfo,
   FormTitle,
   RangeWrapper,
   TabValue,
-  TabListWrapper,
+  TabListWrapper, DurationWrapper,
 } from './styles'
+import { LockOverview } from 'components'
 
 type TAb = {
   amount: number
@@ -19,6 +20,9 @@ type TAb = {
 
 export const StakeForm = () => {
   const [tab, setTabIndex] = useState(0)
+  const [dtab, dsetTabIndex] = useState(1)
+
+  console.log('dtab', dtab)
 
   const initialValueForm: TAb = {
     amount: 0,
@@ -45,7 +49,7 @@ export const StakeForm = () => {
           errors,
           handleChange,
           setFieldValue,
-          // handleSubmit,
+          handleSubmit,
           // ...other
         } = props
         console.log('values', values)
@@ -63,11 +67,11 @@ export const StakeForm = () => {
             </FormTitle>
             <div>
               <Input
-                type={'text'}
+                type={'number'}
                 label={'Subscription amount'}
                 value={values.amount}
                 name={'amount'}
-                placeholder={''}
+                placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
                 helperText={touched.amount && errors.amount}
                 onChange={handleChange}
@@ -132,6 +136,64 @@ export const StakeForm = () => {
                 </TabListWrapper>
               </TabList>
             </Tabs>
+            <DurationWrapper>
+              <Text text={'add duration'} type={'popUpPreTitle'} />
+              <Tabs
+                  className={'tablist__list_duration'}
+                style={{ color: 'white' }}
+                selectedIndex={dtab}
+                onSelect={(index: number) => {
+                  dsetTabIndex(index)
+                  switch (index) {
+                    case 0:
+                      setFieldValue('duration', 1)
+                      break
+                    case 1:
+                      setFieldValue('duration', 7)
+                      break
+                    case 2:
+                      setFieldValue('duration', 30)
+                      break
+                    case 3:
+                      setFieldValue('duration', 60)
+                      break
+                    case 4:
+                      setFieldValue('duration', 90)
+                      break
+                  }
+                }}
+              >
+                <TabListWrapper>
+                  <Tab>
+                    <TabValue>
+                      <Text text={'1 D'} type={'value'} />
+                    </TabValue>
+                  </Tab>
+                  <Tab>
+                    <TabValue>
+                      <Text text={'7 D'} type={'value'} />
+                    </TabValue>
+                  </Tab>
+                  <Tab>
+                    <TabValue>
+                      <Text text={'30 D'} type={'value'} />
+                    </TabValue>
+                  </Tab>
+                  <Tab>
+                    <TabValue>
+                      <Text text={'60 D'} type={'value'} />
+                    </TabValue>
+                  </Tab>
+                  <Tab>
+                    <TabValue>
+                      <Text text={'90 D'} type={'value'} />
+                    </TabValue>
+                  </Tab>
+                </TabListWrapper>
+              </Tabs>
+              <LockOverview />
+              <ConfirmButton eventClick={handleSubmit} text={'Conform'} />
+            </DurationWrapper>
           </Form>
         )
       }}

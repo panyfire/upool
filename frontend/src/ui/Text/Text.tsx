@@ -22,6 +22,8 @@ export const Text: FC<IText> = (props) => {
         note: type === 'note',
         card: type === 'card',
         popupTitle: type === 'popupTitle',
+        popUpPreTitle: type === 'popUpPreTitle',
+          popUpValue: type === 'popUpValue',
       })}
       {...other}
     >

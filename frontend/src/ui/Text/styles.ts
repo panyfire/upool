@@ -99,11 +99,29 @@ export const TextCSS = styled.p`
   }
   &.popupTitle {
     color: #1a1329;
-    font-family: 'GP Bold', serif;
+    font-family: 'GP Bold', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px; /* 150% */
+    text-transform: uppercase;
+  }
+  &.popUpPreTitle {
+    color: #86F3FF;
+    font-family: 'GP Bold', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+    text-transform: uppercase;
+  }
+  &.popUpValue {
+    color: #A5A5A5;
+    font-family: 'GP Bold', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 200% */
     text-transform: uppercase;
   }
 `

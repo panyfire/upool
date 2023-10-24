@@ -12,7 +12,7 @@ import { InputProps } from './types'
 export const Input: FC<InputProps> = (props) => {
   const { onChange, name, label, ...other } = props
   // const handleNameChange = (e: ChangeEvent<HTMLInputElement>) =>
-  //   onChange(e: any)
+  //   onChange(e.target.value)
 
   return (
     <InputStyled>
@@ -20,7 +20,7 @@ export const Input: FC<InputProps> = (props) => {
         <Text text={label} type="label" />
       </Label>
       <InputContainer>
-        <Field {...other} onChange={onChange} />
+        <Field name={name} {...other} onChange={onChange} />
         <BtnMaxWrapper>
           <Text text="Max" type="value" />
         </BtnMaxWrapper>

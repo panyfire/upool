@@ -30,6 +30,7 @@ export const RangeSlider = styled.input`
 `
 
 export const RangeSliderValue = styled.div`
+  margin-top: 10px;
   text-align: center;
   color: white;
 `

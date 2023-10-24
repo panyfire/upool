@@ -4,7 +4,7 @@ import { whiteColor } from 'ui/colors'
 export const ButtonStyled = styled.button`
   padding: 21px 22px;
   height: 58px;
-  width: 308px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

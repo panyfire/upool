@@ -35,7 +35,9 @@ export const TabListWrapper = styled.div`
   justify-content: space-between;
   gap: 10px;
   & .react-tabs__tab {
-    padding: 3px 16px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
     border-radius: 30px;
     border: 1px solid #55F8F1;
   }
@@ -50,4 +52,38 @@ export const TabListWrapper = styled.div`
 
 export const RangeWrapper = styled.div`
   margin-top: 33px;
+`
+
+export const DurationWrapper = styled.div`
+  .tablist__list_duration .react-tabs__tab {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    border-radius: 30px;
+    border: 1px solid #55F8F1;
+  }
+  .tablist__list_duration .react-tabs__tab.react-tabs__tab--selected {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    border-radius: 30px;
+    border: 1px solid #55F8F1;
+  }
+  //.tablist__list_duration {
+  //  &.react-tabs__tab {
+  //    width: 60px;
+  //    display: flex;
+  //    justify-content: center;
+  //    border-radius: 30px;
+  //    border: 1px solid #55F8F1;
+  //  }
+  //  & .react-tabs__tab.react-tabs__tab--selected {
+  //    border: 1px solid #55F8F1;
+  //    background: #55F8F1;
+  //    & p {
+  //      color: black;
+  //    }
+  //  }
+  }
+  
 `
