@@ -6,6 +6,7 @@ use App\Entity\Staking;
 use App\Repository\StakingRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,12 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StakingController extends AbstractController
 {
-    #[Route('/api/staking/list/', name: 'api_staking_list')]
-    public function list(EntityManagerInterface $manager): Response
+    /**
+     * @throws Exception
+     */
+    #[Route('/api/staking/{chainId}', name: 'api_staking_chain', defaults: ['chainId' => ''])]
+    public function list(EntityManagerInterface $manager, string $chainId = ''): Response
     {
-        $stakings = $manager->getRepository(Staking::class)->findAll();
+        $stakes = [];
+
+        if (empty($chainId)) {
+            $stakes = $manager->getRepository(Staking::class)->findAll();
+        } else {
+            $stakes = $manager->getRepository(Staking::class)->findBy(['chainId' => $chainId]);
+        }
+
+        if (empty($stakes)) {
+            throw new Exception('Stakes does not exists.', 404);
+        }
+
         $stakingResult = [];
-        foreach ($stakings as $staking) {
+        foreach ($stakes as $staking) {
             $stakingResult[] = [
                 'nameCoin' => $staking->getNameCoin(),
                 'iconCoinUrl' => $staking->getIconCoinUrl(),

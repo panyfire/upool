@@ -2,3 +2,7 @@ api_staking_list:
     path:       /api/staking/
     controller: App\Controller\StakingController::list
     methods:    GET|HEAD
+api_staking_chain:
+    path:       /api/staking/{chainId}
+    controller: App\Controller\StakingController::list
+    methods:    GET|HEAD
