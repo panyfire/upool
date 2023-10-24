@@ -53,7 +53,7 @@ export const UIKit: FC = () => {
           label={''}
           name={''}
           placeholder={''}
-          error={false}
+          error={undefined}
         />
 
         <div onClick={() => setOpen(true)} style={{ color: 'white' }}>

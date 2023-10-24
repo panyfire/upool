@@ -10,7 +10,7 @@ import { WalletsContainer } from './styles'
 
 
 export const Profile = () => {
-  const { wallet } = useMetaMask()
+  const { wallet,  } = useMetaMask()
   const navigate = useNavigate();
 
   useEffect(() => {

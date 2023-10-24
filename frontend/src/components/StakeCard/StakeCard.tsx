@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { StakeButton, Text } from 'ui'
 import { CardMiddle, CardTop, CardValues, CardWrapper } from './styles'
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 import img from 'img/ETC.png'
@@ -11,10 +12,12 @@ type IStakeCard = {
   minAPR: string
   maxAPR: string
   onClick: () => void
+  disabled?: boolean
 }
 
 export const StakeCard: FC<IStakeCard> = (props) => {
-  const { tittle, preTittle, minAPR, maxAPR, onClick } = props
+  const { tittle, preTittle, minAPR, maxAPR, onClick, disabled } = props
+
   return (
     <CardWrapper>
       <CardTop>
@@ -34,7 +37,13 @@ export const StakeCard: FC<IStakeCard> = (props) => {
           <Text text={`${maxAPR}%`} type={'card'} />
         </CardValues>
       </CardMiddle>
-      <StakeButton onClick={onClick} text={'Stake'} />
+      <div>
+        <StakeButton
+          disabled={disabled}
+          onClick={onClick}
+          text={'Stake'}
+        />
+      </div>
     </CardWrapper>
   )
 }

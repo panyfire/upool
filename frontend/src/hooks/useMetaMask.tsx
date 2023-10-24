@@ -8,10 +8,13 @@ import {
   useCallback,
 } from 'react'
 
+
 import detectEthereumProvider from '@metamask/detect-provider'
+// import ethers from 'ethers'
 import { formatBalance } from 'utils'
 
 type WalletState = {
+  error?: boolean
   accounts: string[]
   balance: string
   chainId: string | unknown
@@ -25,6 +28,8 @@ type MetaMaskContextData = {
   isConnecting: boolean
   connectMetaMask: () => void
   clearError: () => void
+  handleLogout: any
+  sendBitcoin: any
 }
 
 const disconnectedState: WalletState = {
@@ -102,7 +107,6 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       //@ts-ignore
       const provider = await detectEthereumProvider({ silent: true })
       setHasProvider(Boolean(provider))
-
       if (provider) {
         updateWalletAndAccounts()
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -130,18 +134,67 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     setIsConnecting(true)
 
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      const accounts = await window.ethereum.request({
+      const accounts = await window?.ethereum?.request({
         method: 'eth_requestAccounts',
       })
       clearError()
       updateWallet(accounts)
     } catch (err: any) {
       setErrorMessage(err.message)
+      setWallet((prev) => ({ ...prev, error: true }))
     }
     setIsConnecting(false)
   }
+
+  const handleLogout = async () => {
+    try {
+      const provider = window?.ethereum
+      if (provider) {
+        await provider.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: [] }],
+        })
+        // Блокируем аккаунты в виджете MetaMask
+        await provider.request({ method: 'eth_accounts', params: [] })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
+  const sendBitcoin = async () => {
+    try {
+      // Проверяем доступность MetaMask
+      const provider = window?.ethereum
+      if (provider) {
+        // Запрашиваем разрешение на доступ к аккаунту пользователя
+        await provider.request({ method: 'eth_requestAccounts' });
+
+        // Получаем аккаунт пользователя
+        // const accounts = await provider.request({ method: 'eth_accounts' });
+
+        // Создаем подключение к провайдеру
+        // const ethereum = new ethers.providers.Web3Provider(provider);
+
+        // Отправляем транзакцию
+        // const transaction = await ethereum.send('eth_sendTransaction', [
+        //   {
+        //     from: accounts[0],
+        //     to: toAddress,
+        //     value: ethers.utils.parseEther(amount.toString()).toString(),
+        //   },
+        // ]);
+
+        console.log('Транзакция успешно отправлена. Хеш транзакции:');
+      } else {
+        console.log('MetaMask не доступен');
+      }
+    } catch (error) {
+      console.log('Ошибка:', error);
+    }
+  };
+
 
   return (
     // eslint-disable-next-line react/react-in-jsx-scope
@@ -154,6 +207,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting,
         connectMetaMask,
         clearError,
+        handleLogout,
+        sendBitcoin,
       }}
     >
       {children}

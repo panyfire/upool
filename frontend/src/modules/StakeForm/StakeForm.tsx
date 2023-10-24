@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { Tab, Tabs, TabList } from 'react-tabs'
 import { Form, Formik, FormikProps } from 'formik'
 import { Icon, Input, Text, InputRange, ConfirmButton } from 'ui'
@@ -8,7 +8,8 @@ import {
   FormTitle,
   RangeWrapper,
   TabValue,
-  TabListWrapper, DurationWrapper,
+  TabListWrapper,
+  DurationWrapper,
 } from './styles'
 import { LockOverview } from 'components'
 
@@ -18,7 +19,7 @@ type TAb = {
   duration: number
 }
 
-export const StakeForm = () => {
+export const StakeForm: FC<TAb> = () => {
   const [tab, setTabIndex] = useState(0)
   const [dtab, dsetTabIndex] = useState(1)
 
@@ -139,7 +140,7 @@ export const StakeForm = () => {
             <DurationWrapper>
               <Text text={'add duration'} type={'popUpPreTitle'} />
               <Tabs
-                  className={'tablist__list_duration'}
+                className={'tablist__list_duration'}
                 style={{ color: 'white' }}
                 selectedIndex={dtab}
                 onSelect={(index: number) => {
