@@ -124,7 +124,15 @@ sudo mv composer.phar /usr/local/bin/composer
 ```
 composer i --ignore-platform-reqs
 ```
+### Подтягиваем зависимости
+
+```
+composer install
+```
 
 ### Накатываем базу
-
+```
+php bin/console doctrine:schema:update --force
+php bin/console doctrine:fixtures:load
+```
 # TODO: Дописать в скором времени
