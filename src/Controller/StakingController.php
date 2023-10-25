@@ -20,7 +20,6 @@ class StakingController extends AbstractController
     #[Route('/api/staking/{chainId}', name: 'api_staking_chain', defaults: ['chainId' => ''])]
     public function list(EntityManagerInterface $manager, string $chainId = ''): Response
     {
-        $stakes = [];
 
         if (empty($chainId)) {
             $stakes = $manager->getRepository(Staking::class)->findAll();
@@ -28,20 +27,21 @@ class StakingController extends AbstractController
             $stakes = $manager->getRepository(Staking::class)->findBy(['chainId' => $chainId]);
         }
 
-        if (empty($stakes)) {
-            throw new Exception('Stakes does not exists.', 404);
+        $stakingResult = [];
+
+        if (!empty($stakes)) {
+            foreach ($stakes as $staking) {
+                $stakingResult[] = [
+                    'nameCoin' => $staking->getNameCoin(),
+                    'iconCoinUrl' => $staking->getIconCoinUrl(),
+                    'minArpPercent' => $staking->getMinArpPercent(),
+                    'maxArpPercent' => $staking->getMaxArpPercent(),
+                    'subHeader' => $staking->getSubHeader()
+                ];
+            }
         }
 
-        $stakingResult = [];
-        foreach ($stakes as $staking) {
-            $stakingResult[] = [
-                'nameCoin' => $staking->getNameCoin(),
-                'iconCoinUrl' => $staking->getIconCoinUrl(),
-                'minArpPercent' => $staking->getMinArpPercent(),
-                'maxArpPercent' => $staking->getMaxArpPercent(),
-                'subHeader' => $staking->getSubHeader()
-            ];
-        }
+
         return new JsonResponse($stakingResult);
     }
 }
