@@ -31,6 +31,24 @@ class Staking
     #[ORM\Column(length: 23)]
     private ?string $chainId = null;
 
+    #[ORM\Column(length: 23)]
+    private ?float $apr = null;
+
+    #[ORM\Column(length: 23)]
+    private ?string $duration = null;
+
+    #[ORM\Column(length: 23)]
+    private ?float $coinToBeLocked = null;
+
+    #[ORM\Column(length: 23)]
+    private ?string $startLocking = null;
+
+    #[ORM\Column(length: 23)]
+    private ?string $endLocking = null;
+
+    #[ORM\Column(length: 23)]
+    private ?float $expectedRoi = null;
+
 
     public function getId(): ?int
     {
@@ -101,5 +119,41 @@ class Staking
     public function getChainId(): ?string
     {
         return $this->chainId;
+    }
+
+    public function setApr(string $apr): self
+    {
+        $this->apr = $apr;
+        return $this;
+    }
+
+    public function setDuration(string $duration): self
+    {
+        $this->duration = $duration;
+        return $this;
+    }
+
+    public function setCoinToBeLocked(string $coinToBeLocked): self
+    {
+        $this->coinToBeLocked = $coinToBeLocked;
+        return $this;
+    }
+
+    public function setStartLocking(string $startLocking): self
+    {
+        $this->startLocking = $startLocking;
+        return $this;
+    }
+
+    public function setEndLocking(string $endLocking): self
+    {
+        $this->endLocking = $endLocking;
+        return $this;
+    }
+
+    public function setExpectedRoi(string $expectedRoi): self
+    {
+        $this->expectedRoi = $expectedRoi;
+        return $this;
     }
 }
