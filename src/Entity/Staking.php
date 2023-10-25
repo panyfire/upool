@@ -6,7 +6,7 @@ use App\Repository\StakingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StakingRepository::class)]
-class Staking
+class Staking extends AbstarctEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -155,5 +155,25 @@ class Staking
     {
         $this->expectedRoi = $expectedRoi;
         return $this;
+    }
+
+    public function getApr(): ?float
+    {
+        return $this->apr;
+    }
+
+    public function getDuration(): ?string
+    {
+        return $this->duration;
+    }
+
+    public function getExpectedRoi(): ?float
+    {
+        return $this->expectedRoi;
+    }
+
+    public function getCoinToBeLocked(): ?float
+    {
+        return $this->coinToBeLocked;
     }
 }

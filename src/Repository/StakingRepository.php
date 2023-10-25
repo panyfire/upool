@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Staking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,5 +21,15 @@ class StakingRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Staking::class);
+    }
+
+    public function findById($id): ?array
+    {
+        $stakes = $this->createQueryBuilder('p')
+            ->where('p.id = :inner_id')
+            ->setParameter('inner_id', $id)
+            ->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        return $stakes ?? null;
     }
 }

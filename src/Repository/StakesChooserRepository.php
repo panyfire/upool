@@ -9,10 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<StakesChooser>
  *
- * @method Staking|null find($id, $lockMode = null, $lockVersion = null)
- * @method Staking|null findOneBy(array $criteria, array $orderBy = null)
- * @method Staking[]    findAll()
- * @method Staking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StakesChooser|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StakesChooser|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StakesChooser[]    findAll()
+ * @method StakesChooser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class StakesChooserRepository extends ServiceEntityRepository
 {
@@ -20,4 +20,29 @@ class StakesChooserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StakesChooser::class);
     }
+
+//    /**
+//     * @return StakesChooser[] Returns an array of StakesChooser objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('s.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+
+//    public function findOneBySomeField($value): ?StakesChooser
+//    {
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 }
