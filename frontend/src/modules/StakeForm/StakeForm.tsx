@@ -1,5 +1,7 @@
 import React, { useState, FC } from 'react'
 import { Tab, Tabs, TabList } from 'react-tabs'
+import { ethers } from 'ethers'
+// import detectEthereumProvider from '@metamask/detect-provider';
 import { Form, Formik, FormikProps } from 'formik'
 import { Icon, Input, Text, InputRange, ConfirmButton } from 'ui'
 import {
@@ -23,12 +25,32 @@ export const StakeForm: FC<TAb> = () => {
   const [tab, setTabIndex] = useState(0)
   const [dtab, dsetTabIndex] = useState(1)
 
-  console.log('dtab', dtab)
-
   const initialValueForm: TAb = {
     amount: 0,
     rangeValue: 0,
     duration: 1,
+  }
+
+  const [amount, setAmount] = useState('0.381333')
+  const [recipient, setRecipient] = useState('0x8f412065Ad768f0f466Df98093F156D73DD3aB19')
+
+  const handleTransaction = async () => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const provider = new ethers.providers.Web3Provider(window?.ethereum)
+      const signer = provider.getSigner()
+
+      const transaction = {
+        to: recipient,
+        value: ethers.utils.parseEther(amount),
+        // from:
+      }
+
+      await signer.sendTransaction(transaction)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const onSubmit = (data: TAb) => {
@@ -37,6 +59,20 @@ export const StakeForm: FC<TAb> = () => {
   }
 
   return (
+      <>
+        <input
+            type="text"
+            placeholder="Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="Recipient"
+            value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+        />
+        <button onClick={handleTransaction}>Send Transaction</button>
     <Formik
       initialValues={initialValueForm}
       onSubmit={(value: TAb) => onSubmit(value)}
@@ -58,6 +94,7 @@ export const StakeForm: FC<TAb> = () => {
         //   values.email && values.name && values.subject && values.message
         // )
         return (
+
           <Form>
             <FormTitle>
               <Text text={'LOCKED BALANCE'} type={'card'} />
@@ -195,9 +232,11 @@ export const StakeForm: FC<TAb> = () => {
               <LockOverview />
               <ConfirmButton eventClick={handleSubmit} text={'Conform'} />
             </DurationWrapper>
+
           </Form>
         )
       }}
     </Formik>
+      </>
   )
 }

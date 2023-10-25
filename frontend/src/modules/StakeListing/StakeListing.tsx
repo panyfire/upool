@@ -5,8 +5,10 @@ import { StakeForm } from 'modules'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { Layout } from 'layouts/Layout'
 import { Popup, StakeCard } from 'components'
-import { ListingWrapper } from './styles'
+
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
+import { Text } from 'ui'
+import { ListingWrapper } from './styles'
 
 type TResponse = {
   nameCoin: string
@@ -17,29 +19,25 @@ type TResponse = {
 }
 
 export const StakeListing: FC = () => {
-  const [stakeModal, setStakeModal] = useState(false)
-  const { wallet, connectMetaMask, isConnecting, hasProvider } = useMetaMask()
+  const [, setStakeModal] = useState(false)
+  const { wallet, connectMetaMask, hasProvider } = useMetaMask()
 
-  const dataResponse = hasProvider
-    ? useGetStakeList(`${wallet?.chainId}`)
-    : useGetStakeList(``)
+  const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
 
   const { data } = dataResponse
 
-  console.log('isActiveUser', isConnecting)
-  console.log('hasProvider', hasProvider)
-
   useEffect(() => {
     dataResponse.refetch()
-  }, [wallet?.chainId])
-
-  console.log(wallet.chainId)
+  }, [wallet.chainId, data])
 
   return (
     <>
       <Layout>
         <ListingWrapper>
           {Array.isArray(data) &&
+          data.length &&
+          wallet.chainId &&
+          hasProvider ? (
             data.map((e: TResponse, i: number) => {
               return (
                 <StakeCard
@@ -56,7 +54,10 @@ export const StakeListing: FC = () => {
                   disabled={wallet?.error}
                 />
               )
-            })}
+            })
+          ) : (
+            <Text type={'h3'} text={'No Data'} />
+          )}
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -71,7 +72,7 @@ export const StakeListing: FC = () => {
           />
         </ListingWrapper>
       </Layout>
-      {stakeModal && (
+      { (
         <Popup
           // children={'undefined'}
           onClick={() => setStakeModal(false)}
