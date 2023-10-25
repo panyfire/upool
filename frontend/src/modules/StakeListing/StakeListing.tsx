@@ -1,6 +1,5 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
-
 import 'react-toastify/dist/ReactToastify.css'
 import { StakeForm } from 'modules'
 import { useMetaMask } from 'hooks/useMetaMask'
@@ -9,68 +8,55 @@ import { Popup, StakeCard } from 'components'
 import { ListingWrapper } from './styles'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 
+type TResponse = {
+  nameCoin: string
+  iconCoinUrl: string
+  minArpPercent: string
+  maxArpPercent: string
+  subHeader: string
+}
+
 export const StakeListing: FC = () => {
   const [stakeModal, setStakeModal] = useState(false)
-  const { wallet, connectMetaMask } = useMetaMask()
-    console.log(wallet.chainId)
-  const a = !!wallet && useGetStakeList(`${wallet.chainId}`)
+  const { wallet, connectMetaMask, isConnecting, hasProvider } = useMetaMask()
 
-  console.log(a, 'Statat')
+  const dataResponse = hasProvider
+    ? useGetStakeList(`${wallet?.chainId}`)
+    : useGetStakeList(``)
+
+  const { data } = dataResponse
+
+  console.log('isActiveUser', isConnecting)
+  console.log('hasProvider', hasProvider)
+
+  useEffect(() => {
+    dataResponse.refetch()
+  }, [wallet?.chainId])
+
+  console.log(wallet.chainId)
 
   return (
     <>
       <Layout>
         <ListingWrapper>
-          <StakeCard
-            tittle={'ETH'}
-            preTittle={'Stake ETH'}
-            minAPR={'10'}
-            maxAPR={'88'}
-            onClick={() => {
-              wallet?.accounts?.length ? setStakeModal(true) : connectMetaMask()
-            }}
-            // disabled={wallet?.error}
-          />
-          <StakeCard
-            tittle={'ETH'}
-            preTittle={'Stake ETH'}
-            minAPR={'10'}
-            maxAPR={'88'}
-            onClick={() => {
-              wallet?.accounts?.length ? setStakeModal(true) : connectMetaMask()
-            }}
-            // disabled={wallet?.error}
-          />
-          <StakeCard
-            tittle={'ETH'}
-            preTittle={'Stake ETH'}
-            minAPR={'10'}
-            maxAPR={'88'}
-            onClick={() => {
-              wallet?.accounts?.length ? setStakeModal(true) : connectMetaMask()
-            }}
-            disabled={wallet.error}
-          />
-          <StakeCard
-            tittle={'ETH'}
-            preTittle={'Stake ETH'}
-            minAPR={'10'}
-            maxAPR={'88'}
-            onClick={() => {
-              wallet?.accounts?.length ? setStakeModal(true) : connectMetaMask()
-            }}
-            disabled={wallet?.error}
-          />
-          <StakeCard
-            tittle={'ETH'}
-            preTittle={'Stake ETH'}
-            minAPR={'10'}
-            maxAPR={'88'}
-            onClick={() => {
-              wallet?.accounts?.length ? setStakeModal(true) : connectMetaMask()
-            }}
-            disabled={wallet?.error}
-          />
+          {Array.isArray(data) &&
+            data.map((e: TResponse, i: number) => {
+              return (
+                <StakeCard
+                  key={i}
+                  tittle={e.nameCoin}
+                  preTittle={e.subHeader}
+                  minAPR={e.minArpPercent}
+                  maxAPR={e.maxArpPercent}
+                  onClick={() => {
+                    wallet?.accounts?.length
+                      ? setStakeModal(true)
+                      : connectMetaMask()
+                  }}
+                  disabled={wallet?.error}
+                />
+              )
+            })}
           <ToastContainer
             position="bottom-right"
             autoClose={5000}

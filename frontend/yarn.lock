@@ -1796,6 +1796,11 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
+"@metamask/detect-provider@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@metamask/detect-provider/-/detect-provider-2.0.0.tgz#4bc2795e5e6f7d8b84b2e845058d2f222c99917d"
+  integrity sha512-sFpN+TX13E9fdBDh9lvQeZdJn4qYoRb/6QF2oZZK/Pn559IhCFacPMU1rMuqyXoFQF3JSJfii2l98B87QDPeCQ==
+
 "@metamask/object-multiplex@^1.1.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@metamask/object-multiplex/-/object-multiplex-1.2.0.tgz#38fc15c142f61939391e1b9a8eed679696c7e4f4"
@@ -2303,6 +2308,18 @@
     "@svgr/core" "8.0.0"
     "@svgr/plugin-jsx" "8.0.1"
     "@svgr/plugin-svgo" "8.0.1"
+
+"@tanstack/react-table@^8.10.1":
+  version "8.10.7"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.10.7.tgz#733f4bee8cf5aa19582f944dd0fd3224b21e8c94"
+  integrity sha512-bXhjA7xsTcsW8JPTTYlUg/FuBpn8MNjiEPhkNhIGCUR6iRQM2+WEco4OBpvDeVcR9SE+bmWLzdfiY7bCbCSVuA==
+  dependencies:
+    "@tanstack/table-core" "8.10.7"
+
+"@tanstack/table-core@8.10.7":
+  version "8.10.7"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.10.7.tgz#577e8a635048875de4c9d6d6a3c21d26ff9f9d08"
+  integrity sha512-KQk5OMg5OH6rmbHZxuNROvdI+hKDIUxANaHlV+dPlNN7ED3qYQ/WkpY2qlXww1SIdeMlkIhpN/2L00rof0fXFw==
 
 "@testing-library/dom@^8.5.0":
   version "8.20.1"
@@ -4065,6 +4082,11 @@ core-js@^3.19.2:
   version "3.32.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.32.0.tgz#7643d353d899747ab1f8b03d2803b0312a0fb3b6"
   integrity sha512-rd4rYZNlF3WuoYuRIDEmbR/ga9CeuWX9U05umAvgrrZoHY4Z++cp/xwPQMvUpBB4Ag6J8KfD80G0zwCyaSxDww==
+
+core-js@^3.22.4:
+  version "3.33.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.33.1.tgz#ef3766cfa382482d0a2c2bc5cb52c6d88805da52"
+  integrity sha512-qVSq3s+d4+GsqN0teRCJtM6tdEEXyWxjzbhVrCHmBS5ZTM0FS2MOS0D13dUXAWDUN6a+lHI/N1hF9Ytz6iLl9Q==
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -8621,7 +8643,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.8.1:
+prop-types@^15.5.0, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8826,6 +8848,14 @@ react-query@^3.39.3:
     broadcast-channel "^3.4.1"
     match-sorter "^6.0.2"
 
+react-range-slider-input@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/react-range-slider-input/-/react-range-slider-input-3.0.7.tgz#88ceb118b33d7eb0550cec1f77fc3e60e0f880f9"
+  integrity sha512-yAJDDMUNkILOcZSCLCVbwgnoAM3v0AfdDysTCMXDwY/+ZRNRlv98TyHbVCwPFEd7qiI8Ca/stKb0GAy//NybYw==
+  dependencies:
+    clsx "^1.1.1"
+    core-js "^3.22.4"
+
 react-refresh@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
@@ -8921,6 +8951,14 @@ react-svg-loader@^3.0.3:
   dependencies:
     loader-utils "^1.2.3"
     react-svg-core "^3.0.3"
+
+react-tabs@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-6.0.2.tgz#bc1065c3828561fee285a8fd045f22e0fcdde1eb"
+  integrity sha512-aQXTKolnM28k3KguGDBSAbJvcowOQr23A+CUJdzJtOSDOtTwzEaJA+1U4KwhNL9+Obe+jFS7geuvA7ICQPXOnQ==
+  dependencies:
+    clsx "^2.0.0"
+    prop-types "^15.5.0"
 
 react-toastify@^9.1.3:
   version "9.1.3"
