@@ -81,5 +81,6 @@ export const StakeListing: FC = () => {
         </Popup>
       )}
     </>
+
   )
 }
