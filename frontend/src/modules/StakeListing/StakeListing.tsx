@@ -61,6 +61,7 @@ export const StakeListing: FC = () => {
                     }}
                     disabled={wallet?.error}
                   />
+
                   {stakeModalStatus && (
                     <Popup
                       // children={'undefined'}
@@ -75,7 +76,7 @@ export const StakeListing: FC = () => {
                         maxArpPercent={e.maxArpPercent}
                         minArpPercent={e.minArpPercent}
                         percents={e.percents}
-                        rangeValue={e.rangeValue}
+                        rangeValue={e.rangeValue || '25'}
                         amount={0}
                       />
                     </Popup>
