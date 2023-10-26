@@ -46,6 +46,7 @@ class StakingController extends AbstractController
         $stakingResult = [];
         foreach ($stakes as $index => $staking) {
             $stakingResult[$index] = [
+                'id' => $staking->getId(),
                 'nameCoin' => $staking->getNameCoin(),
                 'iconCoinUrl' => $staking->getIconCoinUrl(),
                 'minArpPercent' => $staking->getMinArpPercent(),
