@@ -11,6 +11,7 @@ export const HeaderStyled = styled.menu`
 
 export const Additional = styled.div`
   display: flex;
+  align-items: center;
   gap: 30px;
 `
 

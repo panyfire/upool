@@ -14,15 +14,13 @@ import {
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
-  const [value, setValue] = useState<string>('')
+  const [, setValue] = useState<string>('')
 
   const chainIDS = [
     { name: 'Ethereum Mainnet', id: '0x1' },
     { name: 'Linea Mainnet', id: '0xe708' },
     { name: 'Goerli', id: '0x5' },
   ]
-  console.log(chainIDS)
-  console.log('value', value)
 
   const handleChangeChainId = async (id: string) => {
     try {

@@ -1,5 +1,5 @@
 export const formatBalance = (rawBalance: string) => {
-  return (parseInt(rawBalance) / 1000000000000000000).toFixed(2)
+  return (parseInt(rawBalance) / 1000000000000000000).toFixed(10)
 }
 
 export const formatChainAsNum = (chainIdHex: string) => {

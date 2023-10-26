@@ -6,14 +6,12 @@ import { chainIdName } from 'utils'
 
 export const Header: FC = () => {
   const { wallet } = useMetaMask()
-  console.log(wallet)
   return (
     <HeaderStyled>
       <Text text={'LOGO'} type={'h2'} />
       <Menu>
         <Additional>
-          <Icon size={'32'} name={'lang'} />
-          <Icon size={'32'} name={'settings'} />
+          <Icon size={'24'} name={'lang'} />
         </Additional>
         <Dropdowns>
           {wallet?.accounts?.length && (
