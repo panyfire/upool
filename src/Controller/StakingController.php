@@ -71,9 +71,9 @@ class StakingController extends AbstractController
     #[Route('/api/staking/detail/{id}', name: 'api_staking_detail')]
     public function detail(EntityManagerInterface $manager, string $id): Response
     {
-        $staking = $manager->getRepository(Staking::class)->createQueryBuilder('s')
+        $staking = current($manager->getRepository(Staking::class)->createQueryBuilder('s')
             ->where('s.id = :id')->setParameter('id', $id)
-        ->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
+        ->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY));
 
         $staking['startLocking'] = (new \DateTime('now'))->format('M dS, Y H:m');
         $staking['endLocking'] = (new \DateTime('now'))->modify('+30 days')->format('M dS, Y H:m');
