@@ -28,8 +28,6 @@ export const StakeListing: FC = () => {
   const [stakeModalStatus, setStakeModal] = useState(false)
   const { wallet, connectMetaMask } = useMetaMask()
 
-  console.log('wallet', wallet)
-
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
 
   const { data } = dataResponse
@@ -78,6 +76,7 @@ export const StakeListing: FC = () => {
                         percents={e.percents}
                         rangeValue={e.rangeValue || '25'}
                         amount={0}
+                        errorStatus={false}
                       />
                     </Popup>
                   )}

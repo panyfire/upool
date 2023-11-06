@@ -20,8 +20,8 @@ export const FormBalance = styled.div`
 `
 
 export const TabValue = styled.div`
-  color: #55F8F1;
-  font-family: Montserrat,serif;
+  color: #55f8f1;
+  font-family: Montserrat, serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -29,21 +29,24 @@ export const TabValue = styled.div`
 `
 
 export const TabListWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  &:nth-child(1) {
+    margin-top: 10px;
+  }
   & .react-tabs__tab {
     width: 60px;
     display: flex;
     justify-content: center;
     border-radius: 30px;
-    border: 1px solid #55F8F1;
+    border: 1px solid #55f8f1;
   }
   & .react-tabs__tab.react-tabs__tab--selected {
-    border: 1px solid #55F8F1;
-    background: #55F8F1;
+    border: 1px solid #55f8f1;
+    background: #55f8f1;
     & p {
       color: black;
     }
@@ -55,35 +58,19 @@ export const RangeWrapper = styled.div`
 `
 
 export const DurationWrapper = styled.div`
+  margin-top:20px;
   .tablist__list_duration .react-tabs__tab {
     width: 60px;
     display: flex;
     justify-content: center;
     border-radius: 30px;
-    border: 1px solid #55F8F1;
+    border: 1px solid #55f8f1;
   }
   .tablist__list_duration .react-tabs__tab.react-tabs__tab--selected {
     width: 60px;
     display: flex;
     justify-content: center;
     border-radius: 30px;
-    border: 1px solid #55F8F1;
+    border: 1px solid #55f8f1;
   }
-  //.tablist__list_duration {
-  //  &.react-tabs__tab {
-  //    width: 60px;
-  //    display: flex;
-  //    justify-content: center;
-  //    border-radius: 30px;
-  //    border: 1px solid #55F8F1;
-  //  }
-  //  & .react-tabs__tab.react-tabs__tab--selected {
-  //    border: 1px solid #55F8F1;
-  //    background: #55F8F1;
-  //    & p {
-  //      color: black;
-  //    }
-  //  }
-  }
-  
 `

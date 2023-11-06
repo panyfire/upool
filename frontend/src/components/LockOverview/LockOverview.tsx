@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Text } from 'ui'
-import { LockOverviewStyles, LockOverviewStylesItem } from './styles'
+import { LockOverviewStyles, LockOverviewStylesItem, Wrapper } from './styles'
 
 type TAb = {
   nameCoin?: string
@@ -21,7 +21,7 @@ type TAb = {
 export const LockOverview: FC<TAb> = (props) => {
   const { expectedRoi, duration } = props
   return (
-    <div>
+    <Wrapper>
       <Text text={'lock overview '} type={'popUpPreTitle'} />
       <LockOverviewStyles>
         <LockOverviewStylesItem>
@@ -46,12 +46,9 @@ export const LockOverview: FC<TAb> = (props) => {
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'expected roi'} type={'popUpValue'} />
-          <Text
-            text={`$ ${Number(expectedRoi).toFixed(5)}`}
-            type={'value'}
-          />
+          <Text text={`$ ${Number(expectedRoi).toFixed(5)}`} type={'value'} />
         </LockOverviewStylesItem>
       </LockOverviewStyles>
-    </div>
+    </Wrapper>
   )
 }

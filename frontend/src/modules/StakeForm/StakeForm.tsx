@@ -1,7 +1,6 @@
 import React, { useState, FC } from 'react'
 import { Tab, Tabs, TabList } from 'react-tabs'
 import { ethers } from 'ethers'
-// import detectEthereumProvider from '@metamask/detect-provider';
 import { Form, Formik, FormikProps } from 'formik'
 import { Icon, Input, Text, InputRange, ConfirmButton } from 'ui'
 import {
@@ -30,6 +29,7 @@ type TAb = {
   percents: string[]
   rangeValue: string
   amount: number
+  errorStatus: string | false | undefined
 }
 
 export const StakeForm: FC<TAb> = (props) => {
@@ -44,6 +44,7 @@ export const StakeForm: FC<TAb> = (props) => {
     percents,
     rangeValue,
     // amount,
+    errorStatus,
   } = props
   const [tab, setTabIndex] = useState(0)
   const [dtab, dsetTabIndex] = useState(1)
@@ -67,34 +68,47 @@ export const StakeForm: FC<TAb> = (props) => {
     minArpPercent: minArpPercent,
     percents: percents,
     rangeValue: rangeValue,
+    errorStatus: errorStatus,
   }
 
-  // const [amount, setAmount] = useState('0.381333')
   const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
+  const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
 
-  const handleTransaction = async () => {
+  console.log('errorCheck', errorCheck)
+
+  const handleTransaction = async (
+    totalAmount: number | undefined | string
+  ) => {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const provider = new ethers.providers.Web3Provider(window?.ethereum)
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
 
       const transaction = {
         to: recipient,
-        value: ethers.utils.parseEther('0.0000451567'),
+        value: ethers.utils.parseEther(`${totalAmount}`),
         // from:
       }
 
       await signer.sendTransaction(transaction)
     } catch (error) {
       console.error(error)
+      setErrorCheck('Не хватает денег')
     }
   }
 
-  const onSubmit = (data: TAb) => {
-    // contactFormApi.mutateAsync(data).catch((reason) => setError(reason.response.status))
-    handleTransaction().then(() => alert(JSON.stringify(data)))
-  }
+  const convertToNumber = (value: string | number | undefined) => Number(value)
+
+  const calculateRoiWithDuration = (values: TAb) =>
+    convertToNumber(values.expectedRoi) +
+    (convertToNumber(values.expectedRoi) *
+      (convertToNumber(values.apr) * convertToNumber(values.duration))) /
+      365
+
+  const onSubmit = (data: TAb) =>
+    handleTransaction(data?.expectedRoi?.toFixed(5))
+
   return (
     <Formik
       initialValues={initialValueForm}
@@ -135,7 +149,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 name={'amount'}
                 placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
-                helperText={touched.amount && errors.amount}
+                helperText={touched.amount && errors.amount && errorCheck}
                 onChange={handleChange}
               />
               <div
@@ -234,7 +248,6 @@ export const StakeForm: FC<TAb> = (props) => {
                 </TabListWrapper>
               </TabList>
             </Tabs>
-
             <DurationWrapper>
               <Text text={'add duration'} type={'popUpPreTitle'} />
               <Tabs
@@ -246,18 +259,38 @@ export const StakeForm: FC<TAb> = (props) => {
                   switch (index) {
                     case 0:
                       setFieldValue('duration', 1)
+                      setFieldValue(
+                        'expectedRoi',
+                        calculateRoiWithDuration(values)
+                      )
                       break
                     case 1:
                       setFieldValue('duration', 7)
+                      setFieldValue(
+                        'expectedRoi',
+                        calculateRoiWithDuration(values)
+                      )
                       break
                     case 2:
                       setFieldValue('duration', 30)
+                      setFieldValue(
+                        'expectedRoi',
+                        calculateRoiWithDuration(values)
+                      )
                       break
                     case 3:
                       setFieldValue('duration', 60)
+                      setFieldValue(
+                        'expectedRoi',
+                        calculateRoiWithDuration(values)
+                      )
                       break
                     case 4:
                       setFieldValue('duration', 90)
+                      setFieldValue(
+                        'expectedRoi',
+                        calculateRoiWithDuration(values)
+                      )
                       break
                   }
                 }}
@@ -288,7 +321,10 @@ export const StakeForm: FC<TAb> = (props) => {
                 rangeValue={''}
                 amount={0}
               />
-              <ConfirmButton eventClick={handleSubmit} text={'Conform'} />
+              <div style={{ marginTop: 20 }}>
+                <ConfirmButton eventClick={handleSubmit} text={'Confirm'} />
+              </div>
+              {errorCheck && <div style={{ color: 'red' }}>{errorCheck}</div>}
             </DurationWrapper>
           </Form>
         )
