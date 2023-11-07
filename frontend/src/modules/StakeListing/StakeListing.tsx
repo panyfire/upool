@@ -36,8 +36,6 @@ export const StakeListing: FC = () => {
     dataResponse.refetch()
   }, [wallet.chainId, data])
 
-  console.log(data)
-
   return (
     <>
       <Layout>

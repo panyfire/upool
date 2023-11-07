@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from 'ui'
 
 export const CardWrapper = styled.div`
   padding: 40px;
@@ -8,7 +9,7 @@ export const CardWrapper = styled.div`
   align-items: center;
   width: calc(100% / 3 - 60px);
   --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #916AFF, #FBCC72);
+  --border-color: linear-gradient(to bottom right, #916aff, #fbcc72);
   --border-width: 0.1em;
   --edge-size: 1em;
   cursor: pointer;
@@ -25,6 +26,12 @@ export const CardWrapper = styled.div`
     0 var(--edge-size)
   );
   transition: color 250ms;
+  @media ${device.laptop} {
+    width: calc(100% / 2 - 60px);
+  }
+  @media ${device.tablet} {
+    width: 100%
+  }
   &:before {
     content: '';
     position: absolute;

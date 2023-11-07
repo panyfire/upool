@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { whiteColor } from 'ui/colors'
 
 export const ButtonStyled = styled.button`
   padding: 21px 22px;
@@ -27,7 +26,7 @@ export const ButtonStyled = styled.button`
   );
   transition: color 250ms;
   p {
-    color: ${whiteColor};
+    color: white;
     font-family: 'GP Meduim', serif;
     font-size: 18px;
     font-style: normal;

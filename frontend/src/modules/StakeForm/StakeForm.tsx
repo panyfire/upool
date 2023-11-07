@@ -74,8 +74,6 @@ export const StakeForm: FC<TAb> = (props) => {
   const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
   const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
 
-  console.log('errorCheck', errorCheck)
-
   const handleTransaction = async (
     totalAmount: number | undefined | string
   ) => {
@@ -106,8 +104,14 @@ export const StakeForm: FC<TAb> = (props) => {
       (convertToNumber(values.apr) * convertToNumber(values.duration))) /
       365
 
+  // const getPercentAmout = (value: any) => {
+  //   return value.percent
+  // }
+
   const onSubmit = (data: TAb) =>
     handleTransaction(data?.expectedRoi?.toFixed(5))
+
+  // const updateFormState = (duration: TAb) => {}
 
   return (
     <Formik
@@ -127,6 +131,7 @@ export const StakeForm: FC<TAb> = (props) => {
           // ...other
         } = props
         console.log('values', values)
+        // TODO: Прокинуть
         // const validate = Boolean(
         //   values.email && values.name && values.subject && values.message
         // )
@@ -168,31 +173,11 @@ export const StakeForm: FC<TAb> = (props) => {
             </FormBalance>
             <RangeWrapper>
               <InputRange
-                name={'rangeValue'}
+                name="rangeValue"
                 max={100}
                 min={0}
                 onChange={(e) => {
-                  if (Number(values.rangeValue) <= 25) {
-                    setTabIndex(0)
-                  }
-                  if (
-                    Number(values.rangeValue) > 25 &&
-                    Number(values.rangeValue) <= 50
-                  ) {
-                    setTabIndex(1)
-                  }
-                  if (
-                    Number(values.rangeValue) > 50 &&
-                    Number(values.rangeValue) <= 75
-                  ) {
-                    setTabIndex(2)
-                  }
-                  if (
-                    Number(values.rangeValue) === 100 ||
-                    values.rangeValue === wallet.balance
-                  ) {
-                    setTabIndex(3)
-                  }
+                  setTabIndex(-1)
                   setFieldValue(
                     'amount',
                     `${getAmountValueWithPercent(
@@ -215,27 +200,30 @@ export const StakeForm: FC<TAb> = (props) => {
               selectedIndex={tab}
               onSelect={(index: number) => {
                 setTabIndex(index)
-                switch (index) {
-                  case 0:
-                    setFieldValue('rangeValue', 25)
-                    break
-                  case 1:
-                    setFieldValue('rangeValue', 50)
-                    break
-                  case 2:
-                    setFieldValue('rangeValue', 75)
-                    break
-                  case 3:
-                    setFieldValue('rangeValue', 100)
-                    break
-                }
               }}
             >
               <TabList className={'tablist__list'}>
                 <TabListWrapper>
                   {percents.map((e: string, i: number) => {
                     return (
-                      <Tab key={i}>
+                      <Tab
+                        key={i}
+                        onClick={() => {
+                          if (e === 'MAX') {
+                            setFieldValue('amount', Number(wallet.balance))
+                            setFieldValue('rangeValue', 100)
+                          } else {
+                            setFieldValue(
+                              'amount',
+                              `${getAmountValueWithPercent(
+                                Number(wallet.balance),
+                                Number(e)
+                              )}`
+                            )
+                            setFieldValue('rangeValue', Number(e))
+                          }
+                        }}
+                      >
                         <TabValue>
                           <Text
                             text={e !== 'MAX' ? `${e} %` : e}
@@ -315,10 +303,10 @@ export const StakeForm: FC<TAb> = (props) => {
                 durations={[]}
                 apr={0}
                 coinToBeLocked={0}
-                maxArpPercent={''}
-                minArpPercent={''}
-                percents={[]}
-                rangeValue={''}
+                maxArpPercent={values.maxArpPercent}
+                minArpPercent={values.minArpPercent}
+                percents={values.percents}
+                rangeValue={values.rangeValue}
                 amount={0}
               />
               <div style={{ marginTop: 20 }}>
