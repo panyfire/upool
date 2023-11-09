@@ -22,7 +22,9 @@ class TransactionController  extends AbstractController
             'wallet',
             'stakeId',
             'amount',
-            'duration'
+            'duration',
+            'transactionHash',
+            'status',
         ];
         $params = $request->request->all();
 
@@ -31,6 +33,12 @@ class TransactionController  extends AbstractController
                 throw new Exception($nameParam . ' параметр пуст - заполните все поля запроса.');
             }
         }
+
+        $isTransacted = $params['status'] == 1;
+        if (!$isTransacted) {
+            throw new Exception('Транзакция не успешна');
+        }
+
         $transaction = new Transaction();
         $transaction->setStartLocking((new \DateTime())->format('Y-m-d H:i:s'));
         $transaction->setEndLocking((new \DateTime())

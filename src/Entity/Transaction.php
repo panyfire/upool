@@ -26,6 +26,9 @@ class Transaction extends AbstarctEntity
     private int $duration;
 
     #[ORM\Column(length: 256)]
+    private string $transactionHash;
+
+    #[ORM\Column(length: 256)]
     private string $startLocking;
 
     #[ORM\Column(length: 256)]
@@ -104,6 +107,18 @@ class Transaction extends AbstarctEntity
     public function setEndLocking(string $endLocking): static
     {
         $this->endLocking = $endLocking;
+
+        return $this;
+    }
+
+    public function getTransactionHash(): ?string
+    {
+        return $this->transactionHash;
+    }
+
+    public function setTransactionHash(string $transactionHash): static
+    {
+        $this->transactionHash = $transactionHash;
 
         return $this;
     }
