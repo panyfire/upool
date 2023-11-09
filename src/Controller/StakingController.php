@@ -45,7 +45,10 @@ class StakingController extends AbstractController
         $durationsDb = $manager->getRepository(StakesChooser::class)->findBy(['code' => 'duration']);
         $durations = [];
         foreach ($durationsDb as $duration) {
-            $durations[] = $duration->getValue();
+            $durations[] = [
+                'type' => $duration->getValue(),
+                'value' => $duration->getSecondValue()
+            ];
         }
 
         $stakingResult = [];
