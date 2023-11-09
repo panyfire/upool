@@ -10,3 +10,7 @@ api_staking_detail:
     path:       /api/staking/detail/{id}
     controller: App\Controller\StakingController::detail
     methods:    GET|HEAD
+api_transaction:
+    path: /api/transaction/add/
+    controller: App\Controller\TransactionController::add
+    methods: POST|HEAD

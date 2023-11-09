@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\StakingRepository;
+use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
@@ -30,4 +30,81 @@ class Transaction extends AbstarctEntity
 
     #[ORM\Column(length: 256)]
     private string $endLocking;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getWallet(): ?string
+    {
+        return $this->wallet;
+    }
+
+    public function setWallet(string $wallet): static
+    {
+        $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    public function getStakeId(): ?int
+    {
+        return $this->stakeId;
+    }
+
+    public function setStakeId(int $stakeId): static
+    {
+        $this->stakeId = $stakeId;
+
+        return $this;
+    }
+
+    public function getAmount(): ?float
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(float $amount): static
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(int $duration): static
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getStartLocking(): ?string
+    {
+        return $this->startLocking;
+    }
+
+    public function setStartLocking(string $startLocking): static
+    {
+        $this->startLocking = $startLocking;
+
+        return $this;
+    }
+
+    public function getEndLocking(): ?string
+    {
+        return $this->endLocking;
+    }
+
+    public function setEndLocking(string $endLocking): static
+    {
+        $this->endLocking = $endLocking;
+
+        return $this;
+    }
 }
