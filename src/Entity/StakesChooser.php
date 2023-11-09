@@ -19,6 +19,9 @@ class StakesChooser
     #[ORM\Column(length: 15)]
     private string $value;
 
+    #[ORM\Column(length: 15)]
+    private int $secondValue;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class StakesChooser
     public function setValue(string $value): static
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getSecondValue(): ?string
+    {
+        return $this->secondValue;
+    }
+
+    public function setSecondValue(int $secondValue): static
+    {
+        $this->secondValue = $secondValue;
 
         return $this;
     }

@@ -1,5 +1,32 @@
 import styled from 'styled-components'
-import { whiteColor, brightBlueColor, blackColor } from 'ui/colors'
+import { whiteColor, brightBlueColor, blackColor,  } from 'ui/colors'
+
+const size = {
+    mobileS: '320px',
+    mobileSM: '350px',
+    mobileM: '375px',
+    mobileL: '425px',
+    tablet: '768px',
+    tabletM: '824px',
+    tabletL: '920px',
+    laptop: '1024px',
+    laptopL: '1440px',
+    desktop: '2560px',
+}
+const device = {
+    mobileS: `(max-width: ${size.mobileS})`,
+    mobileSM: `(max-width: ${size.mobileSM})`,
+    mobileM: `(max-width: ${size.mobileM})`,
+    mobileL: `(max-width: ${size.mobileL})`,
+    mobileLD: `(min-width: ${size.mobileL})`,
+    tablet: `(max-width: ${size.tablet})`,
+    tabletM: `(max-width: ${size.tabletM})`,
+    tabletL: `(max-width: ${size.tabletL})`,
+    laptop: `(max-width: ${size.laptop})`,
+    laptopL: `(max-width: ${size.laptopL})`,
+    desktop: `(max-width: ${size.desktop})`,
+    desktopL: `(max-width: ${size.desktop})`,
+}
 
 export const TextCSS = styled.p`
   color: ${whiteColor};
@@ -14,18 +41,42 @@ export const TextCSS = styled.p`
     font-weight: 400;
     line-height: 44px;
     font-family: 'GP Bold', serif;
+    @media ${device.tabletL} {
+      font-size: 45px;
+      line-height: 25px;
+    }
+    @media ${device.mobileL} {
+      font-size: 36px;
+      line-height: 20px;
+    }
   }
   &.h2 {
     font-size: 40px;
     font-weight: 400;
     line-height: 44px;
     font-family: 'GP Bold', serif;
+    @media ${device.tabletL} {
+      font-size: 32px;
+      line-height: 25px;
+    }
+    @media ${device.mobileL} {
+      font-size: 25px;
+      line-height: 20px;
+    }
   }
   &.h3 {
     font-size: 35px;
     font-weight: 400;
     line-height: 44px;
     font-family: 'GP Bold', serif;
+    @media ${device.tabletL} {
+      font-size: 28px;
+      line-height: 25px;
+    }
+    @media ${device.mobileL} {
+      font-size: 25px;
+      line-height: 25px;
+    }
   }
   &.h4 {
     color: ${brightBlueColor};
@@ -107,7 +158,7 @@ export const TextCSS = styled.p`
     text-transform: uppercase;
   }
   &.popUpPreTitle {
-    color: #86F3FF;
+    color: #86f3ff;
     font-family: 'GP Bold', sans-serif;
     font-size: 14px;
     font-style: normal;
@@ -116,7 +167,7 @@ export const TextCSS = styled.p`
     text-transform: uppercase;
   }
   &.popUpValue {
-    color: #A5A5A5;
+    color: #a5a5a5;
     font-family: 'GP Bold', sans-serif;
     font-size: 12px;
     font-style: normal;

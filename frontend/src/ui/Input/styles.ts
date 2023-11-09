@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { whiteColor } from 'ui/colors'
 
 export const InputStyled = styled.div`
   display: flex;
@@ -18,7 +17,7 @@ export const Field = styled.input`
   padding: 11px 14px;
   height: 100%;
   background: rgba(255, 255, 255, 0.08);
-  color: ${whiteColor};
+  color: white;
   font-size: 12px;
   font-weight: 500;
   font-family: 'GP Meduim', sans-serif;
@@ -34,7 +33,7 @@ export const Field = styled.input`
 `
 
 export const Label = styled.label`
-  color: ${whiteColor};
+  color: white;
 `
 
 export const BtnMaxWrapper = styled.div`

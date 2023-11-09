@@ -12,3 +12,7 @@ export const LockOverviewStylesItem = styled.div`
   display: flex;
   justify-content: space-between;
 `
+
+export const Wrapper = styled.div`
+  margin-top: 20px;
+`

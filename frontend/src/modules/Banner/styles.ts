@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from 'ui'
 
 export const BannerWrapper = styled.div`
   position: relative;
@@ -20,6 +21,9 @@ export const ImgWprap = styled.img`
   bottom: 0;
   width: 527px;
   height: 339px;
+  @media ${device.laptopL} {
+    display: none;
+  }
 `
 
 export const BannerSection = styled.section`

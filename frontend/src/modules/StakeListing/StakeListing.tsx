@@ -5,7 +5,6 @@ import { StakeForm } from 'modules'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { Layout } from 'layouts/Layout'
 import { Popup, StakeCard } from 'components'
-
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { Text } from 'ui'
 import { ListingWrapper } from './styles'
@@ -13,14 +12,21 @@ import { ListingWrapper } from './styles'
 type TResponse = {
   nameCoin: string
   iconCoinUrl: string
-  minArpPercent: string
-  maxArpPercent: string
   subHeader: string
+  duration: string
+  durations: string[]
+  apr: number
+  coinToBeLocked: number
+  expectedRoi: number
+  maxArpPercent: string
+  minArpPercent: string
+  percents: string[]
+  rangeValue: string
 }
 
 export const StakeListing: FC = () => {
-  const [, setStakeModal] = useState(false)
-  const { wallet, connectMetaMask, hasProvider } = useMetaMask()
+  const [stakeModalStatus, setStakeModal] = useState(false)
+  const { wallet, connectMetaMask } = useMetaMask()
 
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
 
@@ -34,25 +40,45 @@ export const StakeListing: FC = () => {
     <>
       <Layout>
         <ListingWrapper>
-          {Array.isArray(data) &&
-          data.length &&
-          wallet.chainId &&
-          hasProvider ? (
+          {Array.isArray(data) && data.length ? (
             data.map((e: TResponse, i: number) => {
               return (
-                <StakeCard
-                  key={i}
-                  tittle={e.nameCoin}
-                  preTittle={e.subHeader}
-                  minAPR={e.minArpPercent}
-                  maxAPR={e.maxArpPercent}
-                  onClick={() => {
-                    wallet?.accounts?.length
-                      ? setStakeModal(true)
-                      : connectMetaMask()
-                  }}
-                  disabled={wallet?.error}
-                />
+                <>
+                  <StakeCard
+                    key={i}
+                    tittle={e.nameCoin}
+                    preTittle={e.subHeader}
+                    minAPR={e.minArpPercent}
+                    maxAPR={e.maxArpPercent}
+                    onClick={() => {
+                      wallet?.accounts?.length
+                        ? setStakeModal(true)
+                        : connectMetaMask()
+                    }}
+                    disabled={wallet?.error}
+                  />
+
+                  {stakeModalStatus && (
+                    <Popup
+                      // children={'undefined'}
+                      onClick={() => setStakeModal(false)}
+                    >
+                      <StakeForm
+                        duration={e.duration}
+                        durations={e.durations}
+                        apr={e.apr}
+                        coinToBeLocked={e.coinToBeLocked}
+                        expectedRoi={e.expectedRoi}
+                        maxArpPercent={e.maxArpPercent}
+                        minArpPercent={e.minArpPercent}
+                        percents={e.percents}
+                        rangeValue={e.rangeValue || '25'}
+                        amount={0}
+                        errorStatus={false}
+                      />
+                    </Popup>
+                  )}
+                </>
               )
             })
           ) : (
@@ -72,14 +98,6 @@ export const StakeListing: FC = () => {
           />
         </ListingWrapper>
       </Layout>
-      { (
-        <Popup
-          // children={'undefined'}
-          onClick={() => setStakeModal(false)}
-        >
-          <StakeForm amount={0} rangeValue={0} duration={0} />
-        </Popup>
-      )}
     </>
   )
 }

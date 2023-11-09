@@ -1,19 +1,46 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { DropDown, Icon, Text, DropDownChainList } from 'ui'
-import { Additional, Dropdowns, HeaderStyled, Menu } from './styles'
+import {
+  Additional,
+  Dropdowns,
+  HeaderStyled,
+  MeniListDrop,
+  Menu,
+  MenuDrop,
+  MenuItemDrop,
+} from './styles'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdName } from 'utils'
 
 export const Header: FC = () => {
   const { wallet } = useMetaMask()
-  console.log(wallet)
+  const [open, setOpen] = useState(false)
+
+  const toggleStatus = (status: boolean, func: (status: boolean) => void) => func(!status)
+
   return (
     <HeaderStyled>
       <Text text={'LOGO'} type={'h2'} />
       <Menu>
         <Additional>
-          <Icon size={'32'} name={'lang'} />
-          <Icon size={'32'} name={'settings'} />
+          <div onClick={() => toggleStatus(open, setOpen)}>
+            <Icon size={'24'} name={'lang'} />
+          </div>
+          {open && (
+            <MenuDrop>
+              <MeniListDrop>
+                <MenuItemDrop onClick={() => toggleStatus(open, setOpen)}>
+                  <Text text={'ENG'} type={'default'} />
+                </MenuItemDrop>
+                <MenuItemDrop onClick={() => toggleStatus(open, setOpen)}>
+                  <Text text={'DAU'} type={'default'} />
+                </MenuItemDrop>
+                <MenuItemDrop onClick={() => toggleStatus(open, setOpen)}>
+                  <Text text={'FRA'} type={'default'} />
+                </MenuItemDrop>
+              </MeniListDrop>
+            </MenuDrop>
+          )}
         </Additional>
         <Dropdowns>
           {wallet?.accounts?.length && (

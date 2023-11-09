@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import {
-  BtnMaxWrapper,
   Field,
   InputContainer,
   InputStyled,
@@ -21,9 +20,6 @@ export const Input: FC<InputProps> = (props) => {
       </Label>
       <InputContainer>
         <Field name={name} {...other} onChange={onChange} />
-        <BtnMaxWrapper>
-          <Text text="Max" type="value" />
-        </BtnMaxWrapper>
       </InputContainer>
     </InputStyled>
   )

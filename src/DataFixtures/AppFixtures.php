@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
                 'subHeader' => 'Stake BTC',
                 'chainId' => '0x5',
                 'apr' => 0.93,
-                'duration' => '1',
+                'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
                 'subHeader' => 'Stake ETH',
                 'chainId' => '0x5',
                 'apr' => 0.93,
-                'duration' => '1',
+                'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
                 'subHeader' => 'Stake ETC',
                 'chainId' => '0x5',
                 'apr' => 0.93,
-                'duration' => '1',
+                'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
@@ -69,7 +69,7 @@ class AppFixtures extends Fixture
                 'subHeader' => 'Stake BNB',
                 'chainId' => '0x1',
                 'apr' => 0.93,
-                'duration' => '1',
+                'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
@@ -83,7 +83,7 @@ class AppFixtures extends Fixture
                 'subHeader' => 'Stake DOGE',
                 'chainId' => '0xe708',
                 'apr' => 0.93,
-                'duration' => '1',
+                'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
@@ -97,7 +97,7 @@ class AppFixtures extends Fixture
                 'subHeader' => 'Stake XRP',
                 'chainId' => '0xe708',
                 'apr' => 0.93,
-                'duration' => '1',
+                'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
@@ -130,38 +130,47 @@ class AppFixtures extends Fixture
             [
                 'code' => 'percent',
                 'value' => '25',
+                'secondValue' => '1'
             ],
             [
                 'code' => 'percent',
                 'value' => '50',
+                'secondValue' => '1'
             ],
             [
                 'code' => 'percent',
                 'value' => '75',
+                'secondValue' => '1'
             ],
             [
                 'code' => 'percent',
                 'value' => 'MAX',
+                'secondValue' => '1'
             ],
             [
                 'code' => 'duration',
                 'value' => '1',
+                'secondValue' => '50'
             ],
             [
                 'code' => 'duration',
                 'value' => '7',
+                'secondValue' => '30'
             ],
             [
                 'code' => 'duration',
                 'value' => '30',
+                'secondValue' => '22'
             ],
             [
                 'code' => 'duration',
                 'value' => '60',
+                'secondValue' => '25'
             ],
             [
                 'code' => 'duration',
                 'value' => '90',
+                'secondValue' => '60'
             ],
         ];
 
@@ -169,6 +178,7 @@ class AppFixtures extends Fixture
             $stakesChooser = new StakesChooser();
             $stakesChooser->setCode($chooser['code']);
             $stakesChooser->setValue($chooser['value']);
+            $stakesChooser->setSecondValue($chooser['secondValue']);
             $manager->persist($stakesChooser);
             $manager->flush();
         }
