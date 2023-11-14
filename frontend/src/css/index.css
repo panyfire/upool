@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #000003;
+}
+
+a {
+  text-decoration: none;
+}
+menu {
+  margin: 0;
+  padding: 0;
+}
+p {
+  margin: 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@font-face {
+  font-family: 'GP Bold' ;
+  src: url('../fonts/gothampro_bold.ttf');
+}
+
+@font-face {
+  font-family: 'GP Meduim';
+  src: url('../fonts/gothampro.ttf');
+}
