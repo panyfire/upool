@@ -13,4 +13,4 @@
 /docker/storage/
 /docker/nginx/*.conf
 /frontend/node_modules/
-logs
+logs!/frontend/src/ui/Icon/

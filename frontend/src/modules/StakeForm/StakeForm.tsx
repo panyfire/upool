@@ -74,8 +74,30 @@ export const StakeForm: FC<TAb> = (props) => {
   const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
   const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
 
+  // const handleTransaction = async (
+  //   totalAmount: number | undefined | string
+  // ) => {
+  //   try {
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //     // @ts-ignore
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum)
+  //     const signer = provider.getSigner()
+  //
+  //     const transaction = {
+  //       to: recipient,
+  //       value: ethers.utils.parseEther(`${totalAmount}`),
+  //       // from:
+  //     }
+  //
+  //     await signer.sendTransaction(transaction)
+  //   } catch (error) {
+  //     console.error(error)
+  //     setErrorCheck('Не хватает денег')
+  //   }
+  // }
+
   const handleTransaction = async (
-    totalAmount: number | undefined | string
+      totalAmount: number | undefined | string
   ) => {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -90,11 +112,26 @@ export const StakeForm: FC<TAb> = (props) => {
       }
 
       await signer.sendTransaction(transaction)
+          .then((transactionResponse) => {
+            // This callback is called when the transaction is first sent to the network
+            console.log('Transaction sent:', transactionResponse)
+            return transactionResponse.wait() // Wait for the transaction to be mined
+          })
+          .then((receipt) => {
+            // This callback is called when the transaction is confirmed on the network
+            console.log('Transaction receipt:', receipt)
+            // You can perform additional actions here after the transaction is confirmed
+          })
+          .catch((error) => {
+            console.error(error)
+            setErrorCheck('Не хватает денег')
+          })
     } catch (error) {
       console.error(error)
       setErrorCheck('Не хватает денег')
     }
   }
+
 
   const convertToNumber = (value: string | number | undefined) => Number(value)
 
