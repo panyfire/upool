@@ -74,13 +74,15 @@ export const StakeForm: FC<TAb> = (props) => {
 
   const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
   const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
-  const sendHook = useSendDataAfterSuccessTran()
-
-  const sendSuccessTransaction = (data: unknown) => sendHook.mutateAsync(data)
+  const { mutateAsync } = useSendDataAfterSuccessTran()
+  const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
 
   const onSendSuccess = (data: unknown) => sendSuccessTransaction(data)
 
-  const handleTransaction = async (amount: number | undefined | string) => {
+  const handleTransaction = async (
+    amount: number | undefined | string,
+    duration: string | number
+  ) => {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -104,7 +106,14 @@ export const StakeForm: FC<TAb> = (props) => {
           // This callback is called when the transaction is confirmed on the network
           console.log('Транзакция потверждена:', receipt)
           // You can perform additional actions here after the transaction is confirmed
-          onSendSuccess(receipt)
+          const response = {
+            wallet: receipt.from,
+            stakeId: wallet.chainId,
+            amount: amount,
+            duration: `${duration}`,
+            transactionHash: receipt.transactionHash,
+          }
+          onSendSuccess(response)
         })
         .catch((error) => {
           console.error(error)
@@ -132,8 +141,21 @@ export const StakeForm: FC<TAb> = (props) => {
   //   return value.percent
   // }
 
-  const onSubmit = (data: TAb) =>
-    handleTransaction(data?.expectedRoi?.toFixed(5))
+  const response = {
+    "wallet": "0x8f412065Ad768f0f466Df98093F156D73DD3aB19",
+    "stakeId": "0x5",
+    "amount": "0.00001",
+    "duration": "30",
+    "transactionHash": "0x5d215db77380758b16f73738322c2bfa88709c5e13fb198f655396788938d6f1"
+  }
+
+  const onSubmit = (data: TAb) =>{
+    onSendSuccess(response)
+    handleTransaction(data?.expectedRoi?.toFixed(5), data.duration)
+  }
+
+
+
 
   return (
     <Formik
@@ -207,11 +229,7 @@ export const StakeForm: FC<TAb> = (props) => {
                       Number(values.rangeValue)
                     )}`
                   )
-                  setFieldValue(
-                    'expectedRoi',
-                    (Number(values.amount) * Number(values.rangeValue)) / 100 +
-                      Number(values.amount)
-                  )
+                  setFieldValue('expectedRoi', calculateRoiWithDuration(values))
                   handleChange(e)
                 }}
                 value={values.rangeValue}
@@ -242,6 +260,10 @@ export const StakeForm: FC<TAb> = (props) => {
                             )
                             setFieldValue('rangeValue', Number(e))
                           }
+                          setFieldValue(
+                            'expectedRoi',
+                            calculateRoiWithDuration(values)
+                          )
                         }}
                       >
                         <TabValue>
@@ -285,7 +307,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 </TabList>
               </Tabs>
               <LockOverview
-                expectedRoi={calculateRoiWithDuration(values)}
+                expectedRoi={values.expectedRoi}
                 duration={values.duration}
                 durations={values.durations}
                 apr={values.apr}
