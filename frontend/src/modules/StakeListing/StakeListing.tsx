@@ -14,7 +14,7 @@ type TResponse = {
   iconCoinUrl: string
   subHeader: string
   duration: string
-  durations: string[]
+  durations: { type: string; value: string }[]
   apr: number
   coinToBeLocked: number
   expectedRoi: number
@@ -43,9 +43,8 @@ export const StakeListing: FC = () => {
           {Array.isArray(data) && data.length ? (
             data.map((e: TResponse, i: number) => {
               return (
-                <>
+                <div key={i}>
                   <StakeCard
-                    key={i}
                     tittle={e.nameCoin}
                     preTittle={e.subHeader}
                     minAPR={e.minArpPercent}
@@ -78,7 +77,7 @@ export const StakeListing: FC = () => {
                       />
                     </Popup>
                   )}
-                </>
+                </div>
               )
             })
           ) : (

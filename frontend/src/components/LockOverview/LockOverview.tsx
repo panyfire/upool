@@ -3,34 +3,34 @@ import { Text } from 'ui'
 import { LockOverviewStyles, LockOverviewStylesItem, Wrapper } from './styles'
 
 type TAb = {
-  nameCoin?: string
-  iconCoinUrl?: string
-  subHeader?: string
-  duration: string
-  durations: string[]
-  apr: number
-  coinToBeLocked: number
-  expectedRoi?: number
-  maxArpPercent: string
-  minArpPercent: string
-  percents: string[]
-  rangeValue: string
-  amount: number
+    nameCoin?: string,
+    iconCoinUrl?: string,
+    subHeader?: string,
+    duration: string,
+    durations: { type: string; value: string }[],
+    apr: number,
+    coinToBeLocked: number,
+    expectedRoi?: number,
+    maxArpPercent: string,
+    minArpPercent: string,
+    percents: string[],
+    rangeValue: string,
+    amount: number,
 }
 
 export const LockOverview: FC<TAb> = (props) => {
-  const { expectedRoi, duration } = props
+  const { expectedRoi, duration, apr, coinToBeLocked } = props
   return (
     <Wrapper>
       <Text text={'lock overview '} type={'popUpPreTitle'} />
       <LockOverviewStyles>
         <LockOverviewStylesItem>
           <Text text={'ETH to be locked'} type={'popUpValue'} />
-          <Text text={'0.00'} type={'value'} />
+          <Text text={`${coinToBeLocked}`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'apr'} type={'popUpValue'} />
-          <Text text={'0.93%'} type={'value'} />
+          <Text text={`${apr}`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'duration'} type={'popUpValue'} />

@@ -1,1 +1,1 @@
-export { useGetStakeFormInfo } from './useGetStakeFormInfo'
+export { useGetStakeFormInfo, useSendDataAfterSuccessTran } from './useGetStakeFormInfo'

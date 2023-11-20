@@ -2,6 +2,7 @@ import React, { useState, FC } from 'react'
 import { Tab, Tabs, TabList } from 'react-tabs'
 import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
+import { useSendDataAfterSuccessTran } from './api/hooks'
 import { Icon, Input, Text, InputRange, ConfirmButton } from 'ui'
 import {
   FormBalance,
@@ -20,7 +21,7 @@ type TAb = {
   iconCoinUrl?: string
   subHeader?: string
   duration: string
-  durations: string[]
+  durations: { type: string; value: string }[]
   apr: number
   coinToBeLocked: number
   expectedRoi?: number
@@ -73,32 +74,13 @@ export const StakeForm: FC<TAb> = (props) => {
 
   const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
   const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
+  const sendHook = useSendDataAfterSuccessTran()
 
-  // const handleTransaction = async (
-  //   totalAmount: number | undefined | string
-  // ) => {
-  //   try {
-  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //     // @ts-ignore
-  //     const provider = new ethers.providers.Web3Provider(window.ethereum)
-  //     const signer = provider.getSigner()
-  //
-  //     const transaction = {
-  //       to: recipient,
-  //       value: ethers.utils.parseEther(`${totalAmount}`),
-  //       // from:
-  //     }
-  //
-  //     await signer.sendTransaction(transaction)
-  //   } catch (error) {
-  //     console.error(error)
-  //     setErrorCheck('Не хватает денег')
-  //   }
-  // }
+  const sendSuccessTransaction = (data: unknown) => sendHook.mutateAsync(data)
 
-  const handleTransaction = async (
-      totalAmount: number | undefined | string
-  ) => {
+  const onSendSuccess = (data: unknown) => sendSuccessTransaction(data)
+
+  const handleTransaction = async (amount: number | undefined | string) => {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -107,39 +89,44 @@ export const StakeForm: FC<TAb> = (props) => {
 
       const transaction = {
         to: recipient,
-        value: ethers.utils.parseEther(`${totalAmount}`),
+        value: ethers.utils.parseEther(`${amount}`),
         // from:
       }
 
-      await signer.sendTransaction(transaction)
-          .then((transactionResponse) => {
-            // This callback is called when the transaction is first sent to the network
-            console.log('Transaction sent:', transactionResponse)
-            return transactionResponse.wait() // Wait for the transaction to be mined
-          })
-          .then((receipt) => {
-            // This callback is called when the transaction is confirmed on the network
-            console.log('Transaction receipt:', receipt)
-            // You can perform additional actions here after the transaction is confirmed
-          })
-          .catch((error) => {
-            console.error(error)
-            setErrorCheck('Не хватает денег')
-          })
+      await signer
+        .sendTransaction(transaction)
+        .then((transactionResponse) => {
+          // This callback is called when the transaction is first sent to the network
+          console.log('Транзакция отправлена:', transactionResponse)
+          return transactionResponse.wait() // Wait for the transaction to be mined
+        })
+        .then((receipt) => {
+          // This callback is called when the transaction is confirmed on the network
+          console.log('Транзакция потверждена:', receipt)
+          // You can perform additional actions here after the transaction is confirmed
+          onSendSuccess(receipt)
+        })
+        .catch((error) => {
+          console.error(error)
+          setErrorCheck('Не хватает денег')
+        })
     } catch (error) {
       console.error(error)
       setErrorCheck('Не хватает денег')
     }
   }
 
-
   const convertToNumber = (value: string | number | undefined) => Number(value)
 
   const calculateRoiWithDuration = (values: TAb) =>
-    convertToNumber(values.expectedRoi) +
-    (convertToNumber(values.expectedRoi) *
+    convertToNumber(values.amount) +
+    (convertToNumber(values.amount) *
       (convertToNumber(values.apr) * convertToNumber(values.duration))) /
       365
+
+  // const calcExpectedRoi = () => {
+  //   return values.amount + values.apr
+  // }
 
   // const getPercentAmout = (value: any) => {
   //   return value.percent
@@ -147,8 +134,6 @@ export const StakeForm: FC<TAb> = (props) => {
 
   const onSubmit = (data: TAb) =>
     handleTransaction(data?.expectedRoi?.toFixed(5))
-
-  // const updateFormState = (duration: TAb) => {}
 
   return (
     <Formik
@@ -235,9 +220,7 @@ export const StakeForm: FC<TAb> = (props) => {
             <Tabs
               style={{ color: 'white' }}
               selectedIndex={tab}
-              onSelect={(index: number) => {
-                setTabIndex(index)
-              }}
+              onSelect={(index: number) => setTabIndex(index)}
             >
               <TabList className={'tablist__list'}>
                 <TabListWrapper>
@@ -279,54 +262,21 @@ export const StakeForm: FC<TAb> = (props) => {
                 className={'tablist__list_duration'}
                 style={{ color: 'white' }}
                 selectedIndex={dtab}
-                onSelect={(index: number) => {
-                  dsetTabIndex(index)
-                  switch (index) {
-                    case 0:
-                      setFieldValue('duration', 1)
-                      setFieldValue(
-                        'expectedRoi',
-                        calculateRoiWithDuration(values)
-                      )
-                      break
-                    case 1:
-                      setFieldValue('duration', 7)
-                      setFieldValue(
-                        'expectedRoi',
-                        calculateRoiWithDuration(values)
-                      )
-                      break
-                    case 2:
-                      setFieldValue('duration', 30)
-                      setFieldValue(
-                        'expectedRoi',
-                        calculateRoiWithDuration(values)
-                      )
-                      break
-                    case 3:
-                      setFieldValue('duration', 60)
-                      setFieldValue(
-                        'expectedRoi',
-                        calculateRoiWithDuration(values)
-                      )
-                      break
-                    case 4:
-                      setFieldValue('duration', 90)
-                      setFieldValue(
-                        'expectedRoi',
-                        calculateRoiWithDuration(values)
-                      )
-                      break
-                  }
-                }}
+                onSelect={(index: number) => dsetTabIndex(index)}
               >
                 <TabList className={'tablist__list_days'}>
                   <TabListWrapper>
                     {durations.map((e, i: number) => {
                       return (
-                        <Tab key={i}>
+                        <Tab
+                          onClick={() => {
+                            setFieldValue('duration', durations[i].type)
+                            setFieldValue('apr', durations[i].value)
+                          }}
+                          key={`${i} + nd`}
+                        >
                           <TabValue>
-                            <Text text={`${e} D`} type={'value'} />
+                            <Text text={`${e?.type} D`} type={'value'} />
                           </TabValue>
                         </Tab>
                       )
@@ -335,16 +285,16 @@ export const StakeForm: FC<TAb> = (props) => {
                 </TabList>
               </Tabs>
               <LockOverview
-                expectedRoi={values.expectedRoi}
+                expectedRoi={calculateRoiWithDuration(values)}
                 duration={values.duration}
-                durations={[]}
-                apr={0}
-                coinToBeLocked={0}
+                durations={values.durations}
+                apr={values.apr}
+                coinToBeLocked={values.coinToBeLocked}
                 maxArpPercent={values.maxArpPercent}
                 minArpPercent={values.minArpPercent}
                 percents={values.percents}
                 rangeValue={values.rangeValue}
-                amount={0}
+                amount={values.amount}
               />
               <div style={{ marginTop: 20 }}>
                 <ConfirmButton eventClick={handleSubmit} text={'Confirm'} />
