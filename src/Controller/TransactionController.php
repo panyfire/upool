@@ -34,11 +34,6 @@ class TransactionController  extends AbstractController
             }
         }
 
-        $isTransacted = $params['status'] == 1;
-        if (!$isTransacted) {
-            throw new Exception('Транзакция не успешна');
-        }
-
         $transaction = new Transaction();
         $transaction->setStartLocking((new \DateTime())->format('Y-m-d H:i:s'));
         $transaction->setEndLocking((new \DateTime())
