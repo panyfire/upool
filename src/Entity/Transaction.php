@@ -19,8 +19,17 @@ class Transaction extends AbstarctEntity
     #[ORM\Column(length: 15)]
     private int $stakeId;
 
+    #[ORM\Column(length: 15)]
+    private int $apr;
+
     #[ORM\Column(length: 100)]
     private float $amount;
+
+    #[ORM\Column(length: 100)]
+    private float $expectedProfit;
+
+    #[ORM\Column(length: 100)]
+    private float $totalExpectedProfit;
 
     #[ORM\Column(length: 3)]
     private int $duration;
@@ -131,6 +140,42 @@ class Transaction extends AbstarctEntity
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getApr(): ?int
+    {
+        return $this->apr;
+    }
+
+    public function setApr(int $apr): static
+    {
+        $this->apr = $apr;
+
+        return $this;
+    }
+
+    public function getExpectedProfit(): ?float
+    {
+        return $this->expectedProfit;
+    }
+
+    public function setExpectedProfit(float $expectedProfit): static
+    {
+        $this->expectedProfit = $expectedProfit;
+
+        return $this;
+    }
+
+    public function getTotalExpectedProfit(): ?float
+    {
+        return $this->totalExpectedProfit;
+    }
+
+    public function setTotalExpectedProfit(float $totalExpectedProfit): static
+    {
+        $this->totalExpectedProfit = $totalExpectedProfit;
 
         return $this;
     }
