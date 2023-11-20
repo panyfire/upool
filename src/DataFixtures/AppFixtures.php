@@ -186,39 +186,39 @@ class AppFixtures extends Fixture
 
     private function loadTransactions(ObjectManager $manager)
     {
-        $payload = [
-            [
-                'wallet' => 'BTC',
-                'iconCoinUrl' => 'frontend/public/images/btc_icon_coin.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'Stake BTC',
-                'chainId' => '0x5',
-                'apr' => 0.93,
-                'duration' => '1',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ]
-        ];
-
-        foreach ($payload as $coin) {
-            $staking = new Staking();
-            $staking->setNameCoin($coin['nameCoin']);
-            $staking->setIconCoinUrl($coin['iconCoinUrl']);
-            $staking->setMinArpPercent($coin['minArpPercent']);
-            $staking->setMaxArpPercent($coin['maxArpPercent']);
-            $staking->setSubHeader($coin['subHeader']);
-            $staking->setChainId($coin['chainId']);
-            $staking->setApr($coin['apr']);
-            $staking->setDuration($coin['duration']);
-            $staking->setCoinToBeLocked($coin['coinToBeLocked']);
-            $staking->setEndLocking($coin['endLocking']);
-            $staking->setStartLocking($coin['startLocking']);
-            $staking->setExpectedRoi($coin['expectedRoi']);
-            $manager->persist($staking);
-            $manager->flush();
-        }
+//        $payload = [
+//            [
+//                'wallet' => 'BTC',
+//                'iconCoinUrl' => 'frontend/public/images/btc_icon_coin.png',
+//                'minArpPercent' => 10,
+//                'maxArpPercent' => 88,
+//                'subHeader' => 'Stake BTC',
+//                'chainId' => '0x5',
+//                'apr' => 0.93,
+//                'duration' => '1',
+//                'coinToBeLocked' => 0.00,
+//                'endLocking' => '',
+//                'startLocking' => '',
+//                'expectedRoi' => 0.00,
+//            ]
+//        ];
+//
+//        foreach ($payload as $coin) {
+//            $staking = new Staking();
+//            $staking->setNameCoin($coin['nameCoin']);
+//            $staking->setIconCoinUrl($coin['iconCoinUrl']);
+//            $staking->setMinArpPercent($coin['minArpPercent']);
+//            $staking->setMaxArpPercent($coin['maxArpPercent']);
+//            $staking->setSubHeader($coin['subHeader']);
+//            $staking->setChainId($coin['chainId']);
+//            $staking->setApr($coin['apr']);
+//            $staking->setDuration($coin['duration']);
+//            $staking->setCoinToBeLocked($coin['coinToBeLocked']);
+//            $staking->setEndLocking($coin['endLocking']);
+//            $staking->setStartLocking($coin['startLocking']);
+//            $staking->setExpectedRoi($coin['expectedRoi']);
+//            $manager->persist($staking);
+//            $manager->flush();
+//        }
     }
 }
