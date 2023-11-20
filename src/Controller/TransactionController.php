@@ -25,6 +25,7 @@ class TransactionController  extends AbstractController
             'duration',
             'transactionHash',
             'status',
+            'apr'
         ];
         $params = $request->request->all();
 
@@ -41,6 +42,9 @@ class TransactionController  extends AbstractController
         foreach ($params as $nameParam => $valueParam) {
             $methodName = 'set' . ucfirst($nameParam);
             $transaction->$methodName($valueParam);
+            $expectedProfit = (float)$params['amount'] * ((float)$params['apr'] / 100);
+            $transaction->setTotalExpectedProfit((float)$params['amount'] + $expectedProfit);
+            $transaction->setExpectedProfit($expectedProfit);
         }
 
         $manager->persist($transaction);
