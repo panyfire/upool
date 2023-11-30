@@ -11,30 +11,33 @@ import {
   RangeWrapper,
   TabValue,
   TabListWrapper,
-  DurationWrapper,
+  DurationWrapper, AmountWrapper, MaxBtn,
 } from './styles'
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
+import {chainIdName} from "utils";
 
 type TAb = {
   nameCoin?: string
   iconCoinUrl?: string
   subHeader?: string
-  duration: string
+  duration: number
   durations: { type: string; value: string }[]
   apr: number
   coinToBeLocked: number
-  expectedRoi?: number
+  expectedRoi: number
   maxArpPercent: string
   minArpPercent: string
   percents: string[]
   rangeValue: string
   amount: number
   errorStatus: string | false | undefined
+  id: number
 }
 
 export const StakeForm: FC<TAb> = (props) => {
   const {
+    id,
     durations,
     duration,
     apr,
@@ -56,6 +59,7 @@ export const StakeForm: FC<TAb> = (props) => {
     (amount / 100) * percent
 
   const initialValueForm: TAb = {
+    id: id,
     duration: duration,
     durations: durations,
     apr: apr,
@@ -72,7 +76,7 @@ export const StakeForm: FC<TAb> = (props) => {
     errorStatus: errorStatus,
   }
 
-  const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
+  // const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
   const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
   const { mutateAsync } = useSendDataAfterSuccessTran()
   const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
@@ -80,9 +84,22 @@ export const StakeForm: FC<TAb> = (props) => {
   const onSendSuccess = (data: unknown) => sendSuccessTransaction(data)
 
   const handleTransaction = async (
-    amount: number | undefined | string,
-    duration: string | number
+    amount: number,
+    duration: number,
+    apr: number
   ) => {
+    // const response1 = {
+    //   wallet: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
+    //   stakeId: 72,
+    //   amount: 0.00001,
+    //   duration: 30,
+    //   transactionHash:
+    //       '0x5d215db77380758b16f73738322c2bfa88709c5e13fb198f655396788938d6f1',
+    //   apr: 93,
+    // }
+    //
+    // onSendSuccess(response1)
+
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -90,9 +107,9 @@ export const StakeForm: FC<TAb> = (props) => {
       const signer = provider.getSigner()
 
       const transaction = {
-        to: recipient,
-        value: ethers.utils.parseEther(`${amount}`),
-        // from:
+        to: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
+        value: ethers.utils.parseEther(`1${amount}`),
+        from: '0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633'
       }
 
       await signer
@@ -108,10 +125,11 @@ export const StakeForm: FC<TAb> = (props) => {
           // You can perform additional actions here after the transaction is confirmed
           const response = {
             wallet: receipt.from,
-            stakeId: wallet.chainId,
+            stakeId: id,
             amount: amount,
-            duration: `${duration}`,
+            duration: duration,
             transactionHash: receipt.transactionHash,
+            apr: apr,
           }
           onSendSuccess(response)
         })
@@ -141,21 +159,9 @@ export const StakeForm: FC<TAb> = (props) => {
   //   return value.percent
   // }
 
-  const response = {
-    "wallet": "0x8f412065Ad768f0f466Df98093F156D73DD3aB19",
-    "stakeId": "0x5",
-    "amount": "0.00001",
-    "duration": "30",
-    "transactionHash": "0x5d215db77380758b16f73738322c2bfa88709c5e13fb198f655396788938d6f1"
+  const onSubmit = (data: TAb) => {
+    handleTransaction(data.amount, data.duration, data.apr)
   }
-
-  const onSubmit = (data: TAb) =>{
-    onSendSuccess(response)
-    handleTransaction(data?.expectedRoi?.toFixed(5), data.duration)
-  }
-
-
-
 
   return (
     <Formik
@@ -184,11 +190,11 @@ export const StakeForm: FC<TAb> = (props) => {
             <FormTitle>
               <Text text={'LOCKED BALANCE'} type={'card'} />
               <FormCoinInfo>
-                <Icon size={'32'} name={'wallet'} />
-                <Text text={'ETC'} type={'card'} />
+                <Icon size={'24'} name={'wallet'} />
+                <Text text={chainIdName(`${wallet.chainId}`)} type={'card'} />
               </FormCoinInfo>
             </FormTitle>
-            <div>
+            <AmountWrapper>
               <Input
                 type={'text'}
                 label={'Subscription amount'}
@@ -201,7 +207,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 helperText={touched.amount && errors.amount && errorCheck}
                 onChange={handleChange}
               />
-              <div
+              <MaxBtn
                 onClick={() => {
                   setFieldValue('amount', Number(wallet.balance))
                   setFieldValue('rangeValue', '100')
@@ -209,8 +215,8 @@ export const StakeForm: FC<TAb> = (props) => {
                 }}
               >
                 <Text text="Max" type="value" />
-              </div>
-            </div>
+              </MaxBtn>
+            </AmountWrapper>
             <FormBalance>
               <Text text={'Balance :'} type={'label'} />
               <Text text={wallet?.balance} type={'card'} />

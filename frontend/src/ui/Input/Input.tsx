@@ -1,17 +1,10 @@
 import React, { FC } from 'react'
-import {
-  Field,
-  InputContainer,
-  InputStyled,
-  Label,
-} from './styles'
+import { Field, InputContainer, InputStyled, Label } from './styles'
 import { Text } from 'ui'
 import { InputProps } from './types'
 
 export const Input: FC<InputProps> = (props) => {
   const { onChange, name, label, ...other } = props
-  // const handleNameChange = (e: ChangeEvent<HTMLInputElement>) =>
-  //   onChange(e.target.value)
 
   return (
     <InputStyled>

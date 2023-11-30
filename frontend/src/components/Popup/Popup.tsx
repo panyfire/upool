@@ -12,6 +12,7 @@ import {
 import { IconProperties } from './types'
 import { Icon, Text } from 'ui'
 
+
 export const Popup: FC<IconProperties> = (props) => {
   const { children, onClick, title } = props
   return (
@@ -22,13 +23,12 @@ export const Popup: FC<IconProperties> = (props) => {
           <PopupContainer>
             <Head>
               <div style={{ width: '100%' }}>
-                <Text text={title && title} type={'popupTitle'} />
+                <Text text={title ? `LOCK ${title}` : ''} type={'popupTitle'} />
               </div>
               <CloseIcon onClick={onClick}>
                 <Icon size={'24'} name={'close'} />
               </CloseIcon>
             </Head>
-            <Text text={title && title} type={'h3'} />
             {children && <FormWrapper>{children}</FormWrapper>}
           </PopupContainer>
         </ChildrenWrapper>

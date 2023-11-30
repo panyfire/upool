@@ -7,7 +7,6 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(100% / 3 - 60px);
   --background-color: #060606;
   --border-color: linear-gradient(to bottom right, #916aff, #fbcc72);
   --border-width: 0.1em;
@@ -70,6 +69,11 @@ export const CardTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`
+
+export const CardTitle = styled.div`
+  //width: calc(100% / 2 - 60px);
+  width: 100%;
 `
 
 export const CardValues = styled.div`

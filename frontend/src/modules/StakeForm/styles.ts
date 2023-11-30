@@ -12,6 +12,20 @@ export const FormCoinInfo = styled.div`
   gap: 10px;
 `
 
+export const AmountWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+`
+
+export const MaxBtn = styled.div`
+  position: absolute;
+  right: 11px;
+  top: 50%;
+`
+
 export const FormBalance = styled.div`
   margin-top: 28px;
   display: flex;
@@ -58,7 +72,7 @@ export const RangeWrapper = styled.div`
 `
 
 export const DurationWrapper = styled.div`
-  margin-top:20px;
+  margin-top: 20px;
   .tablist__list_duration .react-tabs__tab {
     width: 60px;
     display: flex;

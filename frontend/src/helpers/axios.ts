@@ -5,18 +5,11 @@ const service = axios.create({
   // withCredentials: false,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json, text/plain, */*'
+    Accept: 'application/json, text/plain, */*',
   },
 })
 
 service.interceptors.request.use((config: InternalAxiosRequestConfig) => config)
 service.interceptors.response.use((response: AxiosResponse) => response.data)
-
-console.log(
-  'service',
-  service.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => config
-  )
-)
 
 export default service

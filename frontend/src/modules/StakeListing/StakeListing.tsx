@@ -7,13 +7,14 @@ import { Layout } from 'layouts/Layout'
 import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { Text } from 'ui'
-import { ListingWrapper } from './styles'
+import { ItemWrapper, ListingWrapper } from './styles'
+import { chainIdName } from 'utils'
 
 type TResponse = {
   nameCoin: string
   iconCoinUrl: string
   subHeader: string
-  duration: string
+  duration: number
   durations: { type: string; value: string }[]
   apr: number
   coinToBeLocked: number
@@ -22,6 +23,7 @@ type TResponse = {
   minArpPercent: string
   percents: string[]
   rangeValue: string
+  id: number
 }
 
 export const StakeListing: FC = () => {
@@ -43,7 +45,7 @@ export const StakeListing: FC = () => {
           {Array.isArray(data) && data.length ? (
             data.map((e: TResponse, i: number) => {
               return (
-                <div key={i}>
+                <ItemWrapper key={i}>
                   <StakeCard
                     tittle={e.nameCoin}
                     preTittle={e.subHeader}
@@ -59,10 +61,11 @@ export const StakeListing: FC = () => {
 
                   {stakeModalStatus && (
                     <Popup
-                      // children={'undefined'}
+                      title={chainIdName(`${wallet.chainId}`)}
                       onClick={() => setStakeModal(false)}
                     >
                       <StakeForm
+                        id={e.id}
                         duration={e.duration}
                         durations={e.durations}
                         apr={e.apr}
@@ -77,7 +80,7 @@ export const StakeListing: FC = () => {
                       />
                     </Popup>
                   )}
-                </div>
+                </ItemWrapper>
               )
             })
           ) : (

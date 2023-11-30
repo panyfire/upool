@@ -6,7 +6,7 @@ type TAb = {
     nameCoin?: string,
     iconCoinUrl?: string,
     subHeader?: string,
-    duration: string,
+    duration: number,
     durations: { type: string; value: string }[],
     apr: number,
     coinToBeLocked: number,
