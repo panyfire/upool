@@ -1,21 +1,23 @@
-import React, { useState, FC } from 'react'
-import { Tab, Tabs, TabList } from 'react-tabs'
+import React, { FC, useState } from 'react'
+import { Tab, TabList, Tabs } from 'react-tabs'
 import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
-import { Icon, Input, Text, InputRange, ConfirmButton } from 'ui'
+import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
 import {
+  AmountWrapper,
+  DurationWrapper,
   FormBalance,
   FormCoinInfo,
   FormTitle,
+  MaxBtn,
   RangeWrapper,
-  TabValue,
   TabListWrapper,
-  DurationWrapper, AmountWrapper, MaxBtn,
+  TabValue,
 } from './styles'
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
-import {chainIdName} from "utils";
+import { chainIdName } from 'utils'
 
 type TAb = {
   nameCoin?: string
@@ -24,16 +26,65 @@ type TAb = {
   duration: number
   durations: { type: string; value: string }[]
   apr: number
-  coinToBeLocked: number
-  expectedRoi: number
+  coinToBeLocked?: number
+  expectedRoi: string
   maxArpPercent: string
   minArpPercent: string
   percents: string[]
-  rangeValue: string
-  amount: number
+  rangeValue?: string
+  amount: string
   errorStatus: string | false | undefined
   id: number
+  startLocking: Date | string
+  endLocking: Date | string
 }
+
+const getAmountValueWithPercent = (amount: string, percent: number) => {
+  if (amount === '100') {
+    return amount
+  }
+  if (amount === '1') {
+    return '0'
+  }
+  return String((Number(amount) / 100) * percent)
+}
+
+function addDaysToDate(currentDate: Date, days: number) {
+  const date = new Date(currentDate)
+  date.setDate(date.getDate() + days)
+
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+  const month = months[date.getMonth()]
+  const day = date.getDate()
+  const year = date.getFullYear()
+  const hours = date.getHours()
+  const minutes = date.getMinutes();
+
+  const suffixes = ['th', 'st', 'nd', 'rd']
+  let suffix = ' '
+  if (day >= 11 && day <= 13) {
+    suffix = 'th'
+  } else {
+    suffix = suffixes[day % 10] || 'th'
+  }
+
+  return `${month} ${day} ${suffix}, ${year} ${hours}:${minutes}`
+}
+
+const currentDate = new Date()
 
 export const StakeForm: FC<TAb> = (props) => {
   const {
@@ -41,13 +92,11 @@ export const StakeForm: FC<TAb> = (props) => {
     durations,
     duration,
     apr,
-    coinToBeLocked,
     expectedRoi,
     maxArpPercent,
     minArpPercent,
     percents,
     rangeValue,
-    // amount,
     errorStatus,
   } = props
   const [tab, setTabIndex] = useState(0)
@@ -55,51 +104,32 @@ export const StakeForm: FC<TAb> = (props) => {
 
   const { wallet } = useMetaMask()
 
-  const getAmountValueWithPercent = (amount: number, percent: number) =>
-    (amount / 100) * percent
-
   const initialValueForm: TAb = {
     id: id,
     duration: duration,
     durations: durations,
+    rangeValue: rangeValue,
     apr: apr,
-    coinToBeLocked: coinToBeLocked,
-    amount: getAmountValueWithPercent(
-      Number(wallet.balance),
-      Number(rangeValue)
-    ),
+    amount: `${getAmountValueWithPercent(wallet.balance, Number(rangeValue))}`,
     expectedRoi: expectedRoi,
     maxArpPercent: maxArpPercent,
     minArpPercent: minArpPercent,
     percents: percents,
-    rangeValue: rangeValue,
     errorStatus: errorStatus,
+    startLocking: addDaysToDate(currentDate, 0),
+    endLocking: addDaysToDate(currentDate, duration),
   }
 
-  // const [recipient] = useState('0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633')
   const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
   const { mutateAsync } = useSendDataAfterSuccessTran()
   const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
 
   const onSendSuccess = (data: unknown) => sendSuccessTransaction(data)
-
   const handleTransaction = async (
-    amount: number,
+    amount: number | string,
     duration: number,
     apr: number
   ) => {
-    // const response1 = {
-    //   wallet: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-    //   stakeId: 72,
-    //   amount: 0.00001,
-    //   duration: 30,
-    //   transactionHash:
-    //       '0x5d215db77380758b16f73738322c2bfa88709c5e13fb198f655396788938d6f1',
-    //   apr: 93,
-    // }
-    //
-    // onSendSuccess(response1)
-
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -108,8 +138,8 @@ export const StakeForm: FC<TAb> = (props) => {
 
       const transaction = {
         to: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-        value: ethers.utils.parseEther(`1${amount}`),
-        from: '0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633'
+        value: ethers.utils.parseEther(`${amount}`),
+        // from: '0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633',
       }
 
       await signer
@@ -126,7 +156,7 @@ export const StakeForm: FC<TAb> = (props) => {
           const response = {
             wallet: receipt.from,
             stakeId: id,
-            amount: amount,
+            amount: Number(amount),
             duration: duration,
             transactionHash: receipt.transactionHash,
             apr: apr,
@@ -151,14 +181,6 @@ export const StakeForm: FC<TAb> = (props) => {
       (convertToNumber(values.apr) * convertToNumber(values.duration))) /
       365
 
-  // const calcExpectedRoi = () => {
-  //   return values.amount + values.apr
-  // }
-
-  // const getPercentAmout = (value: any) => {
-  //   return value.percent
-  // }
-
   const onSubmit = (data: TAb) => {
     handleTransaction(data.amount, data.duration, data.apr)
   }
@@ -180,7 +202,6 @@ export const StakeForm: FC<TAb> = (props) => {
           handleSubmit,
           // ...other
         } = props
-        console.log('values', values)
         // TODO: Прокинуть
         // const validate = Boolean(
         //   values.email && values.name && values.subject && values.message
@@ -198,9 +219,7 @@ export const StakeForm: FC<TAb> = (props) => {
               <Input
                 type={'text'}
                 label={'Subscription amount'}
-                value={`${Number(values.amount).toFixed(
-                  wallet.balance.length
-                )}`}
+                value={`${values.amount.substring(0, 10)}`}
                 name={'amount'}
                 placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
@@ -209,7 +228,7 @@ export const StakeForm: FC<TAb> = (props) => {
               />
               <MaxBtn
                 onClick={() => {
-                  setFieldValue('amount', Number(wallet.balance))
+                  setFieldValue('amount', wallet.balance)
                   setFieldValue('rangeValue', '100')
                   setTabIndex(3)
                 }}
@@ -224,21 +243,21 @@ export const StakeForm: FC<TAb> = (props) => {
             <RangeWrapper>
               <InputRange
                 name="rangeValue"
-                max={100}
-                min={0}
+                max={'100'}
+                min={'0'}
                 onChange={(e) => {
                   setTabIndex(-1)
+                  setFieldValue('rangeValue', e.target.value)
                   setFieldValue(
                     'amount',
                     `${getAmountValueWithPercent(
-                      Number(wallet.balance),
-                      Number(values.rangeValue)
+                      wallet.balance,
+                      Number(e.target.value)
                     )}`
                   )
                   setFieldValue('expectedRoi', calculateRoiWithDuration(values))
-                  handleChange(e)
                 }}
-                value={values.rangeValue}
+                value={`${values.rangeValue}`}
               />
             </RangeWrapper>
             <Tabs
@@ -254,13 +273,13 @@ export const StakeForm: FC<TAb> = (props) => {
                         key={i}
                         onClick={() => {
                           if (e === 'MAX') {
-                            setFieldValue('amount', Number(wallet.balance))
-                            setFieldValue('rangeValue', 100)
+                            setFieldValue('amount', wallet.balance)
+                            setFieldValue('rangeValue', '100')
                           } else {
                             setFieldValue(
                               'amount',
                               `${getAmountValueWithPercent(
-                                Number(wallet.balance),
+                                wallet.balance,
                                 Number(e)
                               )}`
                             )
@@ -300,6 +319,11 @@ export const StakeForm: FC<TAb> = (props) => {
                           onClick={() => {
                             setFieldValue('duration', durations[i].type)
                             setFieldValue('apr', durations[i].value)
+                            setFieldValue('endLocking', addDaysToDate(currentDate, Number(durations[i].type)))
+                            setFieldValue(
+                              'expectedRoi',
+                              calculateRoiWithDuration(values)
+                            )
                           }}
                           key={`${i} + nd`}
                         >
@@ -317,15 +341,20 @@ export const StakeForm: FC<TAb> = (props) => {
                 duration={values.duration}
                 durations={values.durations}
                 apr={values.apr}
-                coinToBeLocked={values.coinToBeLocked}
                 maxArpPercent={values.maxArpPercent}
                 minArpPercent={values.minArpPercent}
                 percents={values.percents}
-                rangeValue={values.rangeValue}
+                rangeValue={values.rangeValue ? values.rangeValue : ''}
                 amount={values.amount}
+                startLocking={values.startLocking}
+                endLocking={values.endLocking}
               />
               <div style={{ marginTop: 20 }}>
-                <ConfirmButton eventClick={handleSubmit} text={'Confirm'} />
+                <ConfirmButton
+                  disableStatus={!Number(values.amount)}
+                  eventClick={handleSubmit}
+                  text={'Confirm'}
+                />
               </div>
               {errorCheck && <div style={{ color: 'red' }}>{errorCheck}</div>}
             </DurationWrapper>

@@ -17,13 +17,12 @@ type TResponse = {
   duration: number
   durations: { type: string; value: string }[]
   apr: number
-  coinToBeLocked: number
   expectedRoi: number
   maxArpPercent: string
   minArpPercent: string
   percents: string[]
-  rangeValue: string
   id: number
+  amount: string
 }
 
 export const StakeListing: FC = () => {
@@ -69,14 +68,15 @@ export const StakeListing: FC = () => {
                         duration={e.duration}
                         durations={e.durations}
                         apr={e.apr}
-                        coinToBeLocked={e.coinToBeLocked}
-                        expectedRoi={e.expectedRoi}
+                        expectedRoi={String(e.expectedRoi) }
                         maxArpPercent={e.maxArpPercent}
                         minArpPercent={e.minArpPercent}
                         percents={e.percents}
-                        rangeValue={e.rangeValue || '25'}
-                        amount={0}
+                        rangeValue={'25'}
+                        amount={String(e.amount) }
                         errorStatus={false}
+                        startLocking={''}
+                        endLocking={''}
                       />
                     </Popup>
                   )}
