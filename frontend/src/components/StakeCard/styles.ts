@@ -25,9 +25,6 @@ export const CardWrapper = styled.div`
     0 var(--edge-size)
   );
   transition: color 250ms;
-  @media ${device.laptop} {
-    width: calc(100% / 2 - 60px);
-  }
   @media ${device.tablet} {
     width: 100%
   }

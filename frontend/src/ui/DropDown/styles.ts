@@ -84,6 +84,7 @@ export const MeniList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `
 
 export const MenuItem = styled.div`
@@ -92,4 +93,5 @@ export const MenuItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `

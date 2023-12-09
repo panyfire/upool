@@ -80,6 +80,32 @@ const Icons = {
       />
     </>
   ),
+    //BTN ICONS
+    bitcoin: () => (
+        <>
+
+        </>
+    ),
+    ethereum: () => (
+        <>
+
+        </>
+    ),
+    optimism: () => (
+        <>
+
+        </>
+    ),
+    polygon: () => (
+        <>
+
+        </>
+    ),
+    BNB: () => (
+        <>
+
+        </>
+    ),
 } as const
 
 export type IconNames = keyof typeof Icons

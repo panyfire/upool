@@ -4,6 +4,7 @@ import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
 import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
+import { toast } from 'react-toastify'
 import {
   AmountWrapper,
   DurationWrapper,
@@ -37,6 +38,7 @@ type TAb = {
   id: number
   startLocking: Date | string
   endLocking: Date | string
+  popUpCallback?: () => void | string
 }
 
 const getAmountValueWithPercent = (amount: string, percent: number) => {
@@ -71,7 +73,7 @@ function addDaysToDate(currentDate: Date, days: number) {
   const day = date.getDate()
   const year = date.getFullYear()
   const hours = date.getHours()
-  const minutes = date.getMinutes();
+  const minutes = date.getMinutes()
 
   const suffixes = ['th', 'st', 'nd', 'rd']
   let suffix = ' '
@@ -98,6 +100,7 @@ export const StakeForm: FC<TAb> = (props) => {
     percents,
     rangeValue,
     errorStatus,
+    popUpCallback,
   } = props
   const [tab, setTabIndex] = useState(0)
   const [dtab, dsetTabIndex] = useState(1)
@@ -118,13 +121,33 @@ export const StakeForm: FC<TAb> = (props) => {
     errorStatus: errorStatus,
     startLocking: addDaysToDate(currentDate, 0),
     endLocking: addDaysToDate(currentDate, duration),
+    popUpCallback: popUpCallback,
   }
 
-  const [errorCheck, setErrorCheck] = useState(initialValueForm.errorStatus)
   const { mutateAsync } = useSendDataAfterSuccessTran()
   const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
+  const [, setLoadingTransaction] = useState<boolean>(false)
 
-  const onSendSuccess = (data: unknown) => sendSuccessTransaction(data)
+
+  const notify = (text: string) =>
+    toast(text, {
+      position: 'bottom-right',
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
+  const onSendSuccess = (data: unknown) => {
+    sendSuccessTransaction(data).then(() => {
+      popUpCallback && popUpCallback()
+      setLoadingTransaction(false)
+      notify('Transaction confirmed')
+    })
+  }
   const handleTransaction = async (
     amount: number | string,
     duration: number,
@@ -146,7 +169,9 @@ export const StakeForm: FC<TAb> = (props) => {
         .sendTransaction(transaction)
         .then((transactionResponse) => {
           // This callback is called when the transaction is first sent to the network
+          setLoadingTransaction(true)
           console.log('Транзакция отправлена:', transactionResponse)
+          notify('Transaction sent')
           return transactionResponse.wait() // Wait for the transaction to be mined
         })
         .then((receipt) => {
@@ -164,12 +189,10 @@ export const StakeForm: FC<TAb> = (props) => {
           onSendSuccess(response)
         })
         .catch((error) => {
-          console.error(error)
-          setErrorCheck('Не хватает денег')
+          notify(error.message)
         })
-    } catch (error) {
-      console.error(error)
-      setErrorCheck('Не хватает денег')
+    } catch ({ message }) {
+      notify(String(message))
     }
   }
 
@@ -223,8 +246,10 @@ export const StakeForm: FC<TAb> = (props) => {
                 name={'amount'}
                 placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
-                helperText={touched.amount && errors.amount && errorCheck}
-                onChange={handleChange}
+                helperText={touched.amount && errors.amount}
+                onChange={(e: HTMLElement) => {
+                  handleChange(e)
+                }}
               />
               <MaxBtn
                 onClick={() => {
@@ -319,7 +344,13 @@ export const StakeForm: FC<TAb> = (props) => {
                           onClick={() => {
                             setFieldValue('duration', durations[i].type)
                             setFieldValue('apr', durations[i].value)
-                            setFieldValue('endLocking', addDaysToDate(currentDate, Number(durations[i].type)))
+                            setFieldValue(
+                              'endLocking',
+                              addDaysToDate(
+                                currentDate,
+                                Number(durations[i].type)
+                              )
+                            )
                             setFieldValue(
                               'expectedRoi',
                               calculateRoiWithDuration(values)
@@ -349,14 +380,15 @@ export const StakeForm: FC<TAb> = (props) => {
                 startLocking={values.startLocking}
                 endLocking={values.endLocking}
               />
+
               <div style={{ marginTop: 20 }}>
                 <ConfirmButton
                   disableStatus={!Number(values.amount)}
                   eventClick={handleSubmit}
                   text={'Confirm'}
+                  style={{ marginTop: 76 }}
                 />
               </div>
-              {errorCheck && <div style={{ color: 'red' }}>{errorCheck}</div>}
             </DurationWrapper>
           </Form>
         )

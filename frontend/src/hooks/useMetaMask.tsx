@@ -8,10 +8,10 @@ import {
   useCallback,
 } from 'react'
 
-
 import detectEthereumProvider from '@metamask/detect-provider'
 // import ethers from 'ethers'
 import { formatBalance } from 'utils'
+import { toast } from 'react-toastify'
 
 type WalletState = {
   error?: boolean
@@ -146,6 +146,18 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     setIsConnecting(false)
   }
 
+  const notify = (text: string) =>
+    toast(text, {
+      position: 'bottom-right',
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
   const handleLogout = async () => {
     try {
       const provider = window?.ethereum
@@ -162,14 +174,13 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-
   const sendBitcoin = async () => {
     try {
       // Проверяем доступность MetaMask
       const provider = window?.ethereum
       if (provider) {
         // Запрашиваем разрешение на доступ к аккаунту пользователя
-        await provider.request({ method: 'eth_requestAccounts' });
+        await provider.request({ method: 'eth_requestAccounts' })
 
         // Получаем аккаунт пользователя
         // const accounts = await provider.request({ method: 'eth_accounts' });
@@ -185,16 +196,17 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         //     value: ethers.utils.parseEther(amount.toString()).toString(),
         //   },
         // ]);
-
-        console.log('Транзакция успешно отправлена. Хеш транзакции:');
+        notify('Транзакция успешно отправлена')
+        // console.log('Транзакция успешно отправлена. Хеш транзакции:')
       } else {
-        console.log('MetaMask не доступен');
+        // console.log('MetaMask не доступен')
+        notify('MetaMask не доступен')
       }
     } catch (error) {
-      console.log('Ошибка:', error);
+      // console.log('Ошибка:', error)
+      notify(String(error))
     }
-  };
-
+  }
 
   return (
     // eslint-disable-next-line react/react-in-jsx-scope

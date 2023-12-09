@@ -25,6 +25,11 @@ export const ButtonStyled = styled.button`
     -10% var(--edge-size)
   );
   transition: color 250ms;
+  &:disabled,
+  &[disabled]{
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
   p {
     color: white;
     font-family: 'GP Meduim', serif;

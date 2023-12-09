@@ -5,7 +5,7 @@ import { GradientBackground } from 'layouts/GradientBackground'
 export const Error = () => {
   return (
     <GradientBackground>
-      HOME PAGE
+      404
       <Text text={'ERROR PAGE'} type={'h1'} />
     </GradientBackground>
   )

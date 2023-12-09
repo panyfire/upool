@@ -43,14 +43,12 @@ export const TabValue = styled.div`
 `
 
 export const TabListWrapper = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  &:nth-child(1) {
-    margin-top: 10px;
-  }
+ 
   & .react-tabs__tab {
     width: 60px;
     display: flex;
@@ -72,7 +70,7 @@ export const RangeWrapper = styled.div`
 `
 
 export const DurationWrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 35px;
   .tablist__list_duration .react-tabs__tab {
     width: 60px;
     display: flex;

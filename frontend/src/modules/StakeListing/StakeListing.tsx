@@ -77,6 +77,7 @@ export const StakeListing: FC = () => {
                         errorStatus={false}
                         startLocking={''}
                         endLocking={''}
+                        popUpCallback={() => setStakeModal(false)}
                       />
                     </Popup>
                   )}
