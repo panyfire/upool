@@ -7,13 +7,45 @@ export const RangeSliderWrapper = styled.div`
 `
 
 export const RangeSlider = styled.input`
-  width: 100%;
   -webkit-appearance: none;
-  height: 7px;
-  
+  width: 100%;
+  height: 10px;
+  background: #595859;
   border-radius: 5px;
-  background-color: #86f3ff;
-  background-repeat: no-repeat;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #86f3ff;
+    cursor: pointer;
+  }
+  &::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #86F3FF;
+    cursor: pointer;
+  }
+  &::-ms-thumb {
+    width: 25px;
+    height: 25px;
+    background: #86F3FF;
+    cursor: pointer;
+  }
+  &::-webkit-slider-runnable-track, &::-moz-range-track, &::-ms-track  {
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+    background: #595859;
+    border-radius: 5px;
+  }
+
+
+
   //&::-webkit-slider-thumb:hover {
   //  box-shadow: #d46a6a50 0px 0px 0px 8px;
   //}
