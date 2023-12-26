@@ -21,7 +21,7 @@ class TransactionController  extends AbstractController
      */
     public function add(EntityManagerInterface $manager, Request $request): Response
     {
-        $mapping = [
+        $mapping=[
             'wallet',
             'stakeId',
             'amount',
@@ -30,22 +30,22 @@ class TransactionController  extends AbstractController
             'status',
             'apr'
         ];
-        $params = $request->request->all();
+        $params=$request->request->all();
 
-        foreach ($params as $nameParam => $paramValue) {
+        foreach ($params as $nameParam=>$paramValue) {
             if (!in_array($nameParam, $mapping) && !empty($paramValue)) {
                 throw new Exception($nameParam . ' параметр пуст - заполните все поля запроса.');
             }
         }
 
-        $transaction = new Transaction();
+        $transaction=new Transaction();
         $transaction->setStartLocking((new \DateTime())->format('Y-m-d H:i:s'));
         $transaction->setEndLocking((new \DateTime())
             ->modify('+' . $params['duration'] . ' days')->format('Y-m-d H:i:s'));
-        foreach ($params as $nameParam => $valueParam) {
-            $methodName = 'set' . ucfirst($nameParam);
+        foreach ($params as $nameParam=>$valueParam) {
+            $methodName='set' . ucfirst($nameParam);
             $transaction->$methodName($valueParam);
-            $expectedProfit = (float)$params['amount'] * ((float)$params['apr'] / 100);
+            $expectedProfit=(float)$params['amount'] * ((float)$params['apr'] / 100);
             $transaction->setTotalExpectedProfit((float)$params['amount'] + $expectedProfit);
             $transaction->setExpectedProfit($expectedProfit);
         }
@@ -53,40 +53,90 @@ class TransactionController  extends AbstractController
         $manager->persist($transaction);
         $manager->flush();
 
-        return new JsonResponse(['status' => true]);
+        return new JsonResponse(['status'=>true]);
     }
 
-    public function get(EntityManagerInterface $manager, LoggerInterface $logger, string $wallet = ''): Response
+    public function get(EntityManagerInterface $manager, LoggerInterface $logger, string $wallet=''): Response
     {
-        $transactions = $manager->getRepository(Transaction::class)->findBy(['wallet' => $wallet]);
-       $logger->withName('api_redeem')->info('TUT MOY LOG', ['tut' => 'tiut']);
-        $result = [];
-        $totalProfitProfile = 0;
-        $totalLockedProfile = 0;
+        $transactions=$manager->getRepository(Transaction::class)->findBy(['wallet'=>$wallet]);
+        $logger->withName('api_redeem')->info('TUT MOY LOG', ['tut'=>'tiut']);
+        $result=[];
+        $totalProfitProfile=0;
+        $totalLockedProfile=0;
         foreach ($transactions as $transaction) {
-            $staking = current($manager->getRepository(Staking::class)->findBy(['id' => $transaction->getStakeId()]));
+            $staking=current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
 
-            $result['transactions'][] = [
-                'id' => $transaction->getId(),
-                'asset' => [
-                    'coinName' => $staking->getNameCoin(),
-                    'coinIconUrl' => $staking->getIconCoinUrl()
+            $result['transactions'][]=[
+                'id'=>$transaction->getId(),
+                'asset'=>[
+                    'coinName'=>$staking->getNameCoin(),
+                    'coinIconUrl'=>$staking->getIconCoinUrl()
                 ],
-                'totalAmount' => $transaction->getAmount(),
-                'realTimeApr' => $transaction->getApr(),
-                'duration' => $transaction->getDuration(),
-                'startLocking' => $transaction->getStartLocking(),
-                'endLocking' => $transaction->getEndLocking(),
-                'expectedProfit' => $transaction->getExpectedProfit(),
-                'totalExpectedProfit' => $transaction->getTotalExpectedProfit()
+                'totalAmount'=>$transaction->getAmount(),
+                'realTimeApr'=>$transaction->getApr(),
+                'duration'=>$transaction->getDuration(),
+                'startLocking'=>$transaction->getStartLocking(),
+                'endLocking'=>$transaction->getEndLocking(),
+                'expectedProfit'=>$transaction->getExpectedProfit(),
+                'totalExpectedProfit'=>$transaction->getTotalExpectedProfit()
             ];
-            $totalProfitProfile += $transaction->getExpectedProfit();
-            $totalLockedProfile += $transaction->getAmount();
+            $totalProfitProfile+=$transaction->getExpectedProfit();
+            $totalLockedProfile+=$transaction->getAmount();
         }
 
-        $result['totalProfitProfile'] = $totalProfitProfile;
-        $result['totalLockedProfile'] = $totalLockedProfile;
+        $result['totalProfitProfile']=$totalProfitProfile;
+        $result['totalLockedProfile']=$totalLockedProfile;
 
-        return new JsonResponse(['status' => true, 'data' => $result]);
+        return new JsonResponse(['status'=>true, 'data'=>$result]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function redeem(EntityManagerInterface $manager, Request $request, LoggerInterface $logger, string $transactionId=''): Response
+    {
+        $transaction=current($manager->getRepository(Transaction::class)->findBy(['id'=>$transactionId]));
+        $wallet = $request->getPayload()->get('wallet');
+
+        if ($transaction && $wallet === $transaction->getWallet()) {
+            $staking = current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
+            $totalProfitProfile = 0;
+            $totalLockedProfile = 0;
+            $transactionData['transactions'][] =[
+                'id'=>$transaction->getId(),
+                'asset'=>[
+                    'coinName'=>$staking->getNameCoin(),
+                    'coinIconUrl'=>$staking->getIconCoinUrl()
+                ],
+                'totalAmount'=>$transaction->getAmount(),
+                'realTimeApr'=>$transaction->getApr(),
+                'duration'=>$transaction->getDuration(),
+                'startLocking'=>$transaction->getStartLocking(),
+                'endLocking'=>$transaction->getEndLocking(),
+                'expectedProfit'=>$transaction->getExpectedProfit(),
+                'totalExpectedProfit'=>$transaction->getTotalExpectedProfit()
+            ];
+
+            $totalProfitProfile+=$transaction->getExpectedProfit();
+            $totalLockedProfile+=$transaction->getAmount();
+
+            $logger->notice(
+                'TRANSACTION ID ' .
+                $transaction->getId() .
+                ' - REDEEM',
+                ['transactionData' =>
+                    array_merge(
+                        $transactionData, [
+                            'totalProfitProfile' => $totalProfitProfile,
+                            'totalLockedProfile' => $totalLockedProfile
+                        ]
+                    )
+                ]);
+        } else {
+            return new Response('', 403);
+        }
+
+
+        return new JsonResponse(['status'=>true]);
     }
 }

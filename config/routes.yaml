@@ -18,3 +18,6 @@ api_get_transaction:
     path: /api/transaction/get/{wallet}
     controller: App\Controller\TransactionController::get
     methods: GET|HEAD
+api_redeem_transaction:
+    path: /api/transaction/redeem/{transactionId}
+    controller: App\Controller\TransactionController::redeem
