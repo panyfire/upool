@@ -63,6 +63,9 @@ class TransactionController  extends AbstractController
         $totalLockedProfile = 0;
         foreach ($transactions as $transaction) {
             $staking = current($manager->getRepository(Staking::class)->findBy(['id' => $transaction->getStakeId()]));
+            if (!$staking->getNameCoin()) {
+                continue;
+            }
             $result['transactions'][] = [
                 'id' => $transaction->getId(),
                 'asset' => [
@@ -81,8 +84,13 @@ class TransactionController  extends AbstractController
             $totalLockedProfile += $transaction->getAmount();
         }
 
-        $result['totalProfitProfile'] = $totalProfitProfile;
-        $result['totalLockedProfile'] = $totalLockedProfile;
+        if ($totalProfitProfile) {
+            $result['totalProfitProfile'] = $totalProfitProfile;
+        }
+
+        if ($totalLockedProfile) {
+            $result['totalLockedProfile'] = $totalLockedProfile;
+        }
 
         return new JsonResponse(['status' => true, 'data' => $result]);
     }

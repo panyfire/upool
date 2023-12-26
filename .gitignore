@@ -8,6 +8,9 @@
 /var/
 /vendor/
 .env
+
+*.log
+/redeemlog
 ###< symfony/framework-bundle ###
 
 /docker/storage/
