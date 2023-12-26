@@ -43,6 +43,10 @@ class Transaction extends AbstarctEntity
     #[ORM\Column(length: 256)]
     private string $endLocking;
 
+    #[ORM\Column()]
+    private bool $isRedeemed = false;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -176,6 +180,18 @@ class Transaction extends AbstarctEntity
     public function setTotalExpectedProfit(float $totalExpectedProfit): static
     {
         $this->totalExpectedProfit = $totalExpectedProfit;
+
+        return $this;
+    }
+
+    public function getIsRedeemed(): bool
+    {
+        return $this->isRedeemed;
+    }
+
+    public function setRedeemed(bool $isRedeemed): static
+    {
+        $this->isRedeemed = $isRedeemed;
 
         return $this;
     }

@@ -78,10 +78,14 @@ class TransactionController  extends AbstractController
                 'startLocking'=>$transaction->getStartLocking(),
                 'endLocking'=>$transaction->getEndLocking(),
                 'expectedProfit'=>$transaction->getExpectedProfit(),
-                'totalExpectedProfit'=>$transaction->getTotalExpectedProfit()
+                'totalExpectedProfit'=>$transaction->getTotalExpectedProfit(),
+                'isRedeemed' => $transaction->getIsRedeemed()
             ];
+            if (!$transaction->getIsRedeemed()) {
+                $totalLockedProfile+=$transaction->getAmount();
+            }
+
             $totalProfitProfile+=$transaction->getExpectedProfit();
-            $totalLockedProfile+=$transaction->getAmount();
         }
 
         $result['totalProfitProfile']=$totalProfitProfile;
@@ -119,6 +123,10 @@ class TransactionController  extends AbstractController
 
             $totalProfitProfile+=$transaction->getExpectedProfit();
             $totalLockedProfile+=$transaction->getAmount();
+
+            $transaction->setRedeemed(true);
+            $manager->persist($transaction);
+            $manager->flush();
 
             $logger->notice(
                 'TRANSACTION ID ' .
