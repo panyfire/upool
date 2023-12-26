@@ -6,6 +6,8 @@ use App\Entity\Staking;
 use App\Entity\Transaction;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,15 +56,16 @@ class TransactionController  extends AbstractController
         return new JsonResponse(['status' => true]);
     }
 
-    public function get(EntityManagerInterface $manager, Request $request, string $wallet = ''): Response
+    public function get(EntityManagerInterface $manager, LoggerInterface $logger, string $wallet = ''): Response
     {
         $transactions = $manager->getRepository(Transaction::class)->findBy(['wallet' => $wallet]);
-
+       $logger->withName('api_redeem')->info('TUT MOY LOG', ['tut' => 'tiut']);
         $result = [];
         $totalProfitProfile = 0;
         $totalLockedProfile = 0;
         foreach ($transactions as $transaction) {
             $staking = current($manager->getRepository(Staking::class)->findBy(['id' => $transaction->getStakeId()]));
+
             $result['transactions'][] = [
                 'id' => $transaction->getId(),
                 'asset' => [
