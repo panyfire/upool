@@ -1,6 +1,7 @@
 import { MouseEventHandler } from 'react'
 export type IButton = {
-  text: string
-  eventClick?: MouseEventHandler<HTMLButtonElement> | any
-  disableStatus?: boolean
+    text: string,
+    eventClick?: MouseEventHandler<HTMLButtonElement> | any,
+    disableStatus?: boolean,
+    style: { marginTop: number }
 }

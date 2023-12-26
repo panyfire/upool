@@ -1,37 +1,30 @@
-import React, { FC, ChangeEvent } from 'react'
+import React from 'react'
 import { RangeSlider, RangeSliderValue, RangeSliderWrapper } from './styles'
-
-type RangeSlider = {
-  min: number
-  max: number
-  onChange: (e:  ChangeEvent<HTMLInputElement> ) => void,
-  value: number | string
+type RangeSliderProps = {
+  min: string
+  max: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   name: string
 }
 
-export const InputRange: FC<RangeSlider> = (props) => {
-  const { min = 0, max, onChange, value, name, ...other } = props
-
-  const getBackgroundSize = () => {
-    if (value) {
-      return {
-        backgroundSize: `${(Number(value) * 10) / max}% 100%`,
-      }
-    }
-  }
-
+export const InputRange: React.FC<RangeSliderProps> = ({
+  min,
+  max,
+  value,
+  onChange,
+  name,
+}) => {
   return (
     <RangeSliderWrapper>
       <RangeSlider
         type="range"
         min={min}
-        max={max}
-        name={name}
         step={1}
-        onChange={onChange}
+        max={max}
         value={value}
-        style={getBackgroundSize()}
-        {...other}
+        onChange={onChange}
+        name={name}
       />
       <RangeSliderValue>{`${Number(value)}%`}</RangeSliderValue>
     </RangeSliderWrapper>

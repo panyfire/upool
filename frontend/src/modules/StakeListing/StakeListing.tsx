@@ -7,21 +7,22 @@ import { Layout } from 'layouts/Layout'
 import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { Text } from 'ui'
-import { ListingWrapper } from './styles'
+import { ItemWrapper, ListingWrapper } from './styles'
+import { chainIdName } from 'utils'
 
 type TResponse = {
   nameCoin: string
   iconCoinUrl: string
   subHeader: string
-  duration: string
-  durations: string[]
+  duration: number
+  durations: { type: string; value: string }[]
   apr: number
-  coinToBeLocked: number
   expectedRoi: number
   maxArpPercent: string
   minArpPercent: string
   percents: string[]
-  rangeValue: string
+  id: number
+  amount: string
 }
 
 export const StakeListing: FC = () => {
@@ -43,9 +44,8 @@ export const StakeListing: FC = () => {
           {Array.isArray(data) && data.length ? (
             data.map((e: TResponse, i: number) => {
               return (
-                <>
+                <ItemWrapper key={i}>
                   <StakeCard
-                    key={i}
                     tittle={e.nameCoin}
                     preTittle={e.subHeader}
                     minAPR={e.minArpPercent}
@@ -60,25 +60,28 @@ export const StakeListing: FC = () => {
 
                   {stakeModalStatus && (
                     <Popup
-                      // children={'undefined'}
+                      title={chainIdName(`${wallet.chainId}`)}
                       onClick={() => setStakeModal(false)}
                     >
                       <StakeForm
+                        id={e.id}
                         duration={e.duration}
                         durations={e.durations}
                         apr={e.apr}
-                        coinToBeLocked={e.coinToBeLocked}
-                        expectedRoi={e.expectedRoi}
+                        expectedRoi={String(e.expectedRoi) }
                         maxArpPercent={e.maxArpPercent}
                         minArpPercent={e.minArpPercent}
                         percents={e.percents}
-                        rangeValue={e.rangeValue || '25'}
-                        amount={0}
+                        rangeValue={'25'}
+                        amount={String(e.amount) }
                         errorStatus={false}
+                        startLocking={''}
+                        endLocking={''}
+                        popUpCallback={() => setStakeModal(false)}
                       />
                     </Popup>
                   )}
-                </>
+                </ItemWrapper>
               )
             })
           ) : (

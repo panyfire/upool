@@ -1,6 +1,12 @@
 import React, { FC } from 'react'
 import { StakeButton, Text } from 'ui'
-import { CardMiddle, CardTop, CardValues, CardWrapper } from './styles'
+import {
+  CardMiddle,
+  CardTitle,
+  CardTop,
+  CardValues,
+  CardWrapper,
+} from './styles'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -21,10 +27,10 @@ export const StakeCard: FC<IStakeCard> = (props) => {
   return (
     <CardWrapper>
       <CardTop>
-        <div>
+        <CardTitle>
           <Text text={tittle ?? ''} type={'h2'} />
           <Text text={preTittle ?? ''} type={'note'} />
-        </div>
+        </CardTitle>
         <img src={img} alt="ETC" />
       </CardTop>
       <CardMiddle>
@@ -38,11 +44,7 @@ export const StakeCard: FC<IStakeCard> = (props) => {
         </CardValues>
       </CardMiddle>
       <div>
-        <StakeButton
-          disabled={disabled}
-          onClick={onClick}
-          text={'Stake'}
-        />
+        <StakeButton disabled={disabled} onClick={onClick} text={'Stake'} />
       </div>
     </CardWrapper>
   )

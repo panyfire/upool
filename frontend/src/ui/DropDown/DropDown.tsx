@@ -38,7 +38,10 @@ export const DropDown: FC<IButton> = (props) => {
                 <Icon size={'32'} name={'user'} />
               </MenuItem>
             </Link>
-            <MenuItem onClick={handleLogout}>
+            <MenuItem onClick={() => {
+              handleLogout()
+              setOpen(false)
+            }}>
               <Text text={`Disconnect`} type={'default'} />
               <Icon size={'32'} name={'exit'} />
             </MenuItem>

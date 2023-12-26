@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const LockOverviewStyles = styled.div`
+  margin-top: 6px;
   padding: 20px;
   display: flex;
   flex-direction: column;

@@ -1,7 +1,6 @@
-version: '3'
+version: "3"
 
 services:
-
   nginx:
     build:
       context: docker/nginx
@@ -11,7 +10,7 @@ services:
       - ./:/home/${USER}/${DOMAIN}
       - ./logs/nginx:/var/log/nginx
     ports:
-      - '80:80'
+      - "80:80"
     networks:
       - upool
 

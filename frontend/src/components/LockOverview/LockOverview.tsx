@@ -6,31 +6,35 @@ type TAb = {
   nameCoin?: string
   iconCoinUrl?: string
   subHeader?: string
-  duration: string
-  durations: string[]
+  duration: number
+  durations: { type: string; value: string }[]
   apr: number
-  coinToBeLocked: number
-  expectedRoi?: number
+  expectedRoi: string
   maxArpPercent: string
   minArpPercent: string
   percents: string[]
   rangeValue: string
-  amount: number
+  amount: string
+  startLocking: Date | string
+  endLocking: Date | string
 }
 
 export const LockOverview: FC<TAb> = (props) => {
-  const { expectedRoi, duration } = props
+  const { expectedRoi, duration, apr, amount, startLocking, endLocking } = props
   return (
     <Wrapper>
       <Text text={'lock overview '} type={'popUpPreTitle'} />
       <LockOverviewStyles>
         <LockOverviewStylesItem>
           <Text text={'ETH to be locked'} type={'popUpValue'} />
-          <Text text={'0.00'} type={'value'} />
+          <Text
+            text={amount === '0' ? '0' : amount.substring(0, 10)}
+            type={'value'}
+          />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'apr'} type={'popUpValue'} />
-          <Text text={'0.93%'} type={'value'} />
+          <Text text={`${apr}`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'duration'} type={'popUpValue'} />
@@ -38,15 +42,22 @@ export const LockOverview: FC<TAb> = (props) => {
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'Start locking'} type={'popUpValue'} />
-          <Text text={'Jul 6th, 2023 22:26'} type={'value'} />
+          <Text text={`${startLocking}`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'end locking'} type={'popUpValue'} />
-          <Text text={'Jul 6th, 2023 22:26'} type={'value'} />
+          <Text text={`${endLocking}`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'expected roi'} type={'popUpValue'} />
-          <Text text={`$ ${Number(expectedRoi).toFixed(5)}`} type={'value'} />
+          <Text
+            text={
+              String(expectedRoi) === '0'
+                ? '0'
+                : String(expectedRoi).substring(0, 10)
+            }
+            type={'value'}
+          />
         </LockOverviewStylesItem>
       </LockOverviewStyles>
     </Wrapper>
