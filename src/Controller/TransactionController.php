@@ -62,34 +62,37 @@ class TransactionController  extends AbstractController
         $totalProfitProfile = 0;
         $totalLockedProfile = 0;
         foreach ($transactions as $transaction) {
-            $staking = current($manager->getRepository(Staking::class)->findBy(['id' => $transaction->getStakeId()]));
-            if (!$staking->getNameCoin()) {
+
+            try {
+                $staking=current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
+                $result['transactions'][]=[
+                    'id'=>$transaction->getId(),
+                    'asset'=>[
+                        'coinName'=>$staking->getNameCoin(),
+                        'coinIconUrl'=>$staking->getIconCoinUrl()
+                    ],
+                    'totalAmount'=>$transaction->getAmount(),
+                    'realTimeApr'=>$transaction->getApr(),
+                    'duration'=>$transaction->getDuration(),
+                    'startLocking'=>$transaction->getStartLocking(),
+                    'endLocking'=>$transaction->getEndLocking(),
+                    'expectedProfit'=>$transaction->getExpectedProfit(),
+                    'totalExpectedProfit'=>$transaction->getTotalExpectedProfit()
+                ];
+                $totalProfitProfile+=$transaction->getExpectedProfit();
+                $totalLockedProfile+=$transaction->getAmount();
+
+
+                if ($totalProfitProfile) {
+                    $result['totalProfitProfile']=$totalProfitProfile;
+                }
+
+                if ($totalLockedProfile) {
+                    $result['totalLockedProfile']=$totalLockedProfile;
+                }
+            } catch (\Throwable $exception) {
                 continue;
             }
-            $result['transactions'][] = [
-                'id' => $transaction->getId(),
-                'asset' => [
-                    'coinName' => $staking->getNameCoin(),
-                    'coinIconUrl' => $staking->getIconCoinUrl()
-                ],
-                'totalAmount' => $transaction->getAmount(),
-                'realTimeApr' => $transaction->getApr(),
-                'duration' => $transaction->getDuration(),
-                'startLocking' => $transaction->getStartLocking(),
-                'endLocking' => $transaction->getEndLocking(),
-                'expectedProfit' => $transaction->getExpectedProfit(),
-                'totalExpectedProfit' => $transaction->getTotalExpectedProfit()
-            ];
-            $totalProfitProfile += $transaction->getExpectedProfit();
-            $totalLockedProfile += $transaction->getAmount();
-        }
-
-        if ($totalProfitProfile) {
-            $result['totalProfitProfile'] = $totalProfitProfile;
-        }
-
-        if ($totalLockedProfile) {
-            $result['totalLockedProfile'] = $totalLockedProfile;
         }
 
         return new JsonResponse(['status' => true, 'data' => $result]);
