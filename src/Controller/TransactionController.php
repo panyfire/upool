@@ -102,6 +102,10 @@ class TransactionController  extends AbstractController
         $transaction=current($manager->getRepository(Transaction::class)->findBy(['id'=>$transactionId]));
         $wallet = $request->getPayload()->get('wallet');
 
+        if ($transaction->getIsRedeemed()) {
+            return new JsonResponse(['status'=>true]);
+        }
+
         if ($transaction && $wallet === $transaction->getWallet()) {
             $staking = current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
             $totalProfitProfile = 0;
