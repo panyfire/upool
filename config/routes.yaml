@@ -14,3 +14,7 @@ api_transaction:
     path: /api/transaction/add/
     controller: App\Controller\TransactionController::add
     methods: POST|HEAD
+api_get_transaction:
+    path: /api/transaction/get/{wallet}
+    controller: App\Controller\TransactionController::get
+    methods: GET|HEAD

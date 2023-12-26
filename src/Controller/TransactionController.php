@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Staking;
 use App\Entity\Transaction;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -51,5 +52,38 @@ class TransactionController  extends AbstractController
         $manager->flush();
 
         return new JsonResponse(['status' => true]);
+    }
+
+    public function get(EntityManagerInterface $manager, Request $request, string $wallet = ''): Response
+    {
+        $transactions = $manager->getRepository(Transaction::class)->findBy(['wallet' => $wallet]);
+
+        $result = [];
+        $totalProfitProfile = 0;
+        $totalLockedProfile = 0;
+        foreach ($transactions as $transaction) {
+            $staking = current($manager->getRepository(Staking::class)->findBy(['id' => $transaction->getStakeId()]));
+            $result['transactions'][] = [
+                'id' => $transaction->getId(),
+                'asset' => [
+                    'coinName' => $staking->getNameCoin(),
+                    'coinIconUrl' => $staking->getIconCoinUrl()
+                ],
+                'totalAmount' => $transaction->getAmount(),
+                'realTimeApr' => $transaction->getApr(),
+                'duration' => $transaction->getDuration(),
+                'startLocking' => $transaction->getStartLocking(),
+                'endLocking' => $transaction->getEndLocking(),
+                'expectedProfit' => $transaction->getExpectedProfit(),
+                'totalExpectedProfit' => $transaction->getTotalExpectedProfit()
+            ];
+            $totalProfitProfile += $transaction->getExpectedProfit();
+            $totalLockedProfile += $transaction->getAmount();
+        }
+
+        $result['totalProfitProfile'] = $totalProfitProfile;
+        $result['totalLockedProfile'] = $totalLockedProfile;
+
+        return new JsonResponse(['status' => true, 'data' => $result]);
     }
 }
