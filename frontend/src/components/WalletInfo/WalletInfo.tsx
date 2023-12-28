@@ -6,15 +6,16 @@ type IWallet = {
   title: string
   value: string
   convertValue: string
+  color?: string
 }
 
 export const WalletInfo: FC<IWallet> = (props) => {
-  const { title, convertValue, value } = props
+  const { title, convertValue, value, color } = props
 
   return (
     <WalletContainer>
       <Text type={'preTitle'} text={title} />
-      <Text type={'h4'} text={value} />
+      <Text color={color} type={'h4'} text={value} />
       <Text type={'h41'} text={convertValue} />
     </WalletContainer>
   )

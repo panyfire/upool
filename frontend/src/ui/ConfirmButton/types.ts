@@ -3,5 +3,5 @@ export type IButton = {
     text: string,
     eventClick?: MouseEventHandler<HTMLButtonElement> | any,
     disableStatus?: boolean,
-    style: { marginTop: number }
+    style?: { marginTop: number }
 }

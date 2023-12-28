@@ -4,9 +4,10 @@ import { IText } from './types'
 import { TextCSS } from './styles'
 
 export const Text: FC<IText> = (props) => {
-  const { text, type, ...other } = props
+  const { text, type, color, ...other } = props
   return (
     <TextCSS
+      style={{ color: color }}
       className={clsx({
         default: type === 'default',
         h1: type === 'h1',
@@ -14,7 +15,7 @@ export const Text: FC<IText> = (props) => {
         h3: type === 'h3',
         h4: type === 'h4',
         h41: type === 'h41',
-        preTitle: type === 'pre-title',
+        preTitle: type === 'preTitle',
         btn: type === 'btn',
         label: type === 'label',
         value: type === 'value',
@@ -23,7 +24,7 @@ export const Text: FC<IText> = (props) => {
         card: type === 'card',
         popupTitle: type === 'popupTitle',
         popUpPreTitle: type === 'popUpPreTitle',
-          popUpValue: type === 'popUpValue',
+        popUpValue: type === 'popUpValue',
       })}
       {...other}
     >

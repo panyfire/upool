@@ -1,19 +1,24 @@
 import styled from 'styled-components'
 
-export const TableWrapper = styled.div`
+export const TableWrapper = styled.table`
   display: flex;
   flex-direction: column;
+  color: white;
 `
 
-export const TableBody = styled.div`
+export const TableBody = styled.tbody`
   padding: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
   border: 1px solid;
   border-top: none;
 `
 
+export const Img = styled.img`
+  width:45px;
+  height:45px;
+  position: absolute;
+  left: 0;
+  top: 0;
+`
 
 export const TableHead = styled.thead`
   padding: 40px;
@@ -32,7 +37,7 @@ export const TableHead = styled.thead`
   clip-path: polygon(
     var(--edge-size) 0,
     100% 0,
-    100% calc(100% - var(--edge-size)),
+    120% calc(100% - var(--edge-size)),
     calc(100% - var(--edge-size)) 100%,
     0 100%,
     0 var(--edge-size)
@@ -74,10 +79,30 @@ export const TableHead = styled.thead`
 export const TrHead = styled.tr`
   display: flex;
   justify-content: space-between;
-`
-
-export const CardValues = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+  font-family: 'GP Meduim',serif;
+  &:nth-child(1) {
+    position: relative;
+  }
+  & th {
+    color: #1A1329;
+    &:nth-child(1) {
+      display: none
+    }
+  }
+  & td {
+    line-height:25px;
+    &:nth-child(1) {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  & td,th {
+    width: 150px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 `

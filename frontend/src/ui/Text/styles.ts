@@ -86,18 +86,18 @@ export const TextCSS = styled.p`
     line-height: 44px;
   }
   &.h41 {
-    color: ${whiteColor};
     font-family: 'GP Bold', serif;
     font-size: 25px;
     font-weight: 700;
     line-height: 44px;
+    color: rgba(255, 255, 255, 0.64);
   }
   &.preTitle {
+    font-family: 'GP Meduim', serif;
     font-size: 18px;
     font-weight: 700;
-    line-height: 44px; /* 244.444% */
+    line-height: 44px; 
     text-transform: uppercase;
-    font-family: 'GP Meduim', serif;
   }
   &.btn {
     font-family: 'GP Meduim', serif;

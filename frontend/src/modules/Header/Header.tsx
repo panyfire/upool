@@ -14,10 +14,6 @@ import { chainIdName } from 'utils'
 
 export const Header: FC = () => {
   const { wallet } = useMetaMask()
-  // const [open, setOpen] = useState(false)
-
-  // const toggleStatus = (status: boolean, func: (status: boolean) => void) =>
-  //   func(!status)
 
   return (
     <HeaderStyled>
