@@ -9,6 +9,7 @@ import img from 'img/banner.png'
 
 export const Banner: FC = () => {
   const { connectMetaMask, wallet } = useMetaMask()
+  console.log('wallet', wallet)
   return (
     <BannerSection>
       <Layout>
