@@ -6,10 +6,14 @@ import { BannerContent, BannerSection, BannerWrapper, ImgWprap } from './styles'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import img from 'img/banner.png'
+import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 
 export const Banner: FC = () => {
-  const { connectMetaMask, wallet } = useMetaMask()
-  console.log('wallet', wallet)
+  const { connectMetaMask, wallet, isConnecting } = useMetaMask()
+  const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
+
+  const { isLoading } = dataResponse
+
   return (
     <BannerSection>
       <Layout>
@@ -20,11 +24,8 @@ export const Banner: FC = () => {
               <Text text={'Just stake some tokens to earn.'} type={'h3'} />
               <Text text={'High APR, low risk.'} type={'h3'} />
             </div>
-            {!wallet?.accounts?.length && (
-              <AnimatedButton
-                onClick={connectMetaMask}
-                text={'Connect Wallet'}
-              />
+            {!wallet?.accounts?.length && !isLoading && !isConnecting && (
+              <AnimatedButton onClick={connectMetaMask} text="Connect Wallet" />
             )}
           </BannerContent>
           <ImgWprap src={img} alt={'banner'} />

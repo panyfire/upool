@@ -75,7 +75,6 @@ export const IconWrapper = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-  bottom: -140px;
   width: 100%;
   background: rgba(255, 255, 255, 0.08);
   z-index: 100;
