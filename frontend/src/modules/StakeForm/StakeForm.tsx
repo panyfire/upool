@@ -19,6 +19,7 @@ import {
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdName } from 'utils'
+import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 
 type TAb = {
   nameCoin?: string
@@ -106,6 +107,7 @@ export const StakeForm: FC<TAb> = (props) => {
   const [dtab, dsetTabIndex] = useState(1)
 
   const { wallet } = useMetaMask()
+  const tableData = wallet && useGetTableData(wallet?.accounts[0])
 
   const initialValueForm: TAb = {
     id: id,
@@ -144,6 +146,7 @@ export const StakeForm: FC<TAb> = (props) => {
     sendSuccessTransaction(data).then(() => {
       popUpCallback && popUpCallback()
       setLoadingTransaction(false)
+      tableData.refetch()
       notify('Transaction confirmed')
     })
   }
