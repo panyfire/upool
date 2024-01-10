@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const WalletsContainer = styled.div`
   margin: 77px 0 86px;
   display: flex;
-  justify-content: space-between;
+  gap: 60px
 `
 
 export const WalletContainer = styled.div`

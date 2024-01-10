@@ -128,7 +128,6 @@ export const StakeForm: FC<TAb> = (props) => {
   const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
   const [, setLoadingTransaction] = useState<boolean>(false)
 
-
   const notify = (text: string) =>
     toast(text, {
       position: 'bottom-right',
@@ -158,10 +157,10 @@ export const StakeForm: FC<TAb> = (props) => {
       // @ts-ignore
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-
       const transaction = {
         to: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-        value: ethers.utils.parseEther(`${amount}`),
+
+        value: ethers.utils.parseEther(String(amount).slice(0, 13)),
         // from: '0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633',
       }
 
@@ -170,13 +169,12 @@ export const StakeForm: FC<TAb> = (props) => {
         .then((transactionResponse) => {
           // This callback is called when the transaction is first sent to the network
           setLoadingTransaction(true)
-          console.log('Транзакция отправлена:', transactionResponse)
           notify('Transaction sent')
+          popUpCallback && popUpCallback()
           return transactionResponse.wait() // Wait for the transaction to be mined
         })
         .then((receipt) => {
           // This callback is called when the transaction is confirmed on the network
-          console.log('Транзакция потверждена:', receipt)
           // You can perform additional actions here after the transaction is confirmed
           const response = {
             wallet: receipt.from,

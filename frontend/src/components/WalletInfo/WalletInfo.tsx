@@ -5,7 +5,7 @@ import { WalletContainer } from './styles'
 type IWallet = {
   title: string
   value: string
-  convertValue: string
+  convertValue?: string
   color?: string
 }
 
@@ -16,7 +16,9 @@ export const WalletInfo: FC<IWallet> = (props) => {
     <WalletContainer>
       <Text type={'preTitle'} text={title} />
       <Text color={color} type={'h4'} text={value} />
-      <Text type={'h41'} text={convertValue} />
+        {convertValue && (
+            <Text type={'h41'} text={convertValue} />
+        )}
     </WalletContainer>
   )
 }

@@ -174,7 +174,6 @@ export const DropDownChainList: FC<IButton> = (props) => {
               return (
                 <MenuItem
                   onClick={() => {
-                    console.log(e.id)
                     handleChangeChainId(
                       e.id,
                       e.chainName,

@@ -47,17 +47,10 @@ export const Profile = () => {
                 color={'#BEA0FD'}
                 title="LOCKED"
                 value={`${tableData?.data?.data?.totalLockedProfile} BTC`}
-                convertValue="≈ $0.00"
               />
               <WalletInfo
                 title="TOTAL PROFIT"
                 value={`${tableData?.data?.data?.totalProfitProfile} BTC`}
-                convertValue="≈ $0.00"
-              />
-              <WalletInfo
-                title="LAST DAY PROFIT"
-                value={`${tableData?.data?.data?.lastDay || 0} BTC`}
-                convertValue="≈ $0.00"
               />
             </WalletsContainer>
             <div>
@@ -66,18 +59,18 @@ export const Profile = () => {
           </div>
         </Layout>
       </GradientBackground>
-        <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-        />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </HeaderLayout>
   ) : null
 }
