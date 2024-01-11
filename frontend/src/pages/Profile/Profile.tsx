@@ -55,6 +55,7 @@ export const Profile = () => {
             </WalletsContainer>
             <div>
               <Table dataTable={tableData} />
+
             </div>
           </div>
         </Layout>

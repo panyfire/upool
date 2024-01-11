@@ -13,7 +13,8 @@ export type TTAble = {
   endLocking?: string
   totalExpectedProfit?: number
   expectedProfit?: number
-  redeem?: boolean
+  redeem?: boolean | undefined
+  amount?: number | string
 }
 
 export type ProfileTableData = {

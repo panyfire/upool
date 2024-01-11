@@ -77,6 +77,7 @@ export const TableHead = styled.thead`
 `
 
 export const TrHead = styled.tr`
+  position: relative;
   display: flex;
   justify-content: space-between;
   font-family: 'GP Meduim',serif;

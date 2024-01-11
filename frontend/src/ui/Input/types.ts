@@ -8,4 +8,5 @@ export type InputProps = {
   disabled?: boolean
   onChange: any
   helperText?: string | undefined | false
+  maxLength?: number
 }

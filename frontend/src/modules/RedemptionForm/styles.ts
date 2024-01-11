@@ -48,7 +48,7 @@ export const TabListWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
- 
+
   & .react-tabs__tab {
     width: 60px;
     display: flex;
@@ -85,4 +85,9 @@ export const DurationWrapper = styled.div`
     border-radius: 30px;
     border: 1px solid #55f8f1;
   }
+`
+
+export const UnlocksWrapper = styled.div`
+  display: flex;
+  gap: 5px;
 `
