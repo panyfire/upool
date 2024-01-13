@@ -1,28 +1,32 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { ContentWrapper } from './styles'
+import { Layout } from 'layouts/Layout'
 import { GradientBackground } from 'layouts/GradientBackground'
-import { Banner, Footer, StakeListing } from 'modules'
-import { HeaderLayout } from 'layouts/HeaderLayout'
 import { LoaderWrapper } from 'layouts/LoaderWrapper'
+import { HeaderLayout } from 'layouts/HeaderLayout'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
-import { Layout } from 'layouts/Layout'
+import { Footer } from 'modules'
 
-export const Home = () => {
+export const Terms: FC = () => {
   const { wallet } = useMetaMask()
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
   const { isLoading } = dataResponse
-
   return (
     <GradientBackground>
       <LoaderWrapper isLoad={Boolean(wallet?.accounts?.length) && isLoading}>
         <HeaderLayout>
-          <Banner />
-          <StakeListing />
           <Layout>
-            <Footer />
+            <ContentWrapper></ContentWrapper>
           </Layout>
         </HeaderLayout>
       </LoaderWrapper>
+      <div style={{marginBottom: 50}}>
+        <Layout>
+          <Footer />
+        </Layout>
+      </div>
+
     </GradientBackground>
   )
 }

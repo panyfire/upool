@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MetaMaskContextProvider } from 'hooks/useMetaMask'
 import { QueryContext } from 'context'
-import { Home, Error, Profile } from 'pages'
+import { Home, Error, Profile, Terms } from 'pages'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const App: FC = () => {
@@ -13,6 +13,7 @@ export const App: FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </BrowserRouter>
