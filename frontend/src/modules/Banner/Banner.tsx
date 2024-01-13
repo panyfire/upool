@@ -18,16 +18,21 @@ export const Banner: FC = () => {
     <BannerSection>
       <Layout>
         <BannerWrapper>
-          <Text text={'Super Pools'} type={'h1'} />
-          <BannerContent>
-            <div>
-              <Text text={'Just stake some tokens to earn.'} type={'h3'} />
-              <Text text={'High APR, low risk.'} type={'h3'} />
-            </div>
-            {!wallet?.accounts?.length && !isLoading && !isConnecting && (
-              <AnimatedButton onClick={connectMetaMask} text="Connect Wallet" />
-            )}
-          </BannerContent>
+          <div>
+            <Text text={'Super Pools'} type={'h1'} />
+            <BannerContent>
+              <div>
+                <Text text={'Just stake some tokens to earn.'} type={'h3'} />
+                <Text text={'High APR, low risk.'} type={'h3'} />
+              </div>
+              {!wallet?.accounts?.length && !isLoading && !isConnecting && (
+                <AnimatedButton
+                  onClick={connectMetaMask}
+                  text="Connect Wallet"
+                />
+              )}
+            </BannerContent>
+          </div>
           <ImgWprap src={img} alt={'banner'} />
         </BannerWrapper>
       </Layout>

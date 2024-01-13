@@ -8,7 +8,7 @@ export type IChildren = {
 export const Layout: FC<IChildren> = ({ children }) => {
   return (
     <ContentWrapper>
-      <div>{children}</div>
+      {children}
     </ContentWrapper>
   )
 }

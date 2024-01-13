@@ -227,16 +227,13 @@ export const RedemptionForm: FC<TAb> = (props) => {
                 </LockOverviewStylesItem>
               </LockOverviewStyles>
             </div>
-
             <DurationWrapper>
-              <div style={{ marginTop: 20 }}>
                 <ConfirmButton
                   disableStatus={!values.amount && !value}
                   eventClick={handleSubmit}
                   text="Confirm"
-                  style={{ marginTop: 76 }}
+                  style={{ marginTop: 20 }}
                 />
-              </div>
             </DurationWrapper>
           </Form>
         )

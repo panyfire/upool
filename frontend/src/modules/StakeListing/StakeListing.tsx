@@ -8,6 +8,7 @@ import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { ItemWrapper, ListingWrapper } from './styles'
 import { chainIdName } from 'utils'
+import { LoaderWrapper } from 'layouts/LoaderWrapper'
 
 type TResponse = {
   nameCoin: string
@@ -37,7 +38,7 @@ export const StakeListing: FC = () => {
   }, [wallet.chainId, data])
 
   return (
-    <>
+    <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
       <Layout>
         <ListingWrapper>
           {Array.isArray(data) &&
@@ -98,6 +99,6 @@ export const StakeListing: FC = () => {
           />
         </ListingWrapper>
       </Layout>
-    </>
+    </LoaderWrapper>
   )
 }

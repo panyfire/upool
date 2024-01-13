@@ -70,7 +70,7 @@ export const RangeWrapper = styled.div`
 `
 
 export const DurationWrapper = styled.div`
-  margin-top: 35px;
+  //margin-top: 35px;
   .tablist__list_duration .react-tabs__tab {
     width: 60px;
     display: flex;

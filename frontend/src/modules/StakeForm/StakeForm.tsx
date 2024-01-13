@@ -1,10 +1,11 @@
 import React, { FC, useState } from 'react'
 import { Tab, TabList, Tabs } from 'react-tabs'
+import { toast } from 'react-toastify'
 import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
-import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
-import { toast } from 'react-toastify'
+import {ConfirmButton, Icon, Input, InputRange, Text} from 'ui'
+import 'react-rangeslider/lib/index.css'
 import {
   AmountWrapper,
   DurationWrapper,
@@ -248,9 +249,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
                 helperText={touched.amount && errors.amount}
-                onChange={(e: HTMLElement) => {
-                  handleChange(e)
-                }}
+                onChange={handleChange}
               />
               <MaxBtn
                 onClick={() => {
@@ -267,6 +266,7 @@ export const StakeForm: FC<TAb> = (props) => {
               <Text text={wallet?.balance} type={'card'} />
             </FormBalance>
             <RangeWrapper>
+
               <InputRange
                 name="rangeValue"
                 max={'100'}
@@ -382,14 +382,12 @@ export const StakeForm: FC<TAb> = (props) => {
                 endLocking={values.endLocking}
               />
 
-              <div style={{ marginTop: 20 }}>
-                <ConfirmButton
-                  disableStatus={!Number(values.amount)}
-                  eventClick={handleSubmit}
-                  text={'Confirm'}
-                  style={{ marginTop: 76 }}
-                />
-              </div>
+              <ConfirmButton
+                disableStatus={!Number(values.amount)}
+                eventClick={handleSubmit}
+                text={'Confirm'}
+                style={{ marginTop: 20 }}
+              />
             </DurationWrapper>
           </Form>
         )

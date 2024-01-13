@@ -42,3 +42,26 @@ ul {
   font-family: 'GP Meduim';
   src: url('../fonts/gothampro.ttf');
 }
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #86f3ff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:
+    1px 1px 1px #000000,
+    0 0 1px #0d0d0d;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 6px;
+  /*background: #ccc;*/
+}
+
+

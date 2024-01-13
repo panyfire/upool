@@ -21,26 +21,26 @@ export const RangeSlider = styled.input`
     appearance: none;
     width: 25px;
     height: 25px;
-    background: #86f3ff;
+    background: red;
     cursor: pointer;
   }
   &::-moz-range-thumb {
     width: 25px;
     height: 25px;
-    background: #86F3FF;
+    background: red;
     cursor: pointer;
   }
   &::-ms-thumb {
     width: 25px;
     height: 25px;
-    background: #86F3FF;
+    background: red;
     cursor: pointer;
   }
   &::-webkit-slider-runnable-track, &::-moz-range-track, &::-ms-track  {
     width: 100%;
     height: 10px;
     cursor: pointer;
-    background: #595859;
+    background: red;
     border-radius: 5px;
   }
 
@@ -58,6 +58,7 @@ export const RangeSlider = styled.input`
   }
   &::-webkit-slider-thumb {
     transition: background 0.3s ease-in-out;
+    background: red;
   }
 `
 

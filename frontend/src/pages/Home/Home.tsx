@@ -18,9 +18,11 @@ export const Home = () => {
         <HeaderLayout>
           <Banner />
           <StakeListing />
-          <Layout>
-            <Footer />
-          </Layout>
+          <div style={{ marginBottom: 100 }}>
+            <Layout>
+              <Footer />
+            </Layout>
+          </div>
         </HeaderLayout>
       </LoaderWrapper>
     </GradientBackground>

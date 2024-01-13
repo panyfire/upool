@@ -2,10 +2,12 @@ import styled from 'styled-components'
 import { device } from 'ui'
 
 export const BannerWrapper = styled.div`
+  width: 100%;
   position: relative;
-  padding: 67px 0px;
+  padding: 50px 0;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   gap: 20px;
 `
 
@@ -13,15 +15,13 @@ export const BannerContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  justify-content: space-between;
 `
 
 export const ImgWprap = styled.img`
-  position: absolute;
-  right: 12%;
-  bottom: 0;
-  width: 527px;
-  height: 339px;
-  @media ${device.laptopL} {
+  width: 40%;
+  @media ${device.tabletL} {
     display: none;
   }
 `

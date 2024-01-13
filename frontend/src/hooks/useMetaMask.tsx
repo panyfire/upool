@@ -181,13 +181,10 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         //   },
         // ]);
         notify('Транзакция успешно отправлена')
-        // console.log('Транзакция успешно отправлена. Хеш транзакции:')
       } else {
-        // console.log('MetaMask не доступен')
         notify('MetaMask не доступен')
       }
     } catch (error) {
-      // console.log('Ошибка:', error)
       notify(String(error))
     }
   }
