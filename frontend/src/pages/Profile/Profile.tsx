@@ -15,6 +15,7 @@ import { BtnWrapper } from '../styles'
 export const Profile = () => {
   const { wallet } = useMetaMask()
   const tableData = wallet && useGetTableData(wallet?.accounts[0])
+  console.log(tableData)
   const navigate = useNavigate()
 
   const notify = (text: string) =>
@@ -45,7 +46,10 @@ export const Profile = () => {
               <div>
                 <Text text={'YOUR ADDRESS'} type={'h4'} />
                 <BtnWrapper>
-                  <ConfirmButton onClick={() => navigate('/')} text={'to home'} />
+                  <ConfirmButton
+                    onClick={() => navigate('/')}
+                    text={'to home'}
+                  />
                 </BtnWrapper>
               </div>
 
@@ -67,7 +71,11 @@ export const Profile = () => {
                 />
               </WalletsContainer>
               <div>
-                <Table dataTable={tableData} />
+                {tableData?.data?.data.length ? (
+                  <Table dataTable={tableData} />
+                ) : (
+                  <Text type={'h3'} text={'No data'} />
+                )}
               </div>
             </div>
           </Layout>

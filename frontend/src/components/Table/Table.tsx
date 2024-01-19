@@ -22,7 +22,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
     ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       dataTable?.data?.data?.transactions
-    : []
+    : 'No data'
 
   const columns = [
     columnHelper.accessor('asset.coinIconUrl', {
@@ -124,7 +124,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
                 }}
               >
                 <RedemptionForm
-                  id={Number(data.id)}
+                  id={Number(row.id)}
                   amount={0}
                   totalAmount={String(data.totalAmount)}
                   duration={String(data.duration)}
