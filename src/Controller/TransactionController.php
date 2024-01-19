@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Staking;
 use App\Entity\Transaction;
+use App\Helper\PriceHelper;
 use App\Service\CurrencyApi;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -91,26 +92,26 @@ class TransactionController  extends AbstractController
                     'isRedeemed' => $transaction->getIsRedeemed()
                 ];
 
-                $totalProfitProfileInUsd += round($transaction->getExpectedProfit() * $coinPriceInUsd, 11);
-                $totalLockedProfileInUseInUsd += round($transaction->getAmount() * $coinPriceInUsd, 11);
+                $totalProfitProfileInUsd += $transaction->getExpectedProfit() * $coinPriceInUsd;
+                $totalLockedProfileInUseInUsd += $transaction->getAmount() * $coinPriceInUsd;
 
                 $totalProfitProfile += $transaction->getExpectedProfit();
                 $totalLockedProfile += $transaction->getAmount();
 
                 if ($totalProfitProfile) {
-                    $result['totalProfitProfile']=$totalProfitProfile;
+                    $result['totalProfitProfile'] = PriceHelper::convertFloatToString($totalProfitProfile);
                 }
 
                 if ($totalLockedProfile) {
-                    $result['totalLockedProfile']=$totalLockedProfile;
+                    $result['totalLockedProfile'] = PriceHelper::convertFloatToString($totalLockedProfile);
                 }
 
                 if ($totalProfitProfile) {
-                    $result['totalProfitProfileInUsd']=$totalProfitProfileInUsd;
+                    $result['totalProfitProfileInUsd'] = PriceHelper::convertFloatToString($totalProfitProfileInUsd);
                 }
 
                 if ($totalLockedProfile) {
-                    $result['totalLockedProfileInUseInUsd']=$totalLockedProfileInUseInUsd;
+                    $result['totalLockedProfileInUseInUsd'] = PriceHelper::convertFloatToString($totalLockedProfileInUseInUsd);
                 }
             } catch (\Throwable $exception) {
                 continue;

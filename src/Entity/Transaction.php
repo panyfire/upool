@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helper\PriceHelper;
 use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -162,7 +163,7 @@ class Transaction extends AbstarctEntity
 
     public function getExpectedProfit(): ?float
     {
-        return round($this->expectedProfit, 11);
+        return PriceHelper::convertFloatToString($this->expectedProfit);
     }
 
     public function setExpectedProfit(float $expectedProfit): static
@@ -172,9 +173,9 @@ class Transaction extends AbstarctEntity
         return $this;
     }
 
-    public function getTotalExpectedProfit(): ?float
+    public function getTotalExpectedProfit(): string
     {
-        return round($this->totalExpectedProfit, 11);
+        return PriceHelper::convertFloatToString($this->totalExpectedProfit);
     }
 
     public function setTotalExpectedProfit(float $totalExpectedProfit): static
