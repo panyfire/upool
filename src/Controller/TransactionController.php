@@ -91,8 +91,8 @@ class TransactionController  extends AbstractController
                     'isRedeemed' => $transaction->getIsRedeemed()
                 ];
 
-                $totalProfitProfileInUsd += $transaction->getExpectedProfit() * $coinPriceInUsd;
-                $totalLockedProfileInUseInUsd += $transaction->getAmount() * $coinPriceInUsd;
+                $totalProfitProfileInUsd += round($transaction->getExpectedProfit() * $coinPriceInUsd, 12);
+                $totalLockedProfileInUseInUsd += round($transaction->getAmount() * $coinPriceInUsd, 12);
 
                 $totalProfitProfile += $transaction->getExpectedProfit();
                 $totalLockedProfile += $transaction->getAmount();
