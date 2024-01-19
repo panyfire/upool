@@ -78,7 +78,7 @@ class Transaction extends AbstarctEntity
 
     public function getAmount(): ?float
     {
-        return round($this->amount, 12);
+        return round($this->amount, 11);
     }
 
     public function setAmount(float $amount): static
@@ -162,7 +162,7 @@ class Transaction extends AbstarctEntity
 
     public function getExpectedProfit(): ?float
     {
-        return round($this->expectedProfit, 12);
+        return round($this->expectedProfit, 11);
     }
 
     public function setExpectedProfit(float $expectedProfit): static
@@ -174,7 +174,7 @@ class Transaction extends AbstarctEntity
 
     public function getTotalExpectedProfit(): ?float
     {
-        return round($this->totalExpectedProfit, 12);
+        return round($this->totalExpectedProfit, 11);
     }
 
     public function setTotalExpectedProfit(float $totalExpectedProfit): static
