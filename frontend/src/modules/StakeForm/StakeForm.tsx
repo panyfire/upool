@@ -181,7 +181,7 @@ export const StakeForm: FC<TAb> = (props) => {
           // This callback is called when the transaction is confirmed on the network
           // You can perform additional actions here after the transaction is confirmed
           const response = {
-            wallet: receipt.from,
+            wallet: String(wallet.accounts[0]),
             stakeId: id,
             amount: Number(amount),
             duration: duration,

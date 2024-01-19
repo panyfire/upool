@@ -1,15 +1,15 @@
 import React, { FC, useState } from 'react'
 // import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
-import { ConfirmButton, Icon, Input, Text } from 'ui'
+import { ConfirmButton, Icon, Text } from 'ui'
 import { toast } from 'react-toastify'
 import {
-  AmountWrapper,
+  // AmountWrapper,
   DurationWrapper,
   // FormBalance,
   FormCoinInfo,
   FormTitle,
-  MaxBtn,
+  // MaxBtn,
   UnlocksWrapper,
   // RangeWrapper,
   // TabListWrapper,
@@ -25,6 +25,7 @@ import {
 } from 'components/LockOverview/styles'
 import { Alert } from 'components'
 import { useSend } from './api/hooks'
+import { useMetaMask } from 'hooks/useMetaMask'
 
 type TAb = {
   amount: number | string
@@ -37,7 +38,7 @@ type TAb = {
 
 export const RedemptionForm: FC<TAb> = (props) => {
   const { amount, totalAmount, duration, endLocking, id, popupCallback } = props
-  // const { wallet } = useMetaMask()
+  const { wallet } = useMetaMask()
 
   const initialValueForm: TAb = {
     amount,
@@ -47,10 +48,10 @@ export const RedemptionForm: FC<TAb> = (props) => {
     id,
   }
 
-  const [value, setValue] = useState(0)
 
-  const { refetch } = useSend(value)
-  // const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
+  const [, setValue] = useState(0)
+
+  const { mutate } = useSend()
 
   const notify = (text: string) =>
     toast(text, {
@@ -66,7 +67,10 @@ export const RedemptionForm: FC<TAb> = (props) => {
 
   const onSendSuccess = async (data: TAb) => {
     await setValue(Number(data.id))
-    await refetch()
+    await mutate({
+      transactionId: String(data.id),
+      wallet: String(wallet.accounts[0]),
+    })
     if (popupCallback) {
       await popupCallback(false)
     }
@@ -83,10 +87,10 @@ export const RedemptionForm: FC<TAb> = (props) => {
       {(props: FormikProps<TAb>) => {
         const {
           values,
-          touched,
-          errors,
-          handleChange,
-          setFieldValue,
+          // touched,
+          // errors,
+          // handleChange,
+          // setFieldValue,
           handleSubmit,
           // ...other
         } = props
@@ -131,43 +135,40 @@ export const RedemptionForm: FC<TAb> = (props) => {
                   </div>
                 </LockOverviewStylesItem>
               </LockOverviewStyles>
-              <FormTitle style={{ marginTop: 20 }}>
-                <Text text={'Redemption'} type={'popUpPreTitle'} />
-                <FormCoinInfo>
-                  <Icon size={'24'} name={'wallet'} />
-                </FormCoinInfo>
-              </FormTitle>
+              {/*<FormTitle style={{ marginTop: 20 }}>*/}
+              {/*  <Text text={'Redemption'} type={'popUpPreTitle'} />*/}
+              {/*  <FormCoinInfo>*/}
+              {/*    <Icon size={'24'} name={'wallet'} />*/}
+              {/*  </FormCoinInfo>*/}
+              {/*</FormTitle>*/}
             </div>
-            <AmountWrapper>
-              <Input
-                type={'text'}
-                label={'Ransom amount'}
-                value={
-                  values.amount > totalAmount ? totalAmount : values.amount
-                }
-                name={'amount'}
-                placeholder={'Enter amount'}
-                error={touched.amount && Boolean(errors.amount)}
-                helperText={touched.amount && errors.amount}
-                onChange={(e: HTMLElement) => {
-                  handleChange(e)
-                  if (values.amount > totalAmount) {
-                    setFieldValue('amount', String(totalAmount))
-                  }
-                }}
-                maxLength={12}
-              />
-              <MaxBtn
-                onClick={() => {
-                  setFieldValue('amount', totalAmount)
-                }}
-              >
-                <Text text="Max" type="value" />
-              </MaxBtn>
-            </AmountWrapper>
-            <div style={{ marginTop: 20 }}>
-              <Alert />
-            </div>
+            {/*<AmountWrapper>*/}
+            {/*  <Input*/}
+            {/*    type={'text'}*/}
+            {/*    label={'Ransom amount'}*/}
+            {/*    value={*/}
+            {/*      values.amount > totalAmount ? totalAmount : values.amount*/}
+            {/*    }*/}
+            {/*    name={'amount'}*/}
+            {/*    placeholder={'Enter amount'}*/}
+            {/*    error={touched.amount && Boolean(errors.amount)}*/}
+            {/*    helperText={touched.amount && errors.amount}*/}
+            {/*    onChange={(e: HTMLElement) => {*/}
+            {/*      handleChange(e)*/}
+            {/*      if (values.amount > totalAmount) {*/}
+            {/*        setFieldValue('amount', String(totalAmount))*/}
+            {/*      }*/}
+            {/*    }}*/}
+            {/*    maxLength={12}*/}
+            {/*  />*/}
+            {/*  <MaxBtn*/}
+            {/*    onClick={() => {*/}
+            {/*      setFieldValue('amount', totalAmount)*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    <Text text="Max" type="value" />*/}
+            {/*  </MaxBtn>*/}
+            {/*</AmountWrapper>*/}
             <div style={{ marginTop: 20 }}>
               <Text
                 text={'BUYBACK  overview '}
@@ -227,13 +228,15 @@ export const RedemptionForm: FC<TAb> = (props) => {
                 </LockOverviewStylesItem>
               </LockOverviewStyles>
             </div>
+            <div style={{ marginTop: 20 }}>
+              <Alert />
+            </div>
             <DurationWrapper>
-                <ConfirmButton
-                  disableStatus={!values.amount && !value}
-                  eventClick={handleSubmit}
-                  text="Confirm"
-                  style={{ marginTop: 20 }}
-                />
+              <ConfirmButton
+                eventClick={handleSubmit}
+                text="Confirm"
+                style={{ marginTop: 20 }}
+              />
             </DurationWrapper>
           </Form>
         )

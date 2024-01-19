@@ -1,6 +1,6 @@
-import { useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 import { SendRedeemID } from '../services'
 
-export const useSend = (transactionId: string | number) => {
-    return useQuery('SendRedeem', () => SendRedeemID.get(`${transactionId}`), { enabled: !!transactionId })
-}
+
+export const useSend = () =>
+    useMutation('SendSDSD', SendRedeemID.send)
