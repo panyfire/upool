@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Staking;
 use App\Entity\Transaction;
+use App\Service\CurrencyApi;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Monolog\Logger;
@@ -12,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class TransactionController  extends AbstractController
 {
@@ -56,7 +59,10 @@ class TransactionController  extends AbstractController
         return new JsonResponse(['status' => true]);
     }
 
-    public function get(EntityManagerInterface $manager, Request $request, string $wallet = ''): Response
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function get(EntityManagerInterface $manager, Request $request, HttpClientInterface $client, string $wallet = '', ): Response
     {
         $transactions = $manager->getRepository(Transaction::class)->findBy(['wallet' => $wallet]);
 
@@ -67,6 +73,7 @@ class TransactionController  extends AbstractController
 
             try {
                 $staking=current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
+                $coinPriceInUsd = (new CurrencyApi($client))->getDollarInCoin($staking->getNameCoin());
                 $result['transactions'][]=[
                     'id'=>$transaction->getId(),
                     'asset'=>[
@@ -81,8 +88,8 @@ class TransactionController  extends AbstractController
                     'expectedProfit'=>$transaction->getExpectedProfit(),
                     'totalExpectedProfit'=>$transaction->getTotalExpectedProfit()
                 ];
-                $totalProfitProfile+=$transaction->getExpectedProfit();
-                $totalLockedProfile+=$transaction->getAmount();
+                $totalProfitProfile += $transaction->getExpectedProfit() * $coinPriceInUsd;
+                $totalLockedProfile += $transaction->getAmount() * $coinPriceInUsd;
 
 
                 if ($totalProfitProfile) {
