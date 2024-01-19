@@ -1,130 +1,141 @@
-import React, { FC } from 'react'
-
+import React, { FC, useState } from 'react'
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import {TableBody, TableHead, TableWrapper, TrHead} from "./styles";
-
-type TTAble = {
-  asset: string
-  totalAmount: string
-  realTimeAPR: number
-  duration: number
-  startLocking: string
-  endLocking: string
-  profitTheDay: number
-  expectedProfit: number
-}
-
-const defaultData: TTAble[] = [
-  {
-    asset: 'bnb',
-    totalAmount: '0.31717534 bnb',
-    realTimeAPR: 30,
-    duration: 90,
-    startLocking: '05/07/2023',
-    endLocking: '07/07/2023',
-    profitTheDay: 0.31717534,
-    expectedProfit: 0.31717534,
-  },
-  {
-    asset: 'bnb',
-    totalAmount: '0.31717534 bnb',
-    realTimeAPR: 30,
-    duration: 90,
-    startLocking: '05/07/2023',
-    endLocking: '07/07/2023',
-    profitTheDay: 0.31717534,
-    expectedProfit: 0.31717534,
-  },
-  {
-    asset: 'bnb',
-    totalAmount: '0.31717534 bnb',
-    realTimeAPR: 30,
-    duration: 90,
-    startLocking: '05/07/2023',
-    endLocking: '07/07/2023',
-    profitTheDay: 0.31717534,
-    expectedProfit: 0.31717534,
-  },
-]
+import { StakeButton } from 'ui'
+import { TableWrapper, TableHead, TableBody, TrHead, Img } from './styles'
+import { TTAble, ProfileTableData } from './types'
+import { Popup } from 'components'
+import { RedemptionForm } from 'modules/RedemptionForm'
 
 const columnHelper = createColumnHelper<TTAble>()
 
-const columns = [
-  columnHelper.accessor('asset', {
-    header: () => 'Asset',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor((row) => row.totalAmount, {
-    id: 'totalAmount',
-    cell: (info) => <i>{info.getValue()}</i>,
-    header: () => <span>Total Amount</span>,
-  }),
-  columnHelper.accessor('realTimeAPR', {
-    header: () => 'Real Time APR',
-    cell: (info) => info.renderValue(),
-  }),
-  columnHelper.accessor('duration', {
-    header: () => <span>Duration</span>,
-  }),
-  columnHelper.accessor('startLocking', {
-    header: 'Start Locking',
-  }),
-  columnHelper.accessor('endLocking', {
-    header: 'End Locking',
-  }),
-  columnHelper.accessor('profitTheDay', {
-    header: 'Profit The Day',
-  }),
-  columnHelper.accessor('expectedProfit', {
-    header: 'Expected Profit',
-  }),
-]
+export const Table: FC<ProfileTableData> = ({ dataTable }) => {
+  const [data, setData] = useState<TTAble>({})
+  const [stakeModalStatus, setStakeModal] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const arr = dataTable?.data?.data?.transactions?.length
+    ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      dataTable?.data?.data?.transactions
+    : []
 
-export const Table: FC = () => {
-  const [data] = React.useState(() => [...defaultData])
+  const columns = [
+    columnHelper.accessor('asset.coinIconUrl', {
+      header: () => '',
+      cell: (info) => (
+        <div>
+          <Img src={`${info.renderValue()}`} alt={''} />
+        </div>
+      ),
+    }),
+    columnHelper.accessor('asset.coinName', {
+      header: () => 'Asset',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('totalAmount', {
+      header: () => 'Total Amount',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('realTimeApr', {
+      header: () => 'Real-Time APR',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('duration', {
+      header: () => <span>Duration</span>,
+    }),
+    columnHelper.accessor('startLocking', {
+      header: 'Start locking',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('endLocking', {
+      header: 'End locking',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('expectedProfit', {
+      header: 'Expected profit',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('totalExpectedProfit', {
+      header: 'Total expected profit',
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor('redeem', {
+      header: ' ',
+      cell: () => <></>,
+    }),
+  ]
 
   const table = useReactTable({
-    data,
+    data: arr,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
   return (
-    <div style={{ color: 'white' }} className="p-2">
-      <TableWrapper>
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TrHead key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </TrHead>
-          ))}
-        </TableHead>
-        <TableBody>
-          {table.getRowModel().rows.map((row) => (
+    <TableWrapper>
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TrHead key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <th key={header.id}>
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+              </th>
+            ))}
+          </TrHead>
+        ))}
+      </TableHead>
+      <TableBody>
+        {table.getRowModel().rows.map((row) => (
+          <>
             <TrHead key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+                <>
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                </>
               ))}
+              <div style={{ position: 'absolute', right: 0 }}>
+                <StakeButton
+                  onClick={() => {
+                    setData(row.original)
+                    setStakeModal(true)
+                  }}
+                  style={{ width: 125, height: 40 }}
+                  text="REDEEM"
+                />
+              </div>
             </TrHead>
-          ))}
-        </TableBody>
-      </TableWrapper>
-      <div className="h-4" />
-    </div>
+            {stakeModalStatus && (
+              <Popup
+                title={`Redemption ETH`}
+                onClick={() => {
+                  setStakeModal(false)
+                  setData({})
+                }}
+              >
+                <RedemptionForm
+                  id={Number(data.id)}
+                  amount={0}
+                  totalAmount={String(data.totalAmount)}
+                  duration={String(data.duration)}
+                  endLocking={String(data.endLocking)}
+                  popupCallback={setStakeModal}
+                />
+              </Popup>
+            )}
+          </>
+        ))}
+      </TableBody>
+    </TableWrapper>
   )
 }

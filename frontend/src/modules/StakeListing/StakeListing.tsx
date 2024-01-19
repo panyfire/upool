@@ -6,9 +6,9 @@ import { useMetaMask } from 'hooks/useMetaMask'
 import { Layout } from 'layouts/Layout'
 import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
-import { Text } from 'ui'
 import { ItemWrapper, ListingWrapper } from './styles'
 import { chainIdName } from 'utils'
+import { LoaderWrapper } from 'layouts/LoaderWrapper'
 
 type TResponse = {
   nameCoin: string
@@ -38,10 +38,11 @@ export const StakeListing: FC = () => {
   }, [wallet.chainId, data])
 
   return (
-    <>
+    <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
       <Layout>
         <ListingWrapper>
-          {Array.isArray(data) && data.length ? (
+          {Array.isArray(data) &&
+            data.length &&
             data.map((e: TResponse, i: number) => {
               return (
                 <ItemWrapper key={i}>
@@ -68,12 +69,12 @@ export const StakeListing: FC = () => {
                         duration={e.duration}
                         durations={e.durations}
                         apr={e.apr}
-                        expectedRoi={String(e.expectedRoi) }
+                        expectedRoi={String(e.expectedRoi)}
                         maxArpPercent={e.maxArpPercent}
                         minArpPercent={e.minArpPercent}
                         percents={e.percents}
                         rangeValue={'25'}
-                        amount={String(e.amount) }
+                        amount={String(e.amount)}
                         errorStatus={false}
                         startLocking={''}
                         endLocking={''}
@@ -83,10 +84,7 @@ export const StakeListing: FC = () => {
                   )}
                 </ItemWrapper>
               )
-            })
-          ) : (
-            <Text type={'h3'} text={'No Data'} />
-          )}
+            })}
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -101,6 +99,6 @@ export const StakeListing: FC = () => {
           />
         </ListingWrapper>
       </Layout>
-    </>
+    </LoaderWrapper>
   )
 }

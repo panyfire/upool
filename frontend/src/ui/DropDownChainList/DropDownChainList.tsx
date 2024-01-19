@@ -17,18 +17,140 @@ export const DropDownChainList: FC<IButton> = (props) => {
   const [, setValue] = useState<string>('')
 
   const chainIDS = [
-    { name: 'Ethereum Mainnet', id: '0x1' },
-    { name: 'Linea Mainnet', id: '0xe708' },
-    { name: 'Goerli', id: '0x5' },
+    {
+      chainName: 'Ethereum Mainnet',
+      id: '0x1',
+      nativeCurrency: {
+        name: 'Ether',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+      blockExplorerUrls: ['https://etherscan.io'],
+      iconUrls: ['https://path.to.your.icon.eth'],
+    },
+    {
+      chainName: 'Bitcoin',
+      id: '0x2',
+      nativeCurrency: {
+        name: 'Bitcoin',
+        symbol: 'BTC',
+        decimals: 8,
+      },
+      rpcUrls: ['https://bitcoin-mainnet.infura.io/v3/YOUR_INFURA_KEY'],
+      blockExplorerUrls: ['https://blockchain.info'],
+      iconUrls: ['https://path.to.your.icon.btc'],
+    },
+    {
+      chainName: 'Arbitrum',
+      id: '0xa4b1',
+      nativeCurrency: {
+        name: 'Arbitrum',
+        symbol: 'ARB',
+        decimals: 18,
+      },
+      rpcUrls: ['https://arbitrum-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+      blockExplorerUrls: ['https://arbiscan.io'],
+      iconUrls: ['https://path.to.your.icon.arb'],
+    },
+    {
+      chainName: 'Optimism',
+      id: '0xa869',
+      nativeCurrency: {
+        name: 'Optimism',
+        symbol: 'OP',
+        decimals: 18,
+      },
+      rpcUrls: ['https://optimism-goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+      blockExplorerUrls: ['https://optimistic.etherscan.io'],
+      iconUrls: ['https://path.to.your.icon.op'],
+    },
+    {
+      chainName: 'Polygon',
+      id: '0x89',
+      nativeCurrency: {
+        name: 'Polygon',
+        symbol: 'MATIC',
+        decimals: 18,
+      },
+      rpcUrls: [
+        'https://polygon-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
+        'https://matic-mainnet.chainstacklabs.com',
+      ],
+      blockExplorerUrls: ['https://polygonscan.com'],
+      iconUrls: ['https://path.to.your.icon.matic'],
+    },
+    {
+      chainName: 'BNB',
+      id: '0x38',
+      nativeCurrency: {
+        name: 'BNB',
+        symbol: 'BNB',
+        decimals: 18,
+      },
+      rpcUrls: ['https://bsc-dataseed.binance.org'],
+      blockExplorerUrls: ['https://bscscan.com'],
+      iconUrls: ['https://path.to.your.icon.bnb'],
+    },
+    {
+      chainName: 'Linea Mainnet',
+      id: '0xe708',
+      nativeCurrency: {
+        name: 'Ether',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: [
+        'https://linea-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
+      ], // List of RPC endpoints
+      blockExplorerUrls: ['https://etherscan.io'], // List of block explorer URLs,
+      iconUrls: ['https://path.to.your.icon.eth'],
+    },
+    {
+      chainName: 'Goerli',
+      id: '0x5',
+      nativeCurrency: {
+        name: 'Ether',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: [
+        'https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682',
+      ], // List of RPC endpoints
+      blockExplorerUrls: ['https://etherscan.io'], // List of block explorer URLs,
+      iconUrls: ['https://path.to.your.icon.eth'],
+    },
   ]
 
-  const handleChangeChainId = async (id: string) => {
+  type InactiveCurrency = {
+    name?: string
+    symbol?: string
+    decimals?: number | undefined
+  }
+
+  const handleChangeChainId = async (
+    chainId: string,
+    chainName: string,
+    nativeCurrency: InactiveCurrency,
+    rpcUrls: string[],
+    blockExplorerUrls: string[],
+    iconUrls: string[]
+  ) => {
     try {
       await window?.ethereum?.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: id }],
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainId,
+            chainName,
+            nativeCurrency,
+            rpcUrls,
+            blockExplorerUrls,
+            iconUrls,
+          },
+        ],
       })
-      setValue(id)
+      setValue(chainId)
     } catch (error) {
       console.error(error)
     }
@@ -52,11 +174,18 @@ export const DropDownChainList: FC<IButton> = (props) => {
               return (
                 <MenuItem
                   onClick={() => {
-                    handleChangeChainId(e.id).then(() => setOpen(false))
+                    handleChangeChainId(
+                      e.id,
+                      e.chainName,
+                      e.nativeCurrency,
+                      e.rpcUrls,
+                      e.blockExplorerUrls,
+                      e.iconUrls
+                    ).then(() => setOpen(false))
                   }}
                   key={i}
                 >
-                  <Text text={e.name} type={'default'} />
+                  <Text text={e.chainName} type={'default'} />
                 </MenuItem>
               )
             })}

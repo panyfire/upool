@@ -7,7 +7,7 @@ export const HeaderStyled = styled.menu`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(6, 6, 6, 0.72);
+  //background: rgba(6, 6, 6, 0.72);
 `
 
 export const Additional = styled.div`

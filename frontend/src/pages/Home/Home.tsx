@@ -1,28 +1,30 @@
 import React from 'react'
 import { GradientBackground } from 'layouts/GradientBackground'
-import { Banner, StakeListing } from 'modules'
+import { Banner, Footer, StakeListing } from 'modules'
 import { HeaderLayout } from 'layouts/HeaderLayout'
-import { toast } from 'react-toastify'
+import { LoaderWrapper } from 'layouts/LoaderWrapper'
+import { useMetaMask } from 'hooks/useMetaMask'
+import { useGetStakeList } from 'modules/StakeListing/api/hooks'
+import { Layout } from 'layouts/Layout'
 
 export const Home = () => {
-  const notify = () =>
-    toast('🦄 Wow so easy!', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    })
+  const { wallet } = useMetaMask()
+  const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
+  const { isLoading } = dataResponse
+
   return (
     <GradientBackground>
-      <HeaderLayout>
-        <div onClick={notify}>HELLLLLLLLLO</div>
-        <Banner />
-        <StakeListing />
-      </HeaderLayout>
+      <LoaderWrapper isLoad={Boolean(wallet?.accounts?.length) && isLoading}>
+        <HeaderLayout>
+          <Banner />
+          <StakeListing />
+          <div style={{ marginBottom: 100 }}>
+            <Layout>
+              <Footer />
+            </Layout>
+          </div>
+        </HeaderLayout>
+      </LoaderWrapper>
     </GradientBackground>
   )
 }

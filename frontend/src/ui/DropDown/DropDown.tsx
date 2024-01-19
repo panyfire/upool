@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { IButton } from './types'
-import { useMetaMask } from 'hooks/useMetaMask'
 import { Icon, Text } from 'ui'
 import {
   ButtonStyled,
@@ -16,7 +15,29 @@ import {
 export const DropDown: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
-  const { handleLogout } = useMetaMask()
+
+  const handleLogout = async () => {
+    try {
+      const provider = window?.ethereum
+      if (provider) {
+        await provider.request({
+          method: 'wallet_requestPermissions',
+          params: [
+            {
+              eth_accounts: {
+                // Указываем пустой массив аккаунтов для блокировки
+                // чтобы пользователь не видел свои аккаунты в виджете MetaMask
+                // и не мог выбрать их для подтверждения транзакции
+                accounts: [],
+              },
+            },
+          ],
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div style={{ position: 'relative' }}>
@@ -38,11 +59,16 @@ export const DropDown: FC<IButton> = (props) => {
                 <Icon size={'32'} name={'user'} />
               </MenuItem>
             </Link>
-            <MenuItem onClick={() => {
-              handleLogout()
-              setOpen(false)
-            }}>
-              <Text text={`Disconnect`} type={'default'} />
+            <MenuItem
+              onClick={() => {
+                handleLogout()
+                setOpen(false)
+              }}
+            >
+              <div onClick={() => handleLogout()}>
+                <Text text={`Disconnect`} type={'default'} />
+              </div>
+
               <Icon size={'32'} name={'exit'} />
             </MenuItem>
           </MeniList>

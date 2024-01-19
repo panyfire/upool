@@ -1,3 +1,7 @@
 export { Home } from './Home'
 export { Profile } from './Profile'
 export { Error } from './Error'
+export { FAQ } from './FAQ'
+export { Security } from './Security'
+export { PrivacyPolicy } from './PrivacyPolicy'
+export { Trademark } from './Trademark'

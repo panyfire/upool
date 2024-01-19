@@ -20,6 +20,12 @@ export const AmountWrapper = styled.div`
   justify-content: space-between;
 `
 
+export const Line = styled.div`
+  width:100%;
+  background-color: red;
+  height: 2px
+`
+
 export const MaxBtn = styled.div`
   position: absolute;
   right: 11px;
@@ -67,6 +73,7 @@ export const TabListWrapper = styled.div`
 
 export const RangeWrapper = styled.div`
   margin-top: 33px;
+  position: relative;
 `
 
 export const DurationWrapper = styled.div`

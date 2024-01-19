@@ -1,52 +1,90 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { Text } from 'ui'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
+import { useMetaMask } from 'hooks/useMetaMask'
+import { useGetTableData } from 'modules/ProfileTable/api/hooks'
+import { ConfirmButton, Icon, Text } from 'ui'
 import { GradientBackground } from 'layouts/GradientBackground'
 import { HeaderLayout } from 'layouts/HeaderLayout'
-import { useMetaMask } from 'hooks/useMetaMask'
 import { Layout } from 'layouts/Layout'
 import { Table, WalletInfo } from 'components'
-import { WalletsContainer } from './styles'
-
+import { WalletContainer, WalletsContainer } from './styles'
+import { LoaderWrapper } from 'layouts/LoaderWrapper'
+import { BtnWrapper } from '../styles'
 
 export const Profile = () => {
-  const { wallet,  } = useMetaMask()
-  const navigate = useNavigate();
+  const { wallet } = useMetaMask()
+  const tableData = wallet && useGetTableData(wallet?.accounts[0])
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!wallet?.accounts.length) {
-      navigate('/')
-    }
-  }, [wallet])
+  const notify = (text: string) =>
+    toast(text, {
+      position: 'bottom-right',
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
 
-  return (
-    <HeaderLayout>
-      <GradientBackground>
-        <Layout>
-          <div>
-            <Text text={'YOUR ADRESS'} type={'h4'} />
-            <Text text={wallet?.accounts[0]} type={'h41'} />
-            <WalletsContainer>
-              <WalletInfo
-                title="LOCKERD"
-                value="0.0000000 BTC"
-                convertValue="≈ $0.00"
-              />
-              <WalletInfo
-                title="Total Profit"
-                value="0.0000000 BTC"
-                convertValue="≈ $0.00"
-              />
-              <WalletInfo
-                title="Last Day Profit"
-                value="0.0000000 BTC"
-                convertValue="≈ $0.00"
-              />
-            </WalletsContainer>
-            <Table />
-          </div>
-        </Layout>
-      </GradientBackground>
-    </HeaderLayout>
-  )
+  const handleClick = () => {
+    navigator.clipboard.writeText(wallet?.accounts[0])
+    notify('Text is copy')
+  }
+
+  const table = tableData?.data?.data
+
+  return wallet && tableData ? (
+    <LoaderWrapper isLoad={tableData.isLoading || !wallet.accounts.length}>
+      <HeaderLayout>
+        <GradientBackground>
+          <Layout>
+            <div style={{ marginTop: 70 }}>
+              <div>
+                <Text text={'YOUR ADDRESS'} type={'h4'} />
+                <BtnWrapper>
+                  <ConfirmButton onClick={() => navigate('/')} text={'to home'} />
+                </BtnWrapper>
+              </div>
+
+              <WalletContainer>
+                <Text color={'white'} text={wallet?.accounts[0]} type={'h41'} />
+                <div onClick={handleClick}>
+                  <Icon name={'copy'} size={'32'} />
+                </div>
+              </WalletContainer>
+              <WalletsContainer>
+                <WalletInfo
+                  color={'#BEA0FD'}
+                  title="LOCKED"
+                  value={`${table?.totalLockedProfile || 'wait...'}`}
+                />
+                <WalletInfo
+                  title="TOTAL PROFIT"
+                  value={`${table?.totalProfitProfile || 'wait...'}`}
+                />
+              </WalletsContainer>
+              <div>
+                <Table dataTable={tableData} />
+              </div>
+            </div>
+          </Layout>
+        </GradientBackground>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </HeaderLayout>
+    </LoaderWrapper>
+  ) : null
 }

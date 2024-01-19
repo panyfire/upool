@@ -9,7 +9,7 @@ export const CardWrapper = styled.div`
   align-items: center;
   --background-color: #060606;
   --border-color: linear-gradient(to bottom right, #916aff, #fbcc72);
-  --border-width: 0.1em;
+  --border-width: 0.2em;
   --edge-size: 1em;
   cursor: pointer;
   background: var(--background-color);

@@ -5,6 +5,9 @@ export const Background = styled.div`
   width: 100%;
   height: 100%;
   background: #000003;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 export const PinkELement = styled.div`

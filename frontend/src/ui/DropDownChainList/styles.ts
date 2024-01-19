@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ButtonStyled = styled.button`
-  height: 58px;
+  height: 44px;
   position: relative;
   width: 200px;
   display: flex;
@@ -75,7 +75,6 @@ export const IconWrapper = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-  bottom: -140px;
   width: 100%;
   background: rgba(255, 255, 255, 0.08);
   z-index: 100;

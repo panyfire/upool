@@ -1,10 +1,11 @@
 import React, { FC, useState } from 'react'
 import { Tab, TabList, Tabs } from 'react-tabs'
+import { toast } from 'react-toastify'
 import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
-import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
-import { toast } from 'react-toastify'
+import {ConfirmButton, Icon, Input, InputRange, Text} from 'ui'
+import 'react-rangeslider/lib/index.css'
 import {
   AmountWrapper,
   DurationWrapper,
@@ -19,6 +20,7 @@ import {
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdName } from 'utils'
+import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 
 type TAb = {
   nameCoin?: string
@@ -106,6 +108,7 @@ export const StakeForm: FC<TAb> = (props) => {
   const [dtab, dsetTabIndex] = useState(1)
 
   const { wallet } = useMetaMask()
+  const tableData = wallet && useGetTableData(wallet?.accounts[0])
 
   const initialValueForm: TAb = {
     id: id,
@@ -128,7 +131,6 @@ export const StakeForm: FC<TAb> = (props) => {
   const sendSuccessTransaction = (data: unknown) => mutateAsync(data)
   const [, setLoadingTransaction] = useState<boolean>(false)
 
-
   const notify = (text: string) =>
     toast(text, {
       position: 'bottom-right',
@@ -145,6 +147,7 @@ export const StakeForm: FC<TAb> = (props) => {
     sendSuccessTransaction(data).then(() => {
       popUpCallback && popUpCallback()
       setLoadingTransaction(false)
+      tableData.refetch()
       notify('Transaction confirmed')
     })
   }
@@ -158,10 +161,10 @@ export const StakeForm: FC<TAb> = (props) => {
       // @ts-ignore
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-
       const transaction = {
         to: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-        value: ethers.utils.parseEther(`${amount}`),
+
+        value: ethers.utils.parseEther(String(amount).slice(0, 13)),
         // from: '0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633',
       }
 
@@ -170,13 +173,12 @@ export const StakeForm: FC<TAb> = (props) => {
         .then((transactionResponse) => {
           // This callback is called when the transaction is first sent to the network
           setLoadingTransaction(true)
-          console.log('Транзакция отправлена:', transactionResponse)
           notify('Transaction sent')
+          popUpCallback && popUpCallback()
           return transactionResponse.wait() // Wait for the transaction to be mined
         })
         .then((receipt) => {
           // This callback is called when the transaction is confirmed on the network
-          console.log('Транзакция потверждена:', receipt)
           // You can perform additional actions here after the transaction is confirmed
           const response = {
             wallet: receipt.from,
@@ -247,9 +249,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
                 helperText={touched.amount && errors.amount}
-                onChange={(e: HTMLElement) => {
-                  handleChange(e)
-                }}
+                onChange={handleChange}
               />
               <MaxBtn
                 onClick={() => {
@@ -266,6 +266,7 @@ export const StakeForm: FC<TAb> = (props) => {
               <Text text={wallet?.balance} type={'card'} />
             </FormBalance>
             <RangeWrapper>
+
               <InputRange
                 name="rangeValue"
                 max={'100'}
@@ -381,14 +382,12 @@ export const StakeForm: FC<TAb> = (props) => {
                 endLocking={values.endLocking}
               />
 
-              <div style={{ marginTop: 20 }}>
-                <ConfirmButton
-                  disableStatus={!Number(values.amount)}
-                  eventClick={handleSubmit}
-                  text={'Confirm'}
-                  style={{ marginTop: 76 }}
-                />
-              </div>
+              <ConfirmButton
+                disableStatus={!Number(values.amount)}
+                eventClick={handleSubmit}
+                text={'Confirm'}
+                style={{ marginTop: 20 }}
+              />
             </DurationWrapper>
           </Form>
         )

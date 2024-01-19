@@ -28,7 +28,7 @@ type MetaMaskContextData = {
   isConnecting: boolean
   connectMetaMask: () => void
   clearError: () => void
-  handleLogout: any
+  handleLogout?: any
   sendBitcoin: any
 }
 
@@ -59,9 +59,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       providedAccounts ||
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
-      (await window?.ethereum.request({ method: 'eth_accounts' }))
+      (await window?.ethereum?.request({ method: 'eth_accounts' }))
 
-    if (accounts.length === 0) {
+    if (accounts?.length === 0) {
       // If there are no accounts, then the user is disconnected
       setWallet(disconnectedState)
       return
@@ -158,22 +158,6 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       theme: 'dark',
     })
 
-  const handleLogout = async () => {
-    try {
-      const provider = window?.ethereum
-      if (provider) {
-        await provider.request({
-          method: 'wallet_requestPermissions',
-          params: [{ eth_accounts: [] }],
-        })
-        // Блокируем аккаунты в виджете MetaMask
-        await provider.request({ method: 'eth_accounts', params: [] })
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const sendBitcoin = async () => {
     try {
       // Проверяем доступность MetaMask
@@ -197,13 +181,10 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         //   },
         // ]);
         notify('Транзакция успешно отправлена')
-        // console.log('Транзакция успешно отправлена. Хеш транзакции:')
       } else {
-        // console.log('MetaMask не доступен')
         notify('MetaMask не доступен')
       }
     } catch (error) {
-      // console.log('Ошибка:', error)
       notify(String(error))
     }
   }
@@ -219,7 +200,6 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting,
         connectMetaMask,
         clearError,
-        handleLogout,
         sendBitcoin,
       }}
     >

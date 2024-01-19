@@ -36,10 +36,3 @@ export const Field = styled.input`
 export const Label = styled.label`
   color: white;
 `
-
-export const BtnMaxWrapper = styled.div`
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  cursor: pointer;
-`

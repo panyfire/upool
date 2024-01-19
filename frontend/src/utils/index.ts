@@ -18,6 +18,16 @@ export const chainIdName = (hash: string) => {
       return 'Ethereum Mainnet'
     case '0x5':
       return 'Goerli'
+    case '0x38':
+      return 'BNB'
+    case '0x89':
+      return 'Polygon'
+    case '0xa869':
+      return 'Optimism'
+    case '0xa4b1':
+      return 'Arbitrum'
+    case '0x2':
+      return 'Bitcoin'
   }
 }
 
