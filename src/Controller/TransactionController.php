@@ -42,9 +42,9 @@ class TransactionController  extends AbstractController
         }
 
         $transaction = new Transaction();
-        $transaction->setStartLocking((new \DateTime())->format('Y-m-d H:i:s'));
+        $transaction->setStartLocking((new \DateTime())->format('d/m/Y'));
         $transaction->setEndLocking((new \DateTime())
-            ->modify('+' . $params['duration'] . ' days')->format('Y-m-d H:i:s'));
+            ->modify('+' . $params['duration'] . ' days')->format('d/m/Y'));
         foreach ($params as $nameParam => $valueParam) {
             $methodName = 'set' . ucfirst($nameParam);
             $transaction->$methodName($valueParam);
@@ -69,8 +69,9 @@ class TransactionController  extends AbstractController
         $result = [];
         $totalProfitProfile = 0;
         $totalLockedProfile = 0;
+        $totalProfitProfileInUsd = 0;
+        $totalLockedProfileInUseInUsd = 0;
         foreach ($transactions as $transaction) {
-
             try {
                 $staking=current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
                 $coinPriceInUsd = (new CurrencyApi($client))->getDollarInCoin($staking->getNameCoin());
@@ -86,11 +87,15 @@ class TransactionController  extends AbstractController
                     'startLocking'=>$transaction->getStartLocking(),
                     'endLocking'=>$transaction->getEndLocking(),
                     'expectedProfit'=>$transaction->getExpectedProfit(),
-                    'totalExpectedProfit'=>$transaction->getTotalExpectedProfit()
+                    'totalExpectedProfit'=>$transaction->getTotalExpectedProfit(),
+                    'isRedeemed' => $transaction->getIsRedeemed()
                 ];
-                $totalProfitProfile += $transaction->getExpectedProfit() * $coinPriceInUsd;
-                $totalLockedProfile += $transaction->getAmount() * $coinPriceInUsd;
 
+                $totalProfitProfileInUsd += $transaction->getExpectedProfit() * $coinPriceInUsd;
+                $totalLockedProfileInUseInUsd += $transaction->getAmount() * $coinPriceInUsd;
+
+                $totalProfitProfile += $transaction->getExpectedProfit();
+                $totalLockedProfile += $transaction->getAmount();
 
                 if ($totalProfitProfile) {
                     $result['totalProfitProfile']=$totalProfitProfile;
@@ -98,6 +103,14 @@ class TransactionController  extends AbstractController
 
                 if ($totalLockedProfile) {
                     $result['totalLockedProfile']=$totalLockedProfile;
+                }
+
+                if ($totalProfitProfile) {
+                    $result['totalProfitProfileInUsd']=$totalProfitProfileInUsd;
+                }
+
+                if ($totalLockedProfile) {
+                    $result['totalLockedProfileInUseInUsd']=$totalLockedProfileInUseInUsd;
                 }
             } catch (\Throwable $exception) {
                 continue;

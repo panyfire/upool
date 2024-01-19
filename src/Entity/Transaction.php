@@ -78,7 +78,7 @@ class Transaction extends AbstarctEntity
 
     public function getAmount(): ?float
     {
-        return $this->amount;
+        return round($this->amount, 12);
     }
 
     public function setAmount(float $amount): static
