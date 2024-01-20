@@ -21,6 +21,9 @@ class Transaction extends AbstarctEntity
     private int $stakeId;
 
     #[ORM\Column(length: 15)]
+    private string $chainId;
+
+    #[ORM\Column(length: 15)]
     private int $apr;
 
     #[ORM\Column(length: 100)]
@@ -73,6 +76,18 @@ class Transaction extends AbstarctEntity
     public function setStakeId(int $stakeId): static
     {
         $this->stakeId = $stakeId;
+
+        return $this;
+    }
+
+    public function getChainId(): ?string
+    {
+        return $this->chainId;
+    }
+
+    public function setChainId(string $chainId): static
+    {
+        $this->chainId = $chainId;
 
         return $this;
     }

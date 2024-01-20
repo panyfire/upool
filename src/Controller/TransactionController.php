@@ -28,6 +28,7 @@ class TransactionController  extends AbstractController
         $mapping = [
             'wallet',
             'stakeId',
+            'chainId',
             'amount',
             'duration',
             'transactionHash',
@@ -46,13 +47,15 @@ class TransactionController  extends AbstractController
         $transaction->setStartLocking((new \DateTime())->format('d/m/Y'));
         $transaction->setEndLocking((new \DateTime())
             ->modify('+' . $params['duration'] . ' days')->format('d/m/Y'));
+
         foreach ($params as $nameParam => $valueParam) {
             $methodName = 'set' . ucfirst($nameParam);
             $transaction->$methodName($valueParam);
-            $expectedProfit = (float)$params['amount'] * ((float)$params['apr'] / 100);
-            $transaction->setTotalExpectedProfit((float)$params['amount'] + $expectedProfit);
-            $transaction->setExpectedProfit($expectedProfit);
         }
+
+        $expectedProfit = (float)$params['amount'] * ((float)$params['apr'] / 100);
+        $transaction->setTotalExpectedProfit((float)$params['amount'] + $expectedProfit);
+        $transaction->setExpectedProfit($expectedProfit);
 
         $manager->persist($transaction);
         $manager->flush();
@@ -63,9 +66,9 @@ class TransactionController  extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    public function get(EntityManagerInterface $manager, Request $request, HttpClientInterface $client, string $wallet = '', ): Response
+    public function get(EntityManagerInterface $manager, Request $request, HttpClientInterface $client, string $wallet = '', string $chainId = ''): Response
     {
-        $transactions = $manager->getRepository(Transaction::class)->findBy(['wallet' => $wallet]);
+        $transactions = $manager->getRepository(Transaction::class)->findBy(['wallet' => $wallet, 'chainId' => $chainId]);
 
         $result = [];
         $totalProfitProfile = 0;
@@ -76,12 +79,14 @@ class TransactionController  extends AbstractController
             try {
                 $staking=current($manager->getRepository(Staking::class)->findBy(['id'=>$transaction->getStakeId()]));
                 $coinPriceInUsd = (new CurrencyApi($client))->getDollarInCoin($staking->getNameCoin());
+
                 $result['transactions'][]=[
                     'id'=>$transaction->getId(),
                     'asset'=>[
-                        'coinName'=>$staking->getNameCoin(),
+                        'coinName'=>$staking->getNameCoin() ?? null,
                         'coinIconUrl'=>$staking->getIconCoinUrl()
                     ],
+                    'chainId' => $transaction->getChainId(),
                     'totalAmount'=>$transaction->getAmount(),
                     'realTimeApr'=>$transaction->getApr(),
                     'duration'=>$transaction->getDuration(),
@@ -114,6 +119,7 @@ class TransactionController  extends AbstractController
                     $result['totalLockedProfileInUseInUsd'] = PriceHelper::convertFloatToString($totalLockedProfileInUseInUsd);
                 }
             } catch (\Throwable $exception) {
+                $result['error'] = $exception->getMessage();
                 continue;
             }
         }

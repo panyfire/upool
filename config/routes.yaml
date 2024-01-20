@@ -15,7 +15,7 @@ api_transaction:
     controller: App\Controller\TransactionController::add
     methods: POST|HEAD
 api_get_transaction:
-    path: /api/transaction/get/{wallet}
+    path: /api/transaction/get/{wallet}/{chainId}
     controller: App\Controller\TransactionController::get
     methods: GET|HEAD
 api_redeem_transaction:

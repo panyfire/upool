@@ -190,7 +190,8 @@ class AppFixtures extends Fixture
         $payload = [
             [
                 'wallet' => '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-                'stakeId' => '69',
+                'stakeId' => '92',
+                'chainId' => '0x5',
                 'amount' => 0.0002,
                 'duration' => 30,
                 'apr' => 30,
@@ -202,7 +203,9 @@ class AppFixtures extends Fixture
             ],
             [
                 'wallet' => '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-                'stakeId' => '70',
+                'stakeId' => '93',
+                'isRedeemed' => true,
+                'chainId' => '0x5',
                 'amount' => 0.03,
                 'duration' => 60,
                 'apr' => 50,
@@ -214,7 +217,9 @@ class AppFixtures extends Fixture
             ],
             [
                 'wallet' => '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-                'stakeId' => '69',
+                'stakeId' => '95',
+                'isRedeemed' => true,
+                'chainId' => '0x5',
                 'amount' => 1.02,
                 'duration' => 50,
                 'apr' => 30,
@@ -226,7 +231,9 @@ class AppFixtures extends Fixture
             ],
             [
                 'wallet' => '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-                'stakeId' => '69',
+                'stakeId' => '96',
+                'isRedeemed' => true,
+                'chainId' => '0x1',
                 'amount' => 0.0002,
                 'duration' => 30,
                 'apr' => 30,
@@ -242,6 +249,7 @@ class AppFixtures extends Fixture
             $staking = new Transaction();
             $staking->setWallet($transaction['wallet']);
             $staking->setStakeId($transaction['stakeId']);
+            $staking->setChainId($transaction['chainId']);
             $staking->setAmount(($transaction['amount']));
             $staking->setDuration($transaction['duration']);
             $staking->setApr($transaction['apr']);
