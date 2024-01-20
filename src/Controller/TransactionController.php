@@ -112,12 +112,14 @@ class TransactionController  extends AbstractController
                 }
 
                 if ($totalProfitProfile) {
-                    $result['totalProfitProfileInUsd'] = PriceHelper::convertFloatToString($totalProfitProfileInUsd);
+                    $result['totalProfitProfileInUsd'] = number_format($totalProfitProfileInUsd, 2, '.', ' ');
                 }
 
                 if ($totalLockedProfile) {
-                    $result['totalLockedProfileInUseInUsd'] = PriceHelper::convertFloatToString($totalLockedProfileInUseInUsd);
+                    $result['totalLockedProfileInUseInUsd'] = number_format($totalLockedProfileInUseInUsd, 2, '.', ' ');
                 }
+
+
             } catch (\Throwable $exception) {
                 $result['error'] = $exception->getMessage();
                 continue;
