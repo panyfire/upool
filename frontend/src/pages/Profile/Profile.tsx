@@ -18,11 +18,12 @@ export const Profile = () => {
   const tableData = wallet
     ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
     : null
+  console.log(tableData)
   const navigate = useNavigate()
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  const { data } = tableData
+  const { data, refetch } = tableData
 
   const notify = (text: string) =>
     toast(text, {
@@ -69,7 +70,6 @@ export const Profile = () => {
                 </BtnWrapper>
                 <Text text={'YOUR ADDRESS'} type={'h4'} />
               </BackLink>
-
               <WalletContainer>
                 <Text color={'white'} text={wallet?.accounts[0]} type={'h41'} />
                 <div onClick={handleClick}>
@@ -100,17 +100,21 @@ export const Profile = () => {
                 />
               </WalletsContainer>
               <div>
-                {!tableData?.isLoading && data?.data?.length > 0 ? (
-                  <Table dataTable={tableData} />
+                {!tableData?.isLoading &&
+                data?.data?.transactions.length > 0 ? (
+                  <Table
+                    refetch={() => refetch()}
+                    dataTable={tableData}
+                  />
                 ) : (
-                  !tableData?.isLoading &&
-                  !data?.data && (
+                  !tableData?.isLoading && (
                     <Text type={'h3'} color={'white'} text={'Loading'} />
                   )
                 )}
-                {tableData?.isLoading && data?.data.length === 0 && (
-                  <Text type={'h3'} color={'white'} text={'No data'} />
-                )}
+                {!tableData?.isLoading &&
+                  data?.data?.transactions.length === 0 && (
+                    <Text type={'h3'} color={'white'} text={'No data'} />
+                  )}
               </div>
             </div>
           </Layout>

@@ -23,5 +23,6 @@ export type ProfileTableData = {
   totalProfitProfile?: number
   totalLockedProfile?: number
   status?: boolean
-  dataTable?: TTAble[] | undefined | unknown
+  dataTable?: TTAble[] | unknown
+  refetch?: () => void
 }

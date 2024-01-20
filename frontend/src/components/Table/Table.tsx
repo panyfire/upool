@@ -13,7 +13,7 @@ import { RedemptionForm } from 'modules/RedemptionForm'
 
 const columnHelper = createColumnHelper<TTAble>()
 
-export const Table: FC<ProfileTableData> = ({ dataTable }) => {
+export const Table: FC<ProfileTableData> = ({ dataTable, refetch }) => {
   const [data, setData] = useState<TTAble>({})
   const [stakeModalStatus, setStakeModal] = useState(false)
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -22,7 +22,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
     ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       dataTable?.data?.data?.transactions
-    : 'No data'
+    : []
 
   const columns = [
     columnHelper.accessor('asset.coinIconUrl', {
@@ -111,6 +111,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
                   <StakeButton
                     onClick={() => {
                       setData(row.original)
+                      if (refetch) refetch()
                       setStakeModal(true)
                     }}
                     style={{ width: 125, height: 40 }}
@@ -135,6 +136,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
                   duration={String(data.duration)}
                   endLocking={String(data.endLocking)}
                   popupCallback={setStakeModal}
+                  refetch={refetch}
                 />
               </Popup>
             )}

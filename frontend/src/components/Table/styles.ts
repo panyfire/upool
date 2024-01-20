@@ -21,7 +21,8 @@ export const Img = styled.img`
 `
 
 export const TableHead = styled.thead`
-  padding: 40px;
+  padding: 30px 40px;
+  height: 78px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -86,6 +87,7 @@ export const TrHead = styled.tr`
   }
   & th {
     color: #1A1329;
+    font-family: 'GP Bold', serif;
     &:nth-child(1) {
       display: none
     }

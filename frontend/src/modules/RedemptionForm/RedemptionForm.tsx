@@ -1,24 +1,14 @@
 import React, { FC, useState } from 'react'
-// import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { ConfirmButton, Icon, Text } from 'ui'
 import { toast } from 'react-toastify'
 import {
-  // AmountWrapper,
   DurationWrapper,
-  // FormBalance,
   FormCoinInfo,
   FormTitle,
-  // MaxBtn,
   UnlocksWrapper,
-  // RangeWrapper,
-  // TabListWrapper,
-  // TabValue,
 } from './styles'
 
-// import { LockOverview } from 'components'
-// import { useMetaMask } from 'hooks/useMetaMask'
-// import { chainIdName } from 'utils'
 import {
   LockOverviewStyles,
   LockOverviewStylesItem,
@@ -36,10 +26,19 @@ type TAb = {
   popupCallback?: (e: boolean) => void
   transactionId?: string
   wallet?: string
+  refetch?: () => void
 }
 
 export const RedemptionForm: FC<TAb> = (props) => {
-  const { amount, totalAmount, duration, endLocking, id, popupCallback } = props
+  const {
+    amount,
+    totalAmount,
+    duration,
+    endLocking,
+    id,
+    popupCallback,
+    refetch,
+  } = props
   const { wallet } = useMetaMask()
 
   const initialValueForm: TAb = {
@@ -48,13 +47,13 @@ export const RedemptionForm: FC<TAb> = (props) => {
     duration,
     endLocking,
     id,
-    wallet: String(wallet?.accounts[0])
+    wallet: String(wallet?.accounts[0]),
   }
 
   const [, setValue] = useState(0)
 
   const { mutateAsync } = useSend()
-  const send = (data: TAb) => mutateAsync(data)
+  const send = (data: TAb) => mutateAsync(data).then(() => refetch && refetch())
 
   const notify = (text: string) =>
     toast(text, {
@@ -200,10 +199,7 @@ export const RedemptionForm: FC<TAb> = (props) => {
             </div>
             <DurationWrapper>
               <ConfirmButton
-                eventClick={(e) => {
-                  // setFieldValue()
-                  handleSubmit(e)
-                }}
+                eventClick={handleSubmit}
                 text="Confirm"
                 style={{ marginTop: 20 }}
               />
