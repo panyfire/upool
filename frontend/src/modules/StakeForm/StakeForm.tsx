@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
-import {ConfirmButton, Icon, Input, InputRange, Text} from 'ui'
+import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
 import 'react-rangeslider/lib/index.css'
 import {
   AmountWrapper,
@@ -108,7 +108,9 @@ export const StakeForm: FC<TAb> = (props) => {
   const [dtab, dsetTabIndex] = useState(1)
 
   const { wallet } = useMetaMask()
-  const tableData = wallet && useGetTableData(wallet?.accounts[0])
+  const tableData = wallet.chainId
+    ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
+    : null
 
   const initialValueForm: TAb = {
     id: id,
@@ -147,8 +149,7 @@ export const StakeForm: FC<TAb> = (props) => {
     sendSuccessTransaction(data).then(() => {
       popUpCallback && popUpCallback()
       setLoadingTransaction(false)
-      tableData.refetch()
-      notify('Transaction confirmed')
+      tableData?.refetch()
     })
   }
   const handleTransaction = async (
@@ -163,7 +164,6 @@ export const StakeForm: FC<TAb> = (props) => {
       const signer = provider.getSigner()
       const transaction = {
         to: '0x8f412065Ad768f0f466Df98093F156D73DD3aB19',
-
         value: ethers.utils.parseEther(String(amount).slice(0, 13)),
         // from: '0xd8E4Adad8C6E4a09d435449a6003a3274ECF6633',
       }
@@ -172,9 +172,10 @@ export const StakeForm: FC<TAb> = (props) => {
         .sendTransaction(transaction)
         .then((transactionResponse) => {
           // This callback is called when the transaction is first sent to the network
+          localStorage.setItem('transactionResponse', transactionResponse.hash)
           setLoadingTransaction(true)
-          notify('Transaction sent')
           popUpCallback && popUpCallback()
+          notify('Transaction sent')
           return transactionResponse.wait() // Wait for the transaction to be mined
         })
         .then((receipt) => {
@@ -266,7 +267,6 @@ export const StakeForm: FC<TAb> = (props) => {
               <Text text={wallet?.balance} type={'card'} />
             </FormBalance>
             <RangeWrapper>
-
               <InputRange
                 name="rangeValue"
                 max={'100'}

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import { useMetaMask } from 'hooks/useMetaMask'
+import { checkTransactionStatus } from 'utils'
 import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 import { ConfirmButton, Icon, Text } from 'ui'
 import { GradientBackground } from 'layouts/GradientBackground'
@@ -10,13 +11,18 @@ import { Layout } from 'layouts/Layout'
 import { Table, WalletInfo } from 'components'
 import { WalletContainer, WalletsContainer } from './styles'
 import { LoaderWrapper } from 'layouts/LoaderWrapper'
-import { BtnWrapper } from '../styles'
+import { BackLink, BtnWrapper } from '../styles'
 
 export const Profile = () => {
   const { wallet } = useMetaMask()
-  const tableData = wallet && useGetTableData(wallet?.accounts[0])
-  console.log(tableData)
+  const tableData = wallet
+    ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
+    : null
   const navigate = useNavigate()
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const { data } = tableData
 
   const notify = (text: string) =>
     toast(text, {
@@ -36,6 +42,17 @@ export const Profile = () => {
   }
 
   const table = tableData?.data?.data
+  const transactionResponse = localStorage.getItem('transactionResponse')
+
+  useEffect(() => {
+    const interval = setTimeout(() => {
+      if (transactionResponse !== 'null' && tableData) {
+        checkTransactionStatus(String(transactionResponse), tableData.refetch)
+      }
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [transactionResponse, tableData])
 
   return wallet && tableData ? (
     <LoaderWrapper isLoad={tableData.isLoading || !wallet.accounts.length}>
@@ -43,15 +60,15 @@ export const Profile = () => {
         <GradientBackground>
           <Layout>
             <div style={{ marginTop: 70 }}>
-              <div>
-                <Text text={'YOUR ADDRESS'} type={'h4'} />
+              <BackLink>
                 <BtnWrapper>
                   <ConfirmButton
                     onClick={() => navigate('/')}
                     text={'to home'}
                   />
                 </BtnWrapper>
-              </div>
+                <Text text={'YOUR ADDRESS'} type={'h4'} />
+              </BackLink>
 
               <WalletContainer>
                 <Text color={'white'} text={wallet?.accounts[0]} type={'h41'} />
@@ -63,18 +80,34 @@ export const Profile = () => {
                 <WalletInfo
                   color={'#BEA0FD'}
                   title="LOCKED"
-                  value={`${table?.totalLockedProfile || 'wait...'}`}
+                  value={
+                    `${table?.totalLockedProfile || 'wait...'}` || 'No data'
+                  }
+                  convertValue={
+                    `${table?.totalLockedProfileInUseInUsd || 'wait...'}` ||
+                    'No data'
+                  }
                 />
                 <WalletInfo
                   title="TOTAL PROFIT"
-                  value={`${table?.totalProfitProfile || 'wait...'}`}
+                  value={
+                    `${table?.totalProfitProfile || 'wait...'}` || 'No data'
+                  }
+                  convertValue={
+                    `${table?.totalProfitProfileInUsd || 'wait...'}` ||
+                    'No data'
+                  }
                 />
               </WalletsContainer>
               <div>
-                {tableData?.data?.data.length ? (
-                  <Table dataTable={tableData} />
+                {tableData?.isLoading ? (
+                  <Text
+                    type={'h3'}
+                    color={'white'}
+                    text={`${data?.data?.length ? 'No data' : 'Loading'}`}
+                  />
                 ) : (
-                  <Text type={'h3'} text={'No data'} />
+                  <Table dataTable={tableData} />
                 )}
               </div>
             </div>

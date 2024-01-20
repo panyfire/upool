@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { IButton } from './types'
 import { Icon, Text } from 'ui'
@@ -10,115 +10,94 @@ import {
   Menu,
   MenuItem,
 } from './styles'
+import { useGetTableData } from 'modules/ProfileTable/api/hooks'
+import { useMetaMask } from 'hooks/useMetaMask'
 
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
-  const [, setValue] = useState<string>('')
+  const { wallet } = useMetaMask()
+
+  const tableData = wallet
+    ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
+    : null
 
   const chainIDS = [
     {
+      chainId: '0x1',
       chainName: 'Ethereum Mainnet',
-      id: '0x1',
       nativeCurrency: {
-        name: 'Ether',
+        name: 'Ethereum',
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+      rpcUrls: [
+        'https://mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
+      ],
       blockExplorerUrls: ['https://etherscan.io'],
       iconUrls: ['https://path.to.your.icon.eth'],
     },
     {
-      chainName: 'Bitcoin',
-      id: '0x2',
-      nativeCurrency: {
-        name: 'Bitcoin',
-        symbol: 'BTC',
-        decimals: 8,
-      },
-      rpcUrls: ['https://bitcoin-mainnet.infura.io/v3/YOUR_INFURA_KEY'],
-      blockExplorerUrls: ['https://blockchain.info'],
-      iconUrls: ['https://path.to.your.icon.btc'],
-    },
-    {
+      chainId: '0xa4b1',
       chainName: 'Arbitrum',
-      id: '0xa4b1',
       nativeCurrency: {
-        name: 'Arbitrum',
+        name: 'Arbitrum Token',
         symbol: 'ARB',
         decimals: 18,
       },
-      rpcUrls: ['https://arbitrum-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682'],
-      blockExplorerUrls: ['https://arbiscan.io'],
+      rpcUrls: [
+        'https://arbitrum-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
+      ],
+      blockExplorerUrls: ['https://arbitrum-mainnet.infura.io'],
       iconUrls: ['https://path.to.your.icon.arb'],
     },
     {
+      chainId: '0x420',
       chainName: 'Optimism',
-      id: '0xa869',
       nativeCurrency: {
-        name: 'Optimism',
-        symbol: 'OP',
+        name: 'Optimism Ether',
+        symbol: 'OETH',
         decimals: 18,
       },
-      rpcUrls: ['https://optimism-goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
-      blockExplorerUrls: ['https://optimistic.etherscan.io'],
+      rpcUrls: ['https://mainnet.optimism.io'],
+      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
       iconUrls: ['https://path.to.your.icon.op'],
     },
     {
-      chainName: 'Polygon',
-      id: '0x89',
+      chainId: '0x38',
+      chainName: 'BNB Chain',
       nativeCurrency: {
-        name: 'Polygon',
-        symbol: 'MATIC',
-        decimals: 18,
-      },
-      rpcUrls: [
-        'https://polygon-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
-        'https://matic-mainnet.chainstacklabs.com',
-      ],
-      blockExplorerUrls: ['https://polygonscan.com'],
-      iconUrls: ['https://path.to.your.icon.matic'],
-    },
-    {
-      chainName: 'BNB',
-      id: '0x38',
-      nativeCurrency: {
-        name: 'BNB',
+        name: 'Binance Coin',
         symbol: 'BNB',
         decimals: 18,
       },
-      rpcUrls: ['https://bsc-dataseed.binance.org'],
-      blockExplorerUrls: ['https://bscscan.com'],
+      rpcUrls: ['https://bsc-dataseed.binance.org/'],
+      blockExplorerUrls: ['https://bscscan.com/blockExplorer'],
       iconUrls: ['https://path.to.your.icon.bnb'],
     },
     {
-      chainName: 'Linea Mainnet',
-      id: '0xe708',
+      chainId: '0x5',
+      chainName: 'Goerli',
       nativeCurrency: {
         name: 'Ether',
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: [
-        'https://linea-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
-      ], // List of RPC endpoints
-      blockExplorerUrls: ['https://etherscan.io'], // List of block explorer URLs,
+      rpcUrls: ['https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+      blockExplorerUrls: ['https://etherscan.io'],
       iconUrls: ['https://path.to.your.icon.eth'],
     },
     {
-      chainName: 'Goerli',
-      id: '0x5',
+      chainId: '97',
+      chainName: 'BNB Chain Testnet',
       nativeCurrency: {
-        name: 'Ether',
-        symbol: 'ETH',
+        name: 'BNB Chain Testnet',
+        symbol: 'tBNB',
         decimals: 18,
       },
-      rpcUrls: [
-        'https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682',
-      ], // List of RPC endpoints
-      blockExplorerUrls: ['https://etherscan.io'], // List of block explorer URLs,
-      iconUrls: ['https://path.to.your.icon.eth'],
+      rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+      blockExplorerUrls: ['https://testnet.bscscan.com'],
+      iconUrls: ['https://path.to.your.icon.bnb'],
     },
   ]
 
@@ -129,7 +108,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
   }
 
   const handleChangeChainId = async (
-    chainId: string,
+    chainId: string | number,
     chainName: string,
     nativeCurrency: InactiveCurrency,
     rpcUrls: string[],
@@ -150,11 +129,14 @@ export const DropDownChainList: FC<IButton> = (props) => {
           },
         ],
       })
-      setValue(chainId)
     } catch (error) {
       console.error(error)
     }
   }
+
+  useEffect(() => {
+    tableData?.refetch()
+  }, [wallet.chainId])
 
   return (
     <div style={{ position: 'relative' }}>
@@ -175,7 +157,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
                 <MenuItem
                   onClick={() => {
                     handleChangeChainId(
-                      e.id,
+                      e.chainId,
                       e.chainName,
                       e.nativeCurrency,
                       e.rpcUrls,

@@ -15,6 +15,7 @@ export type TTAble = {
   expectedProfit?: number
   redeem?: boolean | undefined
   amount?: number | string
+  isRedeemed?: boolean
 }
 
 export type ProfileTableData = {

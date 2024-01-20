@@ -66,7 +66,9 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
     }),
     columnHelper.accessor('redeem', {
       header: ' ',
-      cell: () => <></>,
+      cell: () => {
+        return <></>
+      },
     }),
   ]
 
@@ -104,16 +106,18 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
                   </td>
                 </>
               ))}
-              <div style={{ position: 'absolute', right: 0 }}>
-                <StakeButton
-                  onClick={() => {
-                    setData(row.original)
-                    setStakeModal(true)
-                  }}
-                  style={{ width: 125, height: 40 }}
-                  text="REDEEM"
-                />
-              </div>
+              {!row.original.isRedeemed && (
+                <div style={{ position: 'absolute', right: 0 }}>
+                  <StakeButton
+                    onClick={() => {
+                      setData(row.original)
+                      setStakeModal(true)
+                    }}
+                    style={{ width: 125, height: 40 }}
+                    text="REDEEM"
+                  />
+                </div>
+              )}
             </TrHead>
             {stakeModalStatus && (
               <Popup
@@ -124,7 +128,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
                 }}
               >
                 <RedemptionForm
-                  id={Number(row.id)}
+                  id={Number(data.id)}
                   amount={0}
                   totalAmount={String(data.totalAmount)}
                   duration={String(data.duration)}

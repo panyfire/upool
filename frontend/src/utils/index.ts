@@ -1,3 +1,5 @@
+import { ethers } from 'ethers'
+import { toast } from 'react-toastify'
 export const formatBalance = (rawBalance: string) => {
   return (parseInt(rawBalance) / 1000000000000000000).toFixed(10)
 }
@@ -31,3 +33,40 @@ export const chainIdName = (hash: string) => {
   }
 }
 
+const notify = (text: string) =>
+  toast(text, {
+    position: 'bottom-right',
+    autoClose: 3500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'dark',
+  })
+
+export const checkTransactionStatus = async (
+  transactionHash: string,
+  callback?: () => void
+) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const receipt = await provider.getTransactionReceipt(transactionHash)
+    if (receipt && receipt.blockNumber) {
+      // Транзакция была успешно подтверждена
+      notify('Transaction confirmed')
+      localStorage.setItem('transactionResponse', 'null')
+      if (callback) {
+        callback()
+      }
+    }
+    // else {
+    //   // Транзакция еще не была подтверждена
+    //   console.log('Транзакция еще не подтверждена')
+    // }
+  } catch (error) {
+    console.error('Ошибка при проверке статуса транзакции:', error)
+  }
+}

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { checkTransactionStatus } from 'utils'
 import { GradientBackground } from 'layouts/GradientBackground'
 import { Banner, Footer, StakeListing } from 'modules'
 import { HeaderLayout } from 'layouts/HeaderLayout'
@@ -11,6 +12,17 @@ export const Home = () => {
   const { wallet } = useMetaMask()
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
   const { isLoading } = dataResponse
+  const transactionResponse = localStorage.getItem('transactionResponse')
+
+  useEffect(() => {
+    const interval = setTimeout(() => {
+      if (transactionResponse !== 'null') {
+        checkTransactionStatus(String(transactionResponse))
+      }
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [transactionResponse])
 
   return (
     <GradientBackground>

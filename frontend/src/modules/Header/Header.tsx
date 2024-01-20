@@ -15,6 +15,7 @@ import { chainIdName } from 'utils'
 export const Header: FC = () => {
   const { wallet } = useMetaMask()
 
+
   return (
     <HeaderStyled>
       <Text text={'LOGO'} type={'h2'} />
