@@ -4,4 +4,5 @@ export type IconProperties = {
   children?: ReactNode | string
   onClick?: () => void
   title?: string
+  status: boolean
 }

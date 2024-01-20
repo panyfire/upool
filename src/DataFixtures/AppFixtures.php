@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
         $payload = [
             [
                 'nameCoin' => 'BNB',
-                'iconCoinUrl' => 'frontend/public/images/bnb-bnb-logo.png',
+                'iconCoinUrl' => '/images/bnb-bnb-logo.png',
                 'minArpPercent' => 10,
                 'maxArpPercent' => 88,
                 'subHeader' => 'Stake BNB',
@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
             ],
             [
                 'nameCoin' => 'ETH',
-                'iconCoinUrl' => 'frontend/public/images/ethereum-eth-logo.png',
+                'iconCoinUrl' => '/images/ethereum-eth-logo.png',
                 'minArpPercent' => 10,
                 'maxArpPercent' => 88,
                 'subHeader' => 'Stake ETH',
@@ -50,7 +50,7 @@ class AppFixtures extends Fixture
             ],
             [
                 'nameCoin' => 'ARB',
-                'iconCoinUrl' => 'frontend/public/images/arbitrum-arb-logo.png',
+                'iconCoinUrl' => '/images/arbitrum-arb-logo.png',
                 'minArpPercent' => 10,
                 'maxArpPercent' => 88,
                 'subHeader' => 'Stake ETC',
@@ -64,7 +64,7 @@ class AppFixtures extends Fixture
             ],
             [
                 'nameCoin' => 'OP',
-                'iconCoinUrl' => 'frontend/public/images/optimism-ethereum-op-logo.png',
+                'iconCoinUrl' => '/images/optimism-ethereum-op-logo.png',
                 'minArpPercent' => 10,
                 'maxArpPercent' => 88,
                 'subHeader' => 'Stake OP(Optimiscm)',
@@ -78,7 +78,7 @@ class AppFixtures extends Fixture
             ],
             [
                 'nameCoin' => 'USDC',
-                'iconCoinUrl' => 'frontend/public/images/usd-coin-usdc-logo.png',
+                'iconCoinUrl' => '/images/usd-coin-usdc-logo.png',
                 'minArpPercent' => 10,
                 'maxArpPercent' => 88,
                 'subHeader' => 'USDC',
@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
             ],
             [
                 'nameCoin' => 'USDT',
-                'iconCoinUrl' => 'frontend/public/images/tether-usdt-logo.png',
+                'iconCoinUrl' => '/images/tether-usdt-logo.png',
                 'minArpPercent' => 10,
                 'maxArpPercent' => 88,
                 'subHeader' => 'Stake USDT',

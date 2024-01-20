@@ -100,14 +100,16 @@ export const Profile = () => {
                 />
               </WalletsContainer>
               <div>
-                {tableData?.isLoading ? (
-                  <Text
-                    type={'h3'}
-                    color={'white'}
-                    text={`${data?.data?.length ? 'No data' : 'Loading'}`}
-                  />
-                ) : (
+                {!tableData?.isLoading && data?.data?.length > 0 ? (
                   <Table dataTable={tableData} />
+                ) : (
+                  !tableData?.isLoading &&
+                  !data?.data && (
+                    <Text type={'h3'} color={'white'} text={'Loading'} />
+                  )
+                )}
+                {tableData?.isLoading && data?.data.length === 0 && (
+                  <Text type={'h3'} color={'white'} text={'No data'} />
                 )}
               </div>
             </div>

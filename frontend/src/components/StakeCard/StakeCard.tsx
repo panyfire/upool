@@ -5,12 +5,11 @@ import {
   CardTitle,
   CardTop,
   CardValues,
-  CardWrapper,
+  CardWrapper, CoinIcon,
 } from './styles'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
 // @ts-ignore
-import img from 'img/ETC.png'
 
 type IStakeCard = {
   tittle: string
@@ -19,10 +18,11 @@ type IStakeCard = {
   maxAPR: string
   onClick: () => void
   disabled?: boolean
+  iconCoinUrl: string
 }
 
 export const StakeCard: FC<IStakeCard> = (props) => {
-  const { tittle, preTittle, minAPR, maxAPR, onClick, disabled } = props
+  const { tittle, preTittle, minAPR, maxAPR, onClick, disabled, iconCoinUrl } = props
 
   return (
     <CardWrapper>
@@ -31,7 +31,7 @@ export const StakeCard: FC<IStakeCard> = (props) => {
           <Text text={tittle ?? ''} type={'h2'} />
           <Text text={preTittle ?? ''} type={'note'} />
         </CardTitle>
-        <img src={img} alt="ETC" />
+        <CoinIcon src={iconCoinUrl ?? 'images/bnb-bnb-logo.png'} alt={tittle} />
       </CardTop>
       <CardMiddle>
         <CardValues>

@@ -64,13 +64,17 @@ export const CardWrapper = styled.div`
 export const CardTop = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: space-between;
 `
 
 export const CardTitle = styled.div`
-  //width: calc(100% / 2 - 60px);
   width: 100%;
+`
+
+export const CoinIcon = styled.img`
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
 `
 
 export const CardValues = styled.div`

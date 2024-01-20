@@ -14,9 +14,9 @@ import { Icon, Text } from 'ui'
 
 
 export const Popup: FC<IconProperties> = (props) => {
-  const { children, onClick, title } = props
+  const { children, onClick, title, status } = props
   return (
-    <PopupStyled>
+    <PopupStyled className={status ? 'isOpened' : 'isClosed'}>
       <Container>
         <Background onClick={onClick} />
         <ChildrenWrapper>

@@ -49,24 +49,27 @@ export const checkTransactionStatus = async (
   transactionHash: string,
   callback?: () => void
 ) => {
-  try {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const receipt = await provider.getTransactionReceipt(transactionHash)
-    if (receipt && receipt.blockNumber) {
-      // Транзакция была успешно подтверждена
-      notify('Transaction confirmed')
-      localStorage.setItem('transactionResponse', 'null')
-      if (callback) {
-        callback()
+  const transaction = localStorage.getItem('transactionHash')
+  if (transaction !== 'null' && transaction) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const receipt = await provider.getTransactionReceipt(transactionHash)
+      if (receipt && receipt.blockNumber) {
+        // Транзакция была успешно подтверждена
+        notify('Transaction confirmed')
+        localStorage.setItem('transactionResponse', 'null')
+        if (callback) {
+          callback()
+        }
       }
+      // else {
+      //   // Транзакция еще не была подтверждена
+      //   console.log('Транзакция еще не подтверждена')
+      // }
+    } catch (error) {
+      console.error('Ошибка при проверке статуса транзакции:', error)
     }
-    // else {
-    //   // Транзакция еще не была подтверждена
-    //   console.log('Транзакция еще не подтверждена')
-    // }
-  } catch (error) {
-    console.error('Ошибка при проверке статуса транзакции:', error)
   }
 }

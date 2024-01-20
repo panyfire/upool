@@ -121,6 +121,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable }) => {
             </TrHead>
             {stakeModalStatus && (
               <Popup
+                status={stakeModalStatus}
                 title={`Redemption ETH`}
                 onClick={() => {
                   setStakeModal(false)

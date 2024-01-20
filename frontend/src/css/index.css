@@ -43,6 +43,14 @@ ul {
   src: url('../fonts/gothampro.ttf');
 }
 
+#root:has(.isOpened) {
+  overflow: hidden;
+}
+
+#root:has(.isClosed) {
+  overflow: auto;
+}
+
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   background: #86f3ff;

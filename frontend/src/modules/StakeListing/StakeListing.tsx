@@ -47,6 +47,7 @@ export const StakeListing: FC = () => {
               return (
                 <ItemWrapper key={i}>
                   <StakeCard
+                    iconCoinUrl={e.iconCoinUrl}
                     tittle={e.nameCoin}
                     preTittle={e.subHeader}
                     minAPR={e.minArpPercent}
@@ -61,6 +62,7 @@ export const StakeListing: FC = () => {
 
                   {stakeModalStatus && (
                     <Popup
+                      status={stakeModalStatus}
                       title={chainIdName(`${wallet.chainId}`)}
                       onClick={() => setStakeModal(false)}
                     >
