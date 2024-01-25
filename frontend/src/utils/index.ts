@@ -33,6 +33,25 @@ export const chainIdName = (hash: string) => {
   }
 }
 
+export const chainIdIcon = (hash: string) => {
+  switch (hash) {
+    case '0x1':
+      return '/images/ethereum-eth-logo.png'
+    case '0x5':
+      return 'Goerli'
+    case '0x38':
+      return '/images/bnb-bnb-logo.png'
+    case '0x89':
+      return 'Polygon'
+    case '0xa869':
+      return '/images/optimism-ethereum-op-logo.png'
+    case '0xa4b1':
+      return '/images/arbitrum-arb-logo.png'
+    case '0x2':
+      return '/images/bitcoin-btc-logo.png'
+  }
+}
+
 const notify = (text: string) =>
   toast(text, {
     position: 'bottom-right',

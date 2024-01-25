@@ -12,6 +12,7 @@ import {
 } from './styles'
 import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 import { useMetaMask } from 'hooks/useMetaMask'
+import { chainIdIcon } from 'utils'
 
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
@@ -51,18 +52,18 @@ export const DropDownChainList: FC<IButton> = (props) => {
       blockExplorerUrls: ['https://arbitrum-mainnet.infura.io'],
       iconUrls: ['https://path.to.your.icon.arb'],
     },
-    {
-      chainId: '0x420',
-      chainName: 'Optimism',
-      nativeCurrency: {
-        name: 'Optimism Ether',
-        symbol: 'OETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://mainnet.optimism.io'],
-      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
-      iconUrls: ['https://path.to.your.icon.op'],
-    },
+    // {
+    //   chainId: '0x420',
+    //   chainName: 'Optimism',
+    //   nativeCurrency: {
+    //     name: 'Optimism Ether',
+    //     symbol: 'OETH',
+    //     decimals: 18,
+    //   },
+    //   rpcUrls: ['https://mainnet.optimism.io'],
+    //   blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+    //   iconUrls: ['https://path.to.your.icon.op'],
+    // },
     {
       chainId: '0x38',
       chainName: 'BNB Chain',
@@ -75,30 +76,30 @@ export const DropDownChainList: FC<IButton> = (props) => {
       blockExplorerUrls: ['https://bscscan.com/blockExplorer'],
       iconUrls: ['https://path.to.your.icon.bnb'],
     },
-    {
-      chainId: '0x5',
-      chainName: 'Goerli',
-      nativeCurrency: {
-        name: 'Ether',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
-      blockExplorerUrls: ['https://etherscan.io'],
-      iconUrls: ['https://path.to.your.icon.eth'],
-    },
-    {
-      chainId: '97',
-      chainName: 'BNB Chain Testnet',
-      nativeCurrency: {
-        name: 'BNB Chain Testnet',
-        symbol: 'tBNB',
-        decimals: 18,
-      },
-      rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-      blockExplorerUrls: ['https://testnet.bscscan.com'],
-      iconUrls: ['https://path.to.your.icon.bnb'],
-    },
+    // {
+    //   chainId: '0x5',
+    //   chainName: 'Goerli',
+    //   nativeCurrency: {
+    //     name: 'Ether',
+    //     symbol: 'ETH',
+    //     decimals: 18,
+    //   },
+    //   rpcUrls: ['https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+    //   blockExplorerUrls: ['https://etherscan.io'],
+    //   iconUrls: ['https://path.to.your.icon.eth'],
+    // },
+    // {
+    //   chainId: '97',
+    //   chainName: 'BNB Chain Testnet',
+    //   nativeCurrency: {
+    //     name: 'BNB Chain Testnet',
+    //     symbol: 'tBNB',
+    //     decimals: 18,
+    //   },
+    //   rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    //   blockExplorerUrls: ['https://testnet.bscscan.com'],
+    //   iconUrls: ['https://path.to.your.icon.bnb'],
+    // },
   ]
 
   type InactiveCurrency = {
@@ -141,8 +142,10 @@ export const DropDownChainList: FC<IButton> = (props) => {
   return (
     <div style={{ position: 'relative' }}>
       <ButtonStyled {...other}>
-        <ButtonWrapper onClick={() => setOpen(!open)}>
-          <Icon size={'24'} name="wallet" />
+        <ButtonWrapper onClick={() => {
+          setOpen(!open)
+        }}>
+          <img width={30} src={chainIdIcon(String(wallet.chainId))} alt="" />
           <Text text={text ?? ''} type="default" />
           <IconWrapper className={clsx({ isActive: open })}>
             <Icon size={'24'} name={'arrowDown'} />

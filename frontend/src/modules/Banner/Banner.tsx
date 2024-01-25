@@ -21,7 +21,7 @@ export const Banner: FC = () => {
           <div>
             <Text text={'Super Pools'} type={'h1'} />
             <BannerContent>
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <Text text={'Just stake some tokens to earn.'} type={'h3'} />
                 <Text text={'High APR, low risk.'} type={'h3'} />
               </div>
