@@ -5,7 +5,6 @@ import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
 import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
-import 'react-rangeslider/lib/index.css'
 import {
   AmountWrapper,
   DurationWrapper,
