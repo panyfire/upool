@@ -36,7 +36,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
         decimals: 18,
       },
       rpcUrls: [
-        'https://mainnet.infura.io/',
+        'https://mainnet.infura.io/v3/',
       ],
       blockExplorerUrls: ['https://etherscan.io'],
       iconUrls: ['https://path.to.your.icon.eth'],
