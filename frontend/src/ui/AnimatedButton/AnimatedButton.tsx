@@ -9,7 +9,7 @@ export const AnimatedButton: FC<IButtonProps> = (props) => {
     <div style={{ position: 'relative' }}>
       <ButtonStyled {...other}>
         <ButtonWrapper>
-          <Text text={text} type="btn" />
+          <Text color={"#000"} text={text} type="default" />
         </ButtonWrapper>
       </ButtonStyled>
       <BackgroundAnimation>

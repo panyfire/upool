@@ -26,7 +26,7 @@ export const Home = () => {
 
   return (
     <GradientBackground>
-      <LoaderWrapper isLoad={Boolean(wallet?.accounts?.length) && isLoading}>
+      <LoaderWrapper isLoad={Boolean(wallet.accounts.length && isLoading)}>
         <HeaderLayout>
           <Banner />
           <StakeListing />

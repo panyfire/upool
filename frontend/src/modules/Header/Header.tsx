@@ -1,19 +1,17 @@
 import React, { FC } from 'react'
-import { DropDown, Text, DropDownChainList } from 'ui'
-import {
-  Dropdowns,
-  HeaderStyled,
-  LogoWrapper,
-  Menu,
-} from './styles'
+import { DropDown, Text, DropDownChainList, AnimatedButton } from 'ui'
+import { Dropdowns, HeaderStyled, LogoWrapper, Menu } from './styles'
 import { useMetaMask } from 'hooks/useMetaMask'
+import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { chainIdName } from 'utils'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import logo from 'img/logo.png'
 
 export const Header: FC = () => {
-  const { wallet } = useMetaMask()
+  const { wallet, isConnecting, connectMetaMask } = useMetaMask()
+  const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
+  const { isLoading } = dataResponse
 
   return (
     <HeaderStyled>
@@ -33,7 +31,13 @@ export const Header: FC = () => {
               icon={undefined}
             />
           </Dropdowns>
-        ) : null}
+        ) : (
+          <>
+            {!wallet?.accounts?.length && !isLoading && !isConnecting && (
+              <AnimatedButton onClick={connectMetaMask} text="Connect Wallet" />
+            )}
+          </>
+        )}
       </Menu>
     </HeaderStyled>
   )

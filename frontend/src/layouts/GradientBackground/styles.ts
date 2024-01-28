@@ -14,8 +14,8 @@ export const PinkELement = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 300px;
-  height: 500px;
+  width: 50%;
+  height: 1000px;
   background: linear-gradient(
     177deg,
     rgba(154, 106, 255, 0.4) 0%,

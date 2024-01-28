@@ -9,13 +9,13 @@ export const BackgroundAnimation = styled.div`
 `
 
 export const ButtonStyled = styled.button`
-  padding: 21px 22px;
-  height: 58px;
-  width: 200px;
+  padding: 14px 12px;
+  height: 44px;
+  width: 154px;
   display: flex;
   align-items: center;
   justify-content: center;
-  --background-color: linear-gradient(180deg, #f3c3c6 0%, #b0fec7 100%);
+  --background-color: linear-gradient(160deg, #f3c3c6 10%, #b0fec7 85%);
   --border-width: 0.5em;
   --edge-size: 1.25em;
   cursor: pointer;
@@ -45,6 +45,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  letter-spacing: 0.48px;
 `
 export const Element = styled.div`
   position: absolute;

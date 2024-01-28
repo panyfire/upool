@@ -8,7 +8,7 @@ import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { ItemWrapper, ListingWrapper } from './styles'
 import { chainIdName } from 'utils'
-import { LoaderWrapper } from 'layouts/LoaderWrapper'
+// import { LoaderWrapper } from 'layouts/LoaderWrapper'
 
 type TResponse = {
   nameCoin: string
@@ -31,19 +31,16 @@ export const StakeListing: FC = () => {
 
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
 
-  const { data } = dataResponse
-
   useEffect(() => {
-    dataResponse.refetch()
-  }, [wallet.chainId, data])
+    // dataResponse.refetch()
+  }, [wallet.chainId, dataResponse.data])
 
   return (
-    <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
+    // <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
       <Layout>
         <ListingWrapper>
-          {Array.isArray(data) &&
-            data.length &&
-            data.map((e: TResponse, i: number) => {
+          {dataResponse.data && Array.isArray(dataResponse.data) ? (
+            dataResponse.data.map((e: TResponse, i: number) => {
               return (
                 <ItemWrapper key={i}>
                   <StakeCard
@@ -86,7 +83,10 @@ export const StakeListing: FC = () => {
                   )}
                 </ItemWrapper>
               )
-            })}
+            })
+          ) : (
+            <>{!dataResponse?.data?.data?.length && ' No Data'} )</>
+          )}
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -101,6 +101,6 @@ export const StakeListing: FC = () => {
           />
         </ListingWrapper>
       </Layout>
-    </LoaderWrapper>
+    // </LoaderWrapper>
   )
 }

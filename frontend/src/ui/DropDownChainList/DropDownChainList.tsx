@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState } from 'react'
 import clsx from 'clsx'
 import { IButton } from './types'
 import { Icon, Text } from 'ui'
@@ -13,6 +13,7 @@ import {
 import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdIcon } from 'utils'
+import { toast } from 'react-toastify'
 
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
@@ -108,6 +109,18 @@ export const DropDownChainList: FC<IButton> = (props) => {
     decimals?: number | undefined
   }
 
+  const notify = (text: string) =>
+    toast(text, {
+      position: 'bottom-right',
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
+
   const handleChangeChainId = async (
     chainId: string | number,
     chainName: string,
@@ -131,20 +144,22 @@ export const DropDownChainList: FC<IButton> = (props) => {
         ],
       })
     } catch (error) {
-      console.error(error)
+      notify(`${error}`)
     }
   }
 
-  useEffect(() => {
-    tableData?.refetch()
-  }, [wallet.chainId])
+  // useEffect(() => {
+  //   // tableData?.refetch()
+  // }, [wallet.chainId])
 
   return (
     <div style={{ position: 'relative' }}>
       <ButtonStyled {...other}>
-        <ButtonWrapper onClick={() => {
-          setOpen(!open)
-        }}>
+        <ButtonWrapper
+          onClick={() => {
+            setOpen(!open)
+          }}
+        >
           <img width={30} src={chainIdIcon(String(wallet.chainId))} alt="" />
           <Text text={text ?? ''} type="default" />
           <IconWrapper className={clsx({ isActive: open })}>
