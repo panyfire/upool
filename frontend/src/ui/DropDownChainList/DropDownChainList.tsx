@@ -43,16 +43,16 @@ export const DropDownChainList: FC<IButton> = (props) => {
     },
     {
       chainId: '0xa4b1',
-      chainName: 'Arbitrum',
+      chainName: 'Arbitrum One',
       nativeCurrency: {
         name: 'Arbitrum Token',
-        symbol: 'ARB',
+        symbol: 'ETH',
         decimals: 18,
       },
       rpcUrls: [
-        'https://arbitrum-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
+        'https://arbitrum-mainnet.infura.io/v3',
       ],
-      blockExplorerUrls: ['https://arbitrum-mainnet.infura.io'],
+      blockExplorerUrls: ['https://explorer.arbitrum.io'],
       iconUrls: ['https://path.to.your.icon.arb'],
     },
     // {
