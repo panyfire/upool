@@ -29,7 +29,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
   const chainIDS = [
     {
       chainId: '0x1',
-      chainName: 'Мейн-нет Ethereum',
+      chainName: 'Ethereum Mainnet',
       nativeCurrency: {
         name: 'Ethereum',
         symbol: 'ETH',
