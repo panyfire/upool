@@ -36,7 +36,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
         decimals: 18,
       },
       rpcUrls: [
-        'https://mainnet.infura.io/v3',
+        'https://mainnet.infura.io/',
       ],
       blockExplorerUrls: ['https://etherscan.io'],
       iconUrls: ['https://path.to.your.icon.eth'],
@@ -50,7 +50,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
         decimals: 18,
       },
       rpcUrls: [
-        'https://arbitrum-mainnet.infura.io/v3',
+        'https://arbitrum-mainnet.infura.io/',
       ],
       blockExplorerUrls: ['https://explorer.arbitrum.io'],
       iconUrls: ['https://path.to.your.icon.arb'],
