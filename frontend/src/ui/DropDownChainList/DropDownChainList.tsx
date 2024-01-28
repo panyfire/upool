@@ -24,6 +24,8 @@ export const DropDownChainList: FC<IButton> = (props) => {
     ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
     : null
 
+  console.log(tableData)
+
   const chainIDS = [
     {
       chainId: '0x1',
