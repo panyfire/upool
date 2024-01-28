@@ -187,6 +187,7 @@ export const StakeForm: FC<TAb> = (props) => {
             duration: duration,
             transactionHash: receipt.transactionHash,
             apr: apr,
+            chainId: String(wallet.chainId),
           }
           onSendSuccess(response)
         })
