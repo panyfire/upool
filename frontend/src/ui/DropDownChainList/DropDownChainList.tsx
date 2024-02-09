@@ -10,7 +10,6 @@ import {
   Menu,
   MenuItem,
 } from './styles'
-import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdIcon } from 'utils'
 import { toast } from 'react-toastify'
@@ -19,12 +18,6 @@ export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
   const { wallet } = useMetaMask()
-
-  const tableData = wallet
-    ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
-    : null
-
-  console.log(tableData)
 
   const chainIDS = [
     {
@@ -49,9 +42,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: [
-        'https://arbitrum-mainnet.infura.io/',
-      ],
+      rpcUrls: ['https://arbitrum-mainnet.infura.io/'],
       blockExplorerUrls: ['https://explorer.arbitrum.io'],
       iconUrls: ['https://path.to.your.icon.arb'],
     },
@@ -150,19 +141,20 @@ export const DropDownChainList: FC<IButton> = (props) => {
     }
   }
 
-  // useEffect(() => {
-  //   // tableData?.refetch()
-  // }, [wallet.chainId])
-
   return (
-    <div style={{ position: 'relative' }}>
+    <div
+      onMouseLeave={() => {
+        setOpen(false)
+      }}
+      style={{ position: 'relative' }}
+    >
       <ButtonStyled {...other}>
         <ButtonWrapper
-          onClick={() => {
-            setOpen(!open)
+          onMouseEnter={() => {
+            setOpen(true)
           }}
         >
-          <img width={30} src={chainIdIcon(String(wallet.chainId))} alt="" />
+          <img width={35} src={chainIdIcon(String(wallet.chainId))} alt="" />
           <Text text={text ?? ''} type="default" />
           <IconWrapper className={clsx({ isActive: open })}>
             <Icon size={'24'} name={'arrowDown'} />

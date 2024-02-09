@@ -29,14 +29,14 @@ export const device = {
 }
 
 export const ButtonStyled = styled.button`
-  height: 44px;
   position: relative;
   width: 200px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #f3c3c6, #b0fec7);
+  --border-color: linear-gradient(0deg, #f3c3c6, #b0fec7);
   --border-width: 0.1em;
   --edge-size: 1em;
   cursor: pointer;
@@ -124,9 +124,13 @@ export const MeniList = styled.div`
 export const MenuItem = styled.div`
   padding: 15px 12px;
   width: 100%;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  &:last-child {
+    border-bottom: none
+  }
 `

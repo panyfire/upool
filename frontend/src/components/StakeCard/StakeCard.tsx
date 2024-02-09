@@ -5,11 +5,9 @@ import {
   CardTitle,
   CardTop,
   CardValues,
-  CardWrapper, CoinIcon,
+  CardWrapper,
+  CoinIcon,
 } from './styles'
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
-// @ts-ignore
 
 type IStakeCard = {
   tittle: string
@@ -22,8 +20,8 @@ type IStakeCard = {
 }
 
 export const StakeCard: FC<IStakeCard> = (props) => {
-  const { tittle, preTittle, minAPR, maxAPR, onClick, disabled, iconCoinUrl } = props
-
+  const { tittle, preTittle, minAPR, maxAPR, onClick, disabled, iconCoinUrl } =
+    props
   return (
     <CardWrapper>
       <CardTop>

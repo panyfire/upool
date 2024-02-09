@@ -1,14 +1,17 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { StakeForm } from 'modules'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { Layout } from 'layouts/Layout'
+import { LoaderWrapper } from 'layouts/LoaderWrapper'
 import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
-import { ItemWrapper, ListingWrapper } from './styles'
+import { ItemWrapper, ListingWrapper, ImageWrapper } from './styles'
 import { chainIdName } from 'utils'
-// import { LoaderWrapper } from 'layouts/LoaderWrapper'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import img2 from 'img/banner2.png'
 
 type TResponse = {
   nameCoin: string
@@ -28,18 +31,17 @@ type TResponse = {
 export const StakeListing: FC = () => {
   const [stakeModalStatus, setStakeModal] = useState(false)
   const { wallet, connectMetaMask } = useMetaMask()
-
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
 
-  useEffect(() => {
-    // dataResponse.refetch()
-  }, [wallet.chainId, dataResponse.data])
-
   return (
-    // <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
+    <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
       <Layout>
         <ListingWrapper>
-          {dataResponse.data && Array.isArray(dataResponse.data) ? (
+          <ImageWrapper>
+            <img src={img2} alt={'banner-decor'} />
+          </ImageWrapper>
+          {Array.isArray(dataResponse.data) &&
+            dataResponse.data.length &&
             dataResponse.data.map((e: TResponse, i: number) => {
               return (
                 <ItemWrapper key={i}>
@@ -83,10 +85,8 @@ export const StakeListing: FC = () => {
                   )}
                 </ItemWrapper>
               )
-            })
-          ) : (
-            <>{!dataResponse?.data?.data?.length && ' No Data'} )</>
-          )}
+            })}
+          )
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -101,6 +101,6 @@ export const StakeListing: FC = () => {
           />
         </ListingWrapper>
       </Layout>
-    // </LoaderWrapper>
+    </LoaderWrapper>
   )
 }

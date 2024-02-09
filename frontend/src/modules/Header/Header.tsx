@@ -33,9 +33,15 @@ export const Header: FC = () => {
           </Dropdowns>
         ) : (
           <>
-            {!wallet?.accounts?.length && !isLoading && !isConnecting && (
-              <AnimatedButton onClick={connectMetaMask} text="Connect Wallet" />
-            )}
+            {!wallet?.accounts?.length &&
+              !isLoading &&
+              !isConnecting && (
+                <AnimatedButton
+                  isAnimated={false}
+                  onClick={connectMetaMask}
+                  text="Connect Wallet"
+                />
+              )}
           </>
         )}
       </Menu>

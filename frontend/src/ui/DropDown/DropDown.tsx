@@ -40,10 +40,19 @@ export const DropDown: FC<IButton> = (props) => {
   }
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div
+      onMouseLeave={() => {
+        setOpen(false)
+      }}
+      style={{ position: 'relative' }}
+    >
       <ButtonStyled {...other}>
-        <ButtonWrapper onClick={() => setOpen(!open)}>
-          <Icon size={'24'} name="wallet" />
+        <ButtonWrapper
+          onMouseEnter={() => {
+            setOpen(true)
+          }}
+        >
+          <Icon size={'32'} name="wallet" />
           <Text text={text ?? ''} type="default" />
           <IconWrapper className={clsx({ isActive: open })}>
             <Icon size={'24'} name={'arrowDown'} />

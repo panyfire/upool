@@ -100,7 +100,6 @@ export const TextCSS = styled.p`
     text-transform: uppercase;
   }
   &.btn {
-    font-family: 'GP Meduim', serif;
     color: ${blackColor};
     font-size: 18px;
     font-style: normal;

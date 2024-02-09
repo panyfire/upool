@@ -8,6 +8,8 @@ const size = {
   tabletL: '920px',
   laptop: '1024px',
   laptopL: '1440px',
+  laptopLM: '1600px',
+  laptopM: '1920px',
   desktop: '2560px',
 }
 
@@ -22,10 +24,12 @@ export const device = {
   tabletL: `(max-width: ${size.tabletL})`,
   laptop: `(max-width: ${size.laptop})`,
   laptopL: `(max-width: ${size.laptopL})`,
+  laptopMinL: `(min-width: ${size.laptopL})`,
+  laptopLM: `(max-width: ${size.laptopLM})`,
+  laptopM: `(max-width: ${size.laptopM})`,
   desktop: `(max-width: ${size.desktop})`,
   desktopL: `(max-width: ${size.desktop})`,
 }
-
 
 export { AnimatedButton } from './AnimatedButton'
 export { StakeButton } from './StakeButton'

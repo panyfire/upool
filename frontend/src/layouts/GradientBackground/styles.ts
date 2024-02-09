@@ -28,8 +28,8 @@ export const BlueELement = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 300px;
-  height: 500px;
+  width: 50%;
+  height: 1000px;
   background: linear-gradient(
     250deg,
     rgba(0, 53, 255, 0.3) 0%,
