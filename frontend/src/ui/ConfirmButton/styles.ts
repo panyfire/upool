@@ -7,7 +7,7 @@ export const ButtonStyled = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  --background-color: rgba(255, 255, 255, 0.08);
+  --background-color: radial-gradient(at center top, #F3C3C6 15%, #eeeab0, #B0FEC7);
   --border-width: 0.5em;
   --edge-size: 1.25em;
   cursor: pointer;
@@ -27,12 +27,15 @@ export const ButtonStyled = styled.button`
   transition: color 250ms;
   &:disabled,
   &[disabled]{
-    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.08);;
     cursor: not-allowed;
+    p {
+      color: white;
+    }
   }
   p {
-    color: white;
-    font-family: 'GP Meduim', serif;
+    color: black;
+    font-family: 'GP Middle', serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;

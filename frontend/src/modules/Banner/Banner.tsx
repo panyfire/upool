@@ -15,7 +15,7 @@ import {
 import img from 'img/banner.png'
 
 export const Banner: FC = () => {
-  const { connectMetaMask, hasProvider } = useMetaMask()
+  const { connectMetaMask, wallet } = useMetaMask()
   const { width } = useMobileDisplaySize()
 
   return (
@@ -31,7 +31,7 @@ export const Banner: FC = () => {
                 <Text text={'Just stake some tokens to earn.'} type={'h3'} />
                 <Connect>
                   <Text text={'High APR, low risk.'} type={'h3'} />
-                  {!hasProvider && width >= 1440 && (
+                  {!wallet?.accounts?.length && width >= 1440 && (
                     <AnimatedButton
                       onClick={connectMetaMask}
                       text="Connect Wallet"

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { StakeForm } from 'modules'
@@ -8,7 +8,6 @@ import { LoaderWrapper } from 'layouts/LoaderWrapper'
 import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
 import { ItemWrapper, ListingWrapper, ImageWrapper } from './styles'
-import { chainIdName } from 'utils'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import img2 from 'img/banner2.png'
@@ -32,16 +31,22 @@ export const StakeListing: FC = () => {
   const [stakeModalStatus, setStakeModal] = useState(false)
   const { wallet, connectMetaMask } = useMetaMask()
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
+  const [data, setData] = useState<TResponse>({} as TResponse)
+  console.log(dataResponse)
+  const a = dataResponse.status !== 'error'
+  useEffect(() => {
+    dataResponse.refetch()
+  }, [wallet.chainId])
 
   return (
-    <LoaderWrapper isLoad={dataResponse.isLoading || !wallet}>
+    <LoaderWrapper isLoad={dataResponse.isLoading && !wallet}>
       <Layout>
         <ListingWrapper>
           <ImageWrapper>
             <img src={img2} alt={'banner-decor'} />
           </ImageWrapper>
           {Array.isArray(dataResponse.data) &&
-            dataResponse.data.length &&
+            dataResponse.data.length && a ?
             dataResponse.data.map((e: TResponse, i: number) => {
               return (
                 <ItemWrapper key={i}>
@@ -52,40 +57,42 @@ export const StakeListing: FC = () => {
                     minAPR={e.minArpPercent}
                     maxAPR={e.maxArpPercent}
                     onClick={() => {
+                      setData(e)
                       wallet?.accounts?.length
                         ? setStakeModal(true)
                         : connectMetaMask()
                     }}
                     disabled={wallet?.error}
                   />
-
-                  {stakeModalStatus && (
+                  {stakeModalStatus && data && (
                     <Popup
                       status={stakeModalStatus}
-                      title={chainIdName(`${wallet.chainId}`)}
+                      title={data.nameCoin}
                       onClick={() => setStakeModal(false)}
                     >
                       <StakeForm
-                        id={e.id}
-                        duration={e.duration}
-                        durations={e.durations}
-                        apr={e.apr}
-                        expectedRoi={String(e.expectedRoi)}
-                        maxArpPercent={e.maxArpPercent}
-                        minArpPercent={e.minArpPercent}
-                        percents={e.percents}
+                        id={data.id}
+                        duration={data.duration}
+                        durations={data.durations}
+                        apr={data.apr}
+                        expectedRoi={String(data.expectedRoi)}
+                        maxArpPercent={data.maxArpPercent}
+                        minArpPercent={data.minArpPercent}
+                        percents={data.percents}
                         rangeValue={'25'}
-                        amount={String(e.amount)}
+                        amount={String(data.amount)}
                         errorStatus={false}
                         startLocking={''}
                         endLocking={''}
                         popUpCallback={() => setStakeModal(false)}
+                        nameCoin={data.nameCoin}
+                        iconCoinUrl={data.iconCoinUrl}
                       />
                     </Popup>
                   )}
                 </ItemWrapper>
               )
-            })}
+            }): 'NO DATA'}
           )
           <ToastContainer
             position="bottom-right"

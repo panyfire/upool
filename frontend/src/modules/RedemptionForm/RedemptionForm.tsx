@@ -201,7 +201,7 @@ export const RedemptionForm: FC<TAb> = (props) => {
               <ConfirmButton
                 eventClick={handleSubmit}
                 text="Confirm"
-                style={{ marginTop: 20 }}
+                style={{ marginTop: 75 }}
               />
             </DurationWrapper>
           </Form>

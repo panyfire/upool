@@ -12,6 +12,11 @@ export const FormCoinInfo = styled.div`
   gap: 10px;
 `
 
+export const Image = styled.img`
+  width: 24px;
+  height: 24px;
+`
+
 export const AmountWrapper = styled.div`
   position: relative;
   display: flex;
@@ -26,10 +31,17 @@ export const Line = styled.div`
   height: 2px
 `
 
-export const MaxBtn = styled.div`
+export const MaxBtn = styled.button`
   position: absolute;
   right: 11px;
   top: 50%;
+  background: transparent;
+  border: none;
+  outline: none;
+  &:disabled,
+  &[disabled]{
+    cursor: not-allowed;
+  }
 `
 
 export const FormBalance = styled.div`
@@ -49,12 +61,14 @@ export const TabValue = styled.div`
 `
 
 export const TabListWrapper = styled.div`
-  margin-top: 20px;
+  //margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
- 
+ & .react-tabs__tab--disabled {
+   cursor: not-allowed;
+ }
   & .react-tabs__tab {
     width: 60px;
     display: flex;
@@ -72,7 +86,7 @@ export const TabListWrapper = styled.div`
 `
 
 export const RangeWrapper = styled.div`
-  margin-top: 33px;
+  margin-top: 31px;
   position: relative;
 `
 
@@ -91,5 +105,11 @@ export const DurationWrapper = styled.div`
     justify-content: center;
     border-radius: 30px;
     border: 1px solid #55f8f1;
+  }
+  .tablist__list_days {
+    margin-top: 6px;
+  }
+  .tablist__list {
+    margin-top: 20px;
   }
 `

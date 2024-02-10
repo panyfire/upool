@@ -147,6 +147,14 @@ export const TextCSS = styled.p`
     font-weight: 400;
     line-height: 24px; /* 150% */
   }
+  &.card2 {
+    color: #55f8f1;
+    font-family: 'GP Bold', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+  }
   &.popupTitle {
     color: #1a1329;
     font-family: 'GP Bold', sans-serif;

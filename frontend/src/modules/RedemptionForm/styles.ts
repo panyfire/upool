@@ -66,7 +66,7 @@ export const TabListWrapper = styled.div`
 `
 
 export const RangeWrapper = styled.div`
-  margin-top: 33px;
+  margin-top: 31px;
 `
 
 export const DurationWrapper = styled.div`

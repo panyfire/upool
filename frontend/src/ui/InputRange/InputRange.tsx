@@ -6,6 +6,7 @@ type RangeSliderProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   name: string
+  disabled: boolean
 }
 
 export const InputRange: React.FC<RangeSliderProps> = ({
@@ -14,6 +15,7 @@ export const InputRange: React.FC<RangeSliderProps> = ({
   value,
   onChange,
   name,
+  disabled,
 }) => {
   return (
     <RangeSliderWrapper>
@@ -25,6 +27,7 @@ export const InputRange: React.FC<RangeSliderProps> = ({
         value={value}
         onChange={onChange}
         name={name}
+        disabled={disabled}
       />
       <RangeSliderValue>{`${Number(value)}%`}</RangeSliderValue>
     </RangeSliderWrapper>

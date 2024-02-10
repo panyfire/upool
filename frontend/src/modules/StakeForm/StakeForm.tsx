@@ -4,13 +4,14 @@ import { toast } from 'react-toastify'
 import { ethers } from 'ethers'
 import { Form, Formik, FormikProps } from 'formik'
 import { useSendDataAfterSuccessTran } from './api/hooks'
-import { ConfirmButton, Icon, Input, InputRange, Text } from 'ui'
+import { ConfirmButton, Input, InputRange, Text } from 'ui'
 import {
   AmountWrapper,
   DurationWrapper,
   FormBalance,
   FormCoinInfo,
   FormTitle,
+  Image,
   MaxBtn,
   RangeWrapper,
   TabListWrapper,
@@ -18,7 +19,6 @@ import {
 } from './styles'
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
-import { chainIdName } from 'utils'
 import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 
 type TAb = {
@@ -102,6 +102,8 @@ export const StakeForm: FC<TAb> = (props) => {
     rangeValue,
     errorStatus,
     popUpCallback,
+    nameCoin,
+    iconCoinUrl,
   } = props
   const [tab, setTabIndex] = useState(0)
   const [dtab, dsetTabIndex] = useState(1)
@@ -198,7 +200,6 @@ export const StakeForm: FC<TAb> = (props) => {
       notify(String(message))
     }
   }
-
   const convertToNumber = (value: string | number | undefined) => Number(value)
 
   const calculateRoiWithDuration = (values: TAb) =>
@@ -210,7 +211,6 @@ export const StakeForm: FC<TAb> = (props) => {
   const onSubmit = (data: TAb) => {
     handleTransaction(data.amount, data.duration, data.apr)
   }
-
   return (
     <Formik
       initialValues={initialValueForm}
@@ -235,24 +235,26 @@ export const StakeForm: FC<TAb> = (props) => {
         return (
           <Form>
             <FormTitle>
-              <Text text={'LOCKED BALANCE'} type={'card'} />
+              <Text text={'LOCKED BALANCE'} type={'card2'} />
               <FormCoinInfo>
-                <Icon size={'24'} name={'wallet'} />
-                <Text text={chainIdName(`${wallet.chainId}`)} type={'card'} />
+                <Image src={iconCoinUrl} alt={''} />
+                <Text text={nameCoin} type={'card2'} />
               </FormCoinInfo>
             </FormTitle>
             <AmountWrapper>
               <Input
                 type={'text'}
                 label={'Subscription amount'}
-                value={`${values.amount.substring(0, 10)}`}
+                value={`${values.amount.substring(0, 12)}`}
                 name={'amount'}
                 placeholder={'Enter amount'}
                 error={touched.amount && Boolean(errors.amount)}
                 helperText={touched.amount && errors.amount}
                 onChange={handleChange}
+                disabled={Boolean(Number(wallet.balance) <= 0)}
               />
               <MaxBtn
+                disabled={Boolean(Number(wallet.balance) <= 0)}
                 onClick={() => {
                   setFieldValue('amount', wallet.balance)
                   setFieldValue('rangeValue', '100')
@@ -271,6 +273,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 name="rangeValue"
                 max={'100'}
                 min={'0'}
+                disabled={Boolean(Number(wallet.balance) <= 0)}
                 onChange={(e) => {
                   setTabIndex(-1)
                   setFieldValue('rangeValue', e.target.value)
@@ -281,40 +284,48 @@ export const StakeForm: FC<TAb> = (props) => {
                       Number(e.target.value)
                     )}`
                   )
+                  if (!e.target.value) {
+                    setFieldValue('expectedRoi', 0)
+                  }
                   setFieldValue('expectedRoi', calculateRoiWithDuration(values))
                 }}
                 value={`${values.rangeValue}`}
               />
             </RangeWrapper>
             <Tabs
-              style={{ color: 'white' }}
+              style={{ color: 'white', marginTop: 20 }}
+              className={'tablist__list'}
               selectedIndex={tab}
               onSelect={(index: number) => setTabIndex(index)}
+              disabled={Boolean(Number(wallet.balance) <= 0)}
             >
-              <TabList className={'tablist__list'}>
+              <TabList>
                 <TabListWrapper>
                   {percents.map((e: string, i: number) => {
                     return (
                       <Tab
+                        disabled={Boolean(Number(wallet.balance) <= 0)}
                         key={i}
                         onClick={() => {
-                          if (e === 'MAX') {
-                            setFieldValue('amount', wallet.balance)
-                            setFieldValue('rangeValue', '100')
-                          } else {
+                          if (!(Number(wallet.balance) <= 0)) {
+                            if (e === 'MAX') {
+                              setFieldValue('amount', wallet.balance)
+                              setFieldValue('rangeValue', '100')
+                            } else {
+                              setFieldValue(
+                                'amount',
+                                `${getAmountValueWithPercent(
+                                  wallet.balance,
+                                  Number(e)
+                                )}`
+                              )
+                              setFieldValue('rangeValue', Number(e))
+                            }
                             setFieldValue(
-                              'amount',
-                              `${getAmountValueWithPercent(
-                                wallet.balance,
-                                Number(e)
-                              )}`
+                              'expectedRoi',
+                              calculateRoiWithDuration(values)
                             )
-                            setFieldValue('rangeValue', Number(e))
                           }
-                          setFieldValue(
-                            'expectedRoi',
-                            calculateRoiWithDuration(values)
-                          )
                         }}
                       >
                         <TabValue>
@@ -336,26 +347,33 @@ export const StakeForm: FC<TAb> = (props) => {
                 style={{ color: 'white' }}
                 selectedIndex={dtab}
                 onSelect={(index: number) => dsetTabIndex(index)}
+                disabled={Boolean(Number(wallet.balance) <= 0)}
               >
-                <TabList className={'tablist__list_days'}>
+                <TabList
+                  disabled={Boolean(Number(wallet.balance) <= 0)}
+                  className={'tablist__list_days'}
+                >
                   <TabListWrapper>
                     {durations.map((e, i: number) => {
                       return (
                         <Tab
+                          disabled={Boolean(Number(wallet.balance) <= 0)}
                           onClick={() => {
-                            setFieldValue('duration', durations[i].type)
-                            setFieldValue('apr', durations[i].value)
-                            setFieldValue(
-                              'endLocking',
-                              addDaysToDate(
-                                currentDate,
-                                Number(durations[i].type)
+                            if (!(Number(wallet.balance) <= 0)) {
+                              setFieldValue('duration', durations[i].type)
+                              setFieldValue('apr', durations[i].value)
+                              setFieldValue(
+                                'endLocking',
+                                addDaysToDate(
+                                  currentDate,
+                                  Number(durations[i].type)
+                                )
                               )
-                            )
-                            setFieldValue(
-                              'expectedRoi',
-                              calculateRoiWithDuration(values)
-                            )
+                              setFieldValue(
+                                'expectedRoi',
+                                calculateRoiWithDuration(values)
+                              )
+                            }
                           }}
                           key={`${i} + nd`}
                         >
@@ -386,7 +404,7 @@ export const StakeForm: FC<TAb> = (props) => {
                 disableStatus={!Number(values.amount)}
                 eventClick={handleSubmit}
                 text={'Confirm'}
-                style={{ marginTop: 20 }}
+                style={{ marginTop: 75 }}
               />
             </DurationWrapper>
           </Form>

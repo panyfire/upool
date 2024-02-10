@@ -29,7 +29,7 @@ export const StakeCard: FC<IStakeCard> = (props) => {
           <Text text={tittle ?? ''} type={'h2'} />
           <Text text={preTittle ?? ''} type={'note'} />
         </CardTitle>
-        <CoinIcon src={iconCoinUrl ?? 'images/bnb-bnb-logo.png'} alt={tittle} />
+        <CoinIcon src={iconCoinUrl} alt={tittle} />
       </CardTop>
       <CardMiddle>
         <CardValues>

@@ -136,7 +136,9 @@ export const DropDownChainList: FC<IButton> = (props) => {
           },
         ],
       })
+      await setOpen(false)
     } catch (error) {
+      console.log('errorerrorerrorerror')
       notify(`${error}`)
     }
   }
@@ -175,7 +177,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
                       e.rpcUrls,
                       e.blockExplorerUrls,
                       e.iconUrls
-                    ).then(() => setOpen(false))
+                    ).catch((e) => {console.log('123123123', e)})
                   }}
                   key={i}
                 >

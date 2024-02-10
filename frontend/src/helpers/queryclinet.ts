@@ -33,7 +33,7 @@ export const getQueryClient = (errorHandle: (error?: AxiosResponse) => void) => 
   })
   return queryClient
 }
-
+//
 const retry = (count: number, error: unknown) => {
   const status = (error as AxiosError).response?.status
   switch (status) {
@@ -41,6 +41,6 @@ const retry = (count: number, error: unknown) => {
     case 403:
       return false
     default:
-      return count < 2
+      return false
   }
 }
