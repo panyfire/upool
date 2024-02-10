@@ -39,8 +39,9 @@ const retry = (count: number, error: unknown) => {
   switch (status) {
     case 401:
     case 403:
+    case 500:
       return false
     default:
-      return false
+      return count < 2
   }
 }

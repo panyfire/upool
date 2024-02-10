@@ -13,6 +13,10 @@ import {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import img from 'img/banner.png'
+import { ImageWrapper } from 'modules/StakeListing/styles'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import img2 from 'img/banner2.png'
 
 export const Banner: FC = () => {
   const { connectMetaMask, wallet } = useMetaMask()
@@ -23,6 +27,9 @@ export const Banner: FC = () => {
       <Layout>
         <BannerWrapper>
           <div>
+            <ImageWrapper>
+              <img src={img2} alt={'banner-decor'} />
+            </ImageWrapper>
             <div style={{ marginBottom: 5 }}>
               <Text text={'Super Pools'} type={'h1'} />
             </div>

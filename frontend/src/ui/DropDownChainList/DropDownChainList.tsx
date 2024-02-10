@@ -138,7 +138,6 @@ export const DropDownChainList: FC<IButton> = (props) => {
       })
       await setOpen(false)
     } catch (error) {
-      console.log('errorerrorerrorerror')
       notify(`${error}`)
     }
   }

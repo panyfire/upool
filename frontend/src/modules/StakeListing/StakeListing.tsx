@@ -7,10 +7,8 @@ import { Layout } from 'layouts/Layout'
 import { LoaderWrapper } from 'layouts/LoaderWrapper'
 import { Popup, StakeCard } from 'components'
 import { useGetStakeList } from 'modules/StakeListing/api/hooks'
-import { ItemWrapper, ListingWrapper, ImageWrapper } from './styles'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import img2 from 'img/banner2.png'
+import { Text } from 'ui'
+import { ItemWrapper, ListingWrapper } from './styles'
 
 type TResponse = {
   nameCoin: string
@@ -32,21 +30,27 @@ export const StakeListing: FC = () => {
   const { wallet, connectMetaMask } = useMetaMask()
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
   const [data, setData] = useState<TResponse>({} as TResponse)
-  console.log(dataResponse)
-  const a = dataResponse.status !== 'error'
+  const [error, setError] = useState<string | null>(null)
+  const a = dataResponse.status === 'error' && dataResponse.error
+
   useEffect(() => {
+    setError(null)
     dataResponse.refetch()
   }, [wallet.chainId])
+
+  useEffect(() => {
+    if (a) {
+      setError('NO DATA')
+    }
+  }, [dataResponse.status])
 
   return (
     <LoaderWrapper isLoad={dataResponse.isLoading && !wallet}>
       <Layout>
         <ListingWrapper>
-          <ImageWrapper>
-            <img src={img2} alt={'banner-decor'} />
-          </ImageWrapper>
           {Array.isArray(dataResponse.data) &&
-            dataResponse.data.length && a ?
+          dataResponse.data.length &&
+          !error ? (
             dataResponse.data.map((e: TResponse, i: number) => {
               return (
                 <ItemWrapper key={i}>
@@ -92,8 +96,10 @@ export const StakeListing: FC = () => {
                   )}
                 </ItemWrapper>
               )
-            }): 'NO DATA'}
-          )
+            })
+          ) : (
+            <Text text={error ? error : ''} type={'h1'} />
+          )}
           <ToastContainer
             position="bottom-right"
             autoClose={5000}

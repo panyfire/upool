@@ -22,7 +22,7 @@ export const ItemWrapper = styled.div`
 
 export const ImageWrapper = styled.div`
   position: absolute;
-  top: -30%;
+  bottom: -50%;
   left: -20%;
   display: none;
   @media ${device.laptopMinL} {
