@@ -85,7 +85,7 @@ export const RedemptionForm: FC<TAb> = (props) => {
     >
       {(props: FormikProps<TAb>) => {
         const {
-          values,
+          // values,
           // touched,
           // errors,
           // handleChange,
@@ -162,9 +162,7 @@ export const RedemptionForm: FC<TAb> = (props) => {
                   />
                   <Text
                     color={'#86F3FF'}
-                    text={String(
-                      values.amount > totalAmount ? totalAmount : values.amount
-                    )}
+                    text={String(totalAmount)}
                     type={'popUpPreTitle'}
                   />
                 </LockOverviewStylesItem>
@@ -185,9 +183,7 @@ export const RedemptionForm: FC<TAb> = (props) => {
                   <Text
                     color={'#86F3FF'}
                     text={String(
-                      +(values.amount > totalAmount
-                        ? totalAmount
-                        : values.amount) / 2
+                      +(Number(totalAmount) / 2)
                     )}
                     type={'popUpPreTitle'}
                   />

@@ -11,3 +11,4 @@ export const whiteColor: string = '#FFFFFF'
 export const purpleColor: string = '#9A6AFF'
 export const blackColor: string = 'rgba(14, 13, 24, 0.80)'
 export const grayColor: string = 'rgba(255, 255, 255, 0.08)'
+//#181818

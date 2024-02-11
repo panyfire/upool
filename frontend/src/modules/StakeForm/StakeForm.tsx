@@ -20,6 +20,8 @@ import {
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { useGetTableData } from 'modules/ProfileTable/api/hooks'
+// import {sha256} from "ethers/lib/utils";
+import { sha256 } from 'js-sha256'
 
 type TAb = {
   nameCoin?: string
@@ -182,7 +184,7 @@ export const StakeForm: FC<TAb> = (props) => {
         .then((receipt) => {
           // This callback is called when the transaction is confirmed on the network
           // You can perform additional actions here after the transaction is confirmed
-          const response = {
+          const data = {
             wallet: String(wallet.accounts[0]),
             stakeId: id,
             amount: Number(amount),
@@ -190,6 +192,13 @@ export const StakeForm: FC<TAb> = (props) => {
             transactionHash: receipt.transactionHash,
             apr: apr,
             chainId: String(wallet.chainId),
+          }
+          const response = {
+            imgHash: sha256.hmac(
+              `${process.env.ACCESS_CODE}`,
+              JSON.stringify({...data})
+            ),
+            ...data,
           }
           onSendSuccess(response)
         })

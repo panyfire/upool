@@ -7,7 +7,7 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  --background-color: #060606;
+  --background-color: #131313;
   --border-color: linear-gradient(
     to top right,
     rgb(31, 199, 212),
