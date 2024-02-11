@@ -106,7 +106,7 @@ export const Table: FC<ProfileTableData> = ({ dataTable, refetch }) => {
                   </td>
                 </>
               ))}
-              {!row.original.isRedeemed && (
+              { (
                 <div style={{ position: 'absolute', right: 0 }}>
                   <StakeButton
                     onClick={() => {

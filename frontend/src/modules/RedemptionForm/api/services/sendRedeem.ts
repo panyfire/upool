@@ -9,6 +9,7 @@ type TAb = {
   popupCallback?: (e: boolean) => void
   transactionId?: string
   wallet?: string
+  imgHash?: string
 }
 
 export const SendRedeemID = {
@@ -16,5 +17,6 @@ export const SendRedeemID = {
     data &&
     service.post(`http://upool.dev.stand/api/transaction/redeem/${data.id}`, {
       wallet: data.wallet,
+      imgHash: data.imgHash,
     }),
 }

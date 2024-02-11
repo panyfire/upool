@@ -16,6 +16,7 @@ import {
 import { Alert } from 'components'
 import { useSend } from './api/hooks'
 import { useMetaMask } from 'hooks/useMetaMask'
+import { sha256 } from 'js-sha256'
 
 type TAb = {
   amount: number | string
@@ -27,6 +28,7 @@ type TAb = {
   transactionId?: string
   wallet?: string
   refetch?: () => void
+  imgHash?: string
 }
 
 export const RedemptionForm: FC<TAb> = (props) => {
@@ -69,7 +71,14 @@ export const RedemptionForm: FC<TAb> = (props) => {
 
   const onSendSuccess = async (data: TAb) => {
     await setValue(Number(data.id))
-    await send(data)
+
+    await send({
+      imgHash: sha256.hmac(
+        `${process.env.ACCESS_CODE}`,
+        JSON.stringify({ ...data })
+      ),
+      ...data,
+    })
     if (popupCallback) {
       await popupCallback(false)
     }
@@ -182,9 +191,7 @@ export const RedemptionForm: FC<TAb> = (props) => {
                   />
                   <Text
                     color={'#86F3FF'}
-                    text={String(
-                      +(Number(totalAmount) / 2)
-                    )}
+                    text={String(+(Number(totalAmount) / 2))}
                     type={'popUpPreTitle'}
                   />
                 </LockOverviewStylesItem>
