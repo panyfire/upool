@@ -96,7 +96,14 @@ export const TextCSS = styled.p`
     font-family: 'GP Meduim', serif;
     font-size: 18px;
     font-weight: 700;
-    line-height: 44px; 
+    line-height: 44px;
+    text-transform: uppercase;
+  }
+  &.preTitleBold {
+    font-family: 'GP Bold', serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 44px;
     text-transform: uppercase;
   }
   &.btn {

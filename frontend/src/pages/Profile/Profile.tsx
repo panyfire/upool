@@ -78,7 +78,7 @@ export const Profile = () => {
               <WalletsContainer>
                 <WalletInfo
                   color={'#BEA0FD'}
-                  title="LOCKED"
+                  title="TOTAL LOCKED"
                   value={
                     `${table?.totalLockedProfile || 'wait...'}` || 'No data'
                   }
@@ -101,10 +101,7 @@ export const Profile = () => {
               <div>
                 {!tableData?.isLoading &&
                 data?.data?.transactions?.length > 0 ? (
-                  <Table
-                    refetch={() => refetch()}
-                    dataTable={tableData}
-                  />
+                  <Table refetch={() => refetch()} dataTable={tableData} />
                 ) : (
                   !tableData?.isLoading && (
                     <Text type={'h3'} color={'white'} text={'Loading'} />

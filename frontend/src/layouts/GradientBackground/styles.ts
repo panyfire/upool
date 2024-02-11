@@ -22,6 +22,7 @@ export const PinkELement = styled.div`
     rgba(252, 154, 252, 0.4) 100%
   );
   filter: blur(250px);
+  pointer-events: none;
 `
 
 export const BlueELement = styled.div`
@@ -36,4 +37,5 @@ export const BlueELement = styled.div`
     rgba(85, 248, 241, 0.3) 92.72%
   );
   filter: blur(250px);
+  pointer-events: none;
 `

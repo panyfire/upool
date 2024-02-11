@@ -6,6 +6,6 @@ export type ErrorHandlingType = [
   setError: Dispatch<SetStateAction<AxiosResponse | undefined>>,
 ]
 
-export interface ProviderProps {
+export type ProviderProps = {
   children: ReactElement
 }

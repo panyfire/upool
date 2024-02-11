@@ -14,11 +14,9 @@ export const WalletInfo: FC<IWallet> = (props) => {
 
   return (
     <WalletContainer>
-      <Text type={'preTitle'} text={`${title}`} />
+      <Text type={'preTitleBold'} text={`${title}`} />
       <Text color={color} type={'h4'} text={`${value}`} />
-        {convertValue && (
-            <Text type={'h41'} text={`≈ $${convertValue}`} />
-        )}
+      {convertValue && <Text type={'h41'} text={`≈ $${convertValue}`} />}
     </WalletContainer>
   )
 }
