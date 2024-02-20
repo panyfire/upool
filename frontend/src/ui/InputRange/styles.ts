@@ -13,26 +13,30 @@ export const RangeSlider = styled.input`
   background: #595859;
   border-radius: 5px;
   outline: none;
-  opacity: 0.7;
+  opacity: 1;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
+  &:disabled,
+  &[disabled]{
+    cursor: not-allowed;
+  }
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 11px;
+    height: 11px;
     background: red;
     cursor: pointer;
   }
   &::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
+    width: 11px;
+    height: 11px;
     background: red;
     cursor: pointer;
   }
   &::-ms-thumb {
-    width: 25px;
-    height: 25px;
+    width: 11px;
+    height: 11px;
     background: red;
     cursor: pointer;
   }

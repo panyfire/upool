@@ -1,5 +1,33 @@
 import styled from 'styled-components'
 
+const size = {
+  mobileS: '320px',
+  mobileSM: '350px',
+  mobileM: '375px',
+  mobileL: '425px',
+  tablet: '768px',
+  tabletM: '824px',
+  tabletL: '920px',
+  laptop: '1024px',
+  laptopL: '1440px',
+  desktop: '2560px',
+}
+
+export const device = {
+  mobileS: `(max-width: ${size.mobileS})`,
+  mobileSM: `(max-width: ${size.mobileSM})`,
+  mobileM: `(max-width: ${size.mobileM})`,
+  mobileL: `(max-width: ${size.mobileL})`,
+  mobileLD: `(min-width: ${size.mobileL})`,
+  tablet: `(max-width: ${size.tablet})`,
+  tabletM: `(max-width: ${size.tabletM})`,
+  tabletL: `(max-width: ${size.tabletL})`,
+  laptop: `(max-width: ${size.laptop})`,
+  laptopL: `(max-width: ${size.laptopL})`,
+  desktop: `(max-width: ${size.desktop})`,
+  desktopL: `(max-width: ${size.desktop})`,
+}
+
 export const ButtonStyled = styled.button`
   height: 44px;
   position: relative;
@@ -8,7 +36,7 @@ export const ButtonStyled = styled.button`
   align-items: center;
   justify-content: center;
   --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #f3c3c6, #b0fec7);
+  --border-color: linear-gradient(180deg, #f3c3c6, #b0fec7);
   --border-width: 0.1em;
   --edge-size: 1em;
   cursor: pointer;
@@ -26,6 +54,9 @@ export const ButtonStyled = styled.button`
     0 var(--edge-size)
   );
   transition: color 250ms;
+  @media ${device.tabletL} {
+    width: auto;
+  }
   &:before {
     content: '';
     position: absolute;
@@ -65,6 +96,11 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & p {
+    @media ${device.tabletL} {
+      display: none;
+    }
+  }
 `
 
 export const IconWrapper = styled.div`
@@ -75,7 +111,6 @@ export const IconWrapper = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-  bottom: -140px;
   width: 100%;
   background: rgba(255, 255, 255, 0.08);
   z-index: 100;
@@ -90,8 +125,13 @@ export const MeniList = styled.div`
 export const MenuItem = styled.div`
   padding: 15px 12px;
   width: 100%;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  &:nth-child(2) {
+    border-bottom: none;
+  }
 `

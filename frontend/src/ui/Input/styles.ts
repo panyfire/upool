@@ -25,6 +25,10 @@ export const Field = styled.input`
   line-height: 24px;
   outline: none;
   border: none;
+  &:disabled,
+  &[disabled]{
+    cursor: not-allowed;
+  }
   &::placeholder {
     font-size: 12px;
     font-style: normal;

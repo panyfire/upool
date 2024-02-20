@@ -96,11 +96,17 @@ export const TextCSS = styled.p`
     font-family: 'GP Meduim', serif;
     font-size: 18px;
     font-weight: 700;
-    line-height: 44px; 
+    line-height: 44px;
+    text-transform: uppercase;
+  }
+  &.preTitleBold {
+    font-family: 'GP Bold', serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 44px;
     text-transform: uppercase;
   }
   &.btn {
-    font-family: 'GP Meduim', serif;
     color: ${blackColor};
     font-size: 18px;
     font-style: normal;
@@ -143,6 +149,14 @@ export const TextCSS = styled.p`
   &.card {
     color: #55f8f1;
     font-family: 'GP Meduim', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+  }
+  &.card2 {
+    color: #55f8f1;
+    font-family: 'GP Bold', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

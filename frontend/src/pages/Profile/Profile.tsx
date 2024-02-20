@@ -16,9 +16,8 @@ import { BackLink, BtnWrapper } from '../styles'
 export const Profile = () => {
   const { wallet } = useMetaMask()
   const tableData = wallet
-    ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
+    ? useGetTableData(String(wallet?.accounts[0]), String(wallet?.chainId))
     : null
-  console.log(tableData)
   const navigate = useNavigate()
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -56,7 +55,7 @@ export const Profile = () => {
   }, [transactionResponse, tableData])
 
   return wallet && tableData ? (
-    <LoaderWrapper isLoad={tableData.isLoading || !wallet.accounts.length}>
+    <LoaderWrapper isLoad={tableData.isLoading || !wallet.accounts?.length}>
       <HeaderLayout>
         <GradientBackground>
           <Layout>
@@ -79,7 +78,7 @@ export const Profile = () => {
               <WalletsContainer>
                 <WalletInfo
                   color={'#BEA0FD'}
-                  title="LOCKED"
+                  title="TOTAL LOCKED"
                   value={
                     `${table?.totalLockedProfile || 'wait...'}` || 'No data'
                   }
@@ -101,18 +100,15 @@ export const Profile = () => {
               </WalletsContainer>
               <div>
                 {!tableData?.isLoading &&
-                data?.data?.transactions.length > 0 ? (
-                  <Table
-                    refetch={() => refetch()}
-                    dataTable={tableData}
-                  />
+                data?.data?.transactions?.length > 0 ? (
+                  <Table refetch={() => refetch()} dataTable={tableData} />
                 ) : (
                   !tableData?.isLoading && (
                     <Text type={'h3'} color={'white'} text={'Loading'} />
                   )
                 )}
                 {!tableData?.isLoading &&
-                  data?.data?.transactions.length === 0 && (
+                  data?.data?.transactions?.length === 0 && (
                     <Text type={'h3'} color={'white'} text={'No data'} />
                   )}
               </div>

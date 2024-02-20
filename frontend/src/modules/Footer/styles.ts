@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-// import { device } from 'ui'
+import { device } from 'ui'
 
 export const FooterWrapper = styled.div`
   margin-top: 80px;
@@ -13,12 +13,17 @@ export const ContentWrapper = styled.menu`
   padding: 0 16px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `
 
 export const LinksWrapper = styled.div`
   display: flex;
   gap: 100px;
   cursor: pointer;
+  @media ${device.tabletL} {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
   & p {
     transition: all .3s ease-in-out;
   }

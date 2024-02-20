@@ -3,11 +3,10 @@ import { device } from 'ui'
 
 export const HeaderStyled = styled.menu`
   width: 100%;
-  height: 60px;
+  height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //background: rgba(6, 6, 6, 0.72);
 `
 
 export const Additional = styled.div`
@@ -21,15 +20,12 @@ export const Dropdowns = styled.div`
   display: flex;
   align-items: center;
   gap: 30px;
-  @media ${device.tabletL} {
-    display: none;
-  }
 `
 
 export const Menu = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  padding-right: 20px
 `
 
 export const MenuDrop = styled.div`
@@ -54,5 +50,16 @@ export const MenuItemDrop = styled.div`
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.08);
+  }
+`
+
+export const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center; 
+  padding: 0 16px;
+  & p {
+    @media ${device.tabletL} {
+      display: none;
+    }
   }
 `

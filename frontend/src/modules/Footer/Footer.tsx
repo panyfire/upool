@@ -2,6 +2,10 @@ import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ContentWrapper, FooterWrapper, LinksWrapper } from './styles'
 import { Text } from 'ui'
+import { LogoWrapper } from 'modules/Header/styles'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import logo from 'img/logo.png'
 
 export const Footer: FC = () => {
   const navigate = useNavigate()
@@ -36,7 +40,10 @@ export const Footer: FC = () => {
             <Text text={'Security'} type={'default'} />
           </div>
         </LinksWrapper>
-        <div>LOGO</div>
+        <LogoWrapper>
+          <img src={logo} width={70} alt="" />
+          <Text text="SafetyStaking" type={'h2'} />
+        </LogoWrapper>
       </ContentWrapper>
     </FooterWrapper>
   )

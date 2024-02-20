@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState } from 'react'
 import clsx from 'clsx'
 import { IButton } from './types'
 import { Icon, Text } from 'ui'
@@ -10,17 +10,14 @@ import {
   Menu,
   MenuItem,
 } from './styles'
-import { useGetTableData } from 'modules/ProfileTable/api/hooks'
 import { useMetaMask } from 'hooks/useMetaMask'
+import { chainIdIcon } from 'utils'
+import { toast } from 'react-toastify'
 
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
   const { wallet } = useMetaMask()
-
-  const tableData = wallet
-    ? useGetTableData(String(wallet.accounts[0]), String(wallet.chainId))
-    : null
 
   const chainIDS = [
     {
@@ -32,37 +29,35 @@ export const DropDownChainList: FC<IButton> = (props) => {
         decimals: 18,
       },
       rpcUrls: [
-        'https://mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
+        'https://mainnet.infura.io/v3/57a5dabf16174ee7bd85aae67ae76604',
       ],
       blockExplorerUrls: ['https://etherscan.io'],
       iconUrls: ['https://path.to.your.icon.eth'],
     },
     {
       chainId: '0xa4b1',
-      chainName: 'Arbitrum',
+      chainName: 'Arbitrum One',
       nativeCurrency: {
         name: 'Arbitrum Token',
-        symbol: 'ARB',
+        symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: [
-        'https://arbitrum-mainnet.infura.io/v3/02792ae49747452b85ca01aa16981682',
-      ],
-      blockExplorerUrls: ['https://arbitrum-mainnet.infura.io'],
+      rpcUrls: ['https://arbitrum-mainnet.infura.io/'],
+      blockExplorerUrls: ['https://explorer.arbitrum.io'],
       iconUrls: ['https://path.to.your.icon.arb'],
     },
-    {
-      chainId: '0x420',
-      chainName: 'Optimism',
-      nativeCurrency: {
-        name: 'Optimism Ether',
-        symbol: 'OETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://mainnet.optimism.io'],
-      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
-      iconUrls: ['https://path.to.your.icon.op'],
-    },
+    // {
+    //   chainId: '0x420',
+    //   chainName: 'Optimism',
+    //   nativeCurrency: {
+    //     name: 'Optimism Ether',
+    //     symbol: 'OETH',
+    //     decimals: 18,
+    //   },
+    //   rpcUrls: ['https://mainnet.optimism.io'],
+    //   blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+    //   iconUrls: ['https://path.to.your.icon.op'],
+    // },
     {
       chainId: '0x38',
       chainName: 'BNB Chain',
@@ -75,30 +70,30 @@ export const DropDownChainList: FC<IButton> = (props) => {
       blockExplorerUrls: ['https://bscscan.com/blockExplorer'],
       iconUrls: ['https://path.to.your.icon.bnb'],
     },
-    {
-      chainId: '0x5',
-      chainName: 'Goerli',
-      nativeCurrency: {
-        name: 'Ether',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
-      blockExplorerUrls: ['https://etherscan.io'],
-      iconUrls: ['https://path.to.your.icon.eth'],
-    },
-    {
-      chainId: '97',
-      chainName: 'BNB Chain Testnet',
-      nativeCurrency: {
-        name: 'BNB Chain Testnet',
-        symbol: 'tBNB',
-        decimals: 18,
-      },
-      rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-      blockExplorerUrls: ['https://testnet.bscscan.com'],
-      iconUrls: ['https://path.to.your.icon.bnb'],
-    },
+    // {
+    //   chainId: '0x5',
+    //   chainName: 'Goerli',
+    //   nativeCurrency: {
+    //     name: 'Ether',
+    //     symbol: 'ETH',
+    //     decimals: 18,
+    //   },
+    //   rpcUrls: ['https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
+    //   blockExplorerUrls: ['https://etherscan.io'],
+    //   iconUrls: ['https://path.to.your.icon.eth'],
+    // },
+    // {
+    //   chainId: '97',
+    //   chainName: 'BNB Chain Testnet',
+    //   nativeCurrency: {
+    //     name: 'BNB Chain Testnet',
+    //     symbol: 'tBNB',
+    //     decimals: 18,
+    //   },
+    //   rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    //   blockExplorerUrls: ['https://testnet.bscscan.com'],
+    //   iconUrls: ['https://path.to.your.icon.bnb'],
+    // },
   ]
 
   type InactiveCurrency = {
@@ -106,6 +101,18 @@ export const DropDownChainList: FC<IButton> = (props) => {
     symbol?: string
     decimals?: number | undefined
   }
+
+  const notify = (text: string) =>
+    toast(text, {
+      position: 'bottom-right',
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    })
 
   const handleChangeChainId = async (
     chainId: string | number,
@@ -129,20 +136,26 @@ export const DropDownChainList: FC<IButton> = (props) => {
           },
         ],
       })
+      await setOpen(false)
     } catch (error) {
-      console.error(error)
+      notify(`${error}`)
     }
   }
 
-  useEffect(() => {
-    tableData?.refetch()
-  }, [wallet.chainId])
-
   return (
-    <div style={{ position: 'relative' }}>
+    <div
+      onMouseLeave={() => {
+        setOpen(false)
+      }}
+      style={{ position: 'relative' }}
+    >
       <ButtonStyled {...other}>
-        <ButtonWrapper onClick={() => setOpen(!open)}>
-          <Icon size={'24'} name="wallet" />
+        <ButtonWrapper
+          onMouseEnter={() => {
+            setOpen(true)
+          }}
+        >
+          <img width={35} src={chainIdIcon(String(wallet.chainId))} alt="" />
           <Text text={text ?? ''} type="default" />
           <IconWrapper className={clsx({ isActive: open })}>
             <Icon size={'24'} name={'arrowDown'} />
@@ -163,7 +176,7 @@ export const DropDownChainList: FC<IButton> = (props) => {
                       e.rpcUrls,
                       e.blockExplorerUrls,
                       e.iconUrls
-                    ).then(() => setOpen(false))
+                    ).catch((e) => {console.log('123123123', e)})
                   }}
                   key={i}
                 >

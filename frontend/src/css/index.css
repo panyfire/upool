@@ -7,9 +7,9 @@ html {
   height: 100%;
 }
 
-#root {
-  height: 100%;
-}
+/*#root {*/
+/*  height: 100%;*/
+/*}*/
 
 body {
   margin: 0;
@@ -36,6 +36,11 @@ ul {
 @font-face {
   font-family: 'GP Bold';
   src: url('../fonts/gothampro_bold.ttf');
+}
+
+@font-face {
+  font-family: 'GP Middle';
+  src: url('../fonts/gothampro_medium.ttf');
 }
 
 @font-face {

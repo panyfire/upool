@@ -12,7 +12,7 @@ export const Input: FC<InputProps> = (props) => {
         <Text text={label} type="label" />
       </Label>
       <InputContainer>
-        <Field maxLength={maxLength} name={name} {...other} onChange={onChange} />
+        <Field maxLength={maxLength} name={name} onChange={onChange} {...other}  />
       </InputContainer>
     </InputStyled>
   )

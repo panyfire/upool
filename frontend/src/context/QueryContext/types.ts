@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
 
-export interface ProviderProps {
+export type ProviderProps = {
   children: ReactElement
 }

@@ -4,11 +4,14 @@ import { device } from 'ui'
 export const BannerWrapper = styled.div`
   width: 100%;
   position: relative;
-  padding: 50px 0;
+  padding: 0 0 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  @media ${device.laptopL} {
+    padding: 50px 0 50px;
+  }
 `
 
 export const BannerContent = styled.div`
@@ -20,12 +23,17 @@ export const BannerContent = styled.div`
 `
 
 export const ImgWprap = styled.img`
-  width: 40%;
-  @media ${device.tabletL} {
-    display: none;
+  display: none;
+  @media ${device.laptopMinL} {
+    display: block;
   }
 `
 
 export const BannerSection = styled.section`
-  //background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 5.79%, rgba(255, 255, 255, 0.00) 100.64%);
+  position: relative;
+`
+
+export const Connect = styled.section`
+  display: flex;
+  gap: 20px
 `

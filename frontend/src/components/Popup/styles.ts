@@ -37,9 +37,9 @@ export const ChildrenWrapper = styled.div`
 
 export const PopupContainer = styled.div`
   position: relative;
-  height: calc(100% - 20px);
+  //height: calc(100% - 20px);
   --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #f3c3c6, #b0fec7);
+  --border-color: linear-gradient(to top, rgb(154, 106, 255), rgb(251, 204, 114));
   --border-width: 0.1em;
   --edge-size: 1em;
   cursor: pointer;
@@ -96,7 +96,7 @@ export const Head = styled.div`
   align-items: center;
   height: 62px;
   --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #f3c3c6, #b0fec7);
+  --border-color: linear-gradient(to bottom right, #f3c3c6, #eeeab0, #b0fec7);
   --border-width: 7.1em;
   --edge-size: 1em;
   cursor: pointer;

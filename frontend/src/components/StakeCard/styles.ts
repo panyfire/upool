@@ -7,11 +7,14 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #916aff, #fbcc72);
+  --background-color: #131313;
+  --border-color: linear-gradient(
+    to top right,
+    rgb(31, 199, 212),
+    rgb(255, 84, 176)
+  );
   --border-width: 0.2em;
   --edge-size: 1em;
-  cursor: pointer;
   background: var(--background-color);
   border: 0;
   isolation: isolate;
@@ -26,7 +29,7 @@ export const CardWrapper = styled.div`
   );
   transition: color 250ms;
   @media ${device.tablet} {
-    width: 100%
+    width: 100%;
   }
   &:before {
     content: '';
@@ -69,6 +72,9 @@ export const CardTop = styled.div`
 
 export const CardTitle = styled.div`
   width: 100%;
+  & p:nth-child(1) {
+    margin-bottom: 20px;
+  }
 `
 
 export const CoinIcon = styled.img`
@@ -94,10 +100,13 @@ export const CardMiddle = styled.div`
   flex-direction: column;
   gap: 10px;
   --background-color: #060606;
-  --border-color: linear-gradient(to bottom right, #f3c3c6, #b0fec7);
+  --border-color: linear-gradient(
+    to top right,
+    rgb(31, 199, 212),
+    rgb(255, 84, 176)
+  );
   --border-width: 0.1em;
   --edge-size: 1em;
-  cursor: pointer;
   background: var(--background-color);
   border: 0;
   isolation: isolate;

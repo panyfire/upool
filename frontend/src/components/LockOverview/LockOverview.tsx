@@ -28,17 +28,17 @@ export const LockOverview: FC<TAb> = (props) => {
         <LockOverviewStylesItem>
           <Text text={'ETH to be locked'} type={'popUpValue'} />
           <Text
-            text={amount === '0' ? '0' : amount.substring(0, 10)}
+            text={amount === '0' ? '0' : amount.substring(0, 12)}
             type={'value'}
           />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'apr'} type={'popUpValue'} />
-          <Text text={`${apr}`} type={'value'} />
+          <Text text={`${apr}%`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'duration'} type={'popUpValue'} />
-          <Text text={`${duration} D`} type={'value'} />
+          <Text text={`${duration} DAY`} type={'value'} />
         </LockOverviewStylesItem>
         <LockOverviewStylesItem>
           <Text text={'Start locking'} type={'popUpValue'} />
@@ -51,10 +51,7 @@ export const LockOverview: FC<TAb> = (props) => {
         <LockOverviewStylesItem>
           <Text text={'expected roi'} type={'popUpValue'} />
           <Text
-            text={
-              String(expectedRoi) === '0'
-                ? '0'
-                : String(expectedRoi).substring(0, 10)
+            text={String(expectedRoi) === '0' ? '$0' : String(expectedRoi).substring(0, 12)
             }
             type={'value'}
           />
