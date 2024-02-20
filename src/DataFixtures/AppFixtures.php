@@ -7,6 +7,7 @@ use App\Entity\Staking;
 use App\Entity\Transaction;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Monolog\Logger;
 
 class AppFixtures extends Fixture
 {
@@ -23,142 +24,62 @@ class AppFixtures extends Fixture
             [
                 'nameCoin' => 'BNB',
                 'iconCoinUrl' => '/images/bnb-bnb-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
+                'minArpPercent' => 14,
+                'maxArpPercent' => 45,
                 'subHeader' => 'Stake BNB',
                 'chainId' => '0x38',
-                'apr' => 0.93,
+                'apr' => 38,
                 'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
                 'expectedRoi' => 0.00,
+                'durationCode' => 'bnb'
             ],
             [
-                'nameCoin' => 'USDC',
-                'iconCoinUrl' => '/images/usd-coin-usdc-logo.png',
+                'nameCoin' => 'CELO',
+                'iconCoinUrl' => '/images/celo-celo-logo.png',
                 'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'USDC',
+                'maxArpPercent' => 40,
+                'subHeader' => 'CELO',
                 'chainId' => '0x38',
-                'apr' => 0.93,
+                'apr' => 31,
                 'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
                 'expectedRoi' => 0.00,
+                'durationCode' => 'celo'
             ],
             [
-                'nameCoin' => 'USDT',
-                'iconCoinUrl' => '/images/tether-usdt-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
+                'nameCoin' => 'MATIC',
+                'iconCoinUrl' => '/images/polygon-matic-logo.png',
+                'minArpPercent' => 11,
+                'maxArpPercent' => 41,
                 'subHeader' => 'Stake USDT',
                 'chainId' => '0x38',
-                'apr' => 0.93,
+                'apr' => 32,
                 'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
                 'expectedRoi' => 0.00,
+                'durationCode' => 'matic'
             ],
             [
                 'nameCoin' => 'ETH',
                 'iconCoinUrl' => '/images/ethereum-eth-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'Stake ETH',
-                'chainId' => '0xa4b1',
-                'apr' => 0.93,
-                'duration' => '30',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ],
-            [
-                'nameCoin' => 'ARB',
-                'iconCoinUrl' => '/images/arbitrum-arb-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'Stake ETC',
-                'chainId' => '0xa4b1',
-                'apr' => 0.93,
-                'duration' => '30',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ],
-            [
-                'nameCoin' => 'USDC',
-                'iconCoinUrl' => '/images/usd-coin-usdc-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'USDC',
-                'chainId' => '0xa4b1',
-                'apr' => 0.93,
-                'duration' => '30',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ],
-            [
-                'nameCoin' => 'USDT',
-                'iconCoinUrl' => '/images/tether-usdt-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'Stake USDT',
-                'chainId' => '0xa4b1',
-                'apr' => 0.93,
-                'duration' => '30',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ],
-            [
-                'nameCoin' => 'USDC',
-                'iconCoinUrl' => '/images/usd-coin-usdc-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'USDC',
-                'chainId' => '0x1',
-                'apr' => 0.93,
-                'duration' => '30',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ],
-            [
-                'nameCoin' => 'USDT',
-                'iconCoinUrl' => '/images/tether-usdt-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
-                'subHeader' => 'Stake USDT',
-                'chainId' => '0x1',
-                'apr' => 0.93,
-                'duration' => '30',
-                'coinToBeLocked' => 0.00,
-                'endLocking' => '',
-                'startLocking' => '',
-                'expectedRoi' => 0.00,
-            ],
-            [
-                'nameCoin' => 'ETH',
-                'iconCoinUrl' => '/images/ethereum-eth-logo.png',
-                'minArpPercent' => 10,
-                'maxArpPercent' => 88,
+                'minArpPercent' => 13,
+                'maxArpPercent' => 47,
                 'subHeader' => 'Stake ETH',
                 'chainId' => '0x1',
-                'apr' => 0.93,
+                'apr' => 36,
                 'duration' => '30',
                 'coinToBeLocked' => 0.00,
                 'endLocking' => '',
                 'startLocking' => '',
                 'expectedRoi' => 0.00,
+                'durationCode' => 'eth'
             ],
         ];
 
@@ -176,6 +97,7 @@ class AppFixtures extends Fixture
             $staking->setEndLocking($coin['endLocking']);
             $staking->setStartLocking($coin['startLocking']);
             $staking->setExpectedRoi($coin['expectedRoi']);
+            $staking->setDurationCode($coin['durationCode']);
             $manager->persist($staking);
             $manager->flush();
         }
@@ -186,48 +108,123 @@ class AppFixtures extends Fixture
         $payload = [
             [
                 'code' => 'percent',
-                'value' => '25',
-                'secondValue' => '1'
+                'value' => '14',
+                'secondValue' => '1',
+                'durationCode' => 'bnb'
             ],
             [
                 'code' => 'percent',
-                'value' => '50',
-                'secondValue' => '1'
+                'value' => '21',
+                'secondValue' => '7',
+                'durationCode' => 'bnb'
             ],
             [
                 'code' => 'percent',
-                'value' => '75',
-                'secondValue' => '1'
+                'value' => '38',
+                'secondValue' => '30',
+                'durationCode' => 'bnb'
             ],
             [
                 'code' => 'percent',
-                'value' => 'MAX',
-                'secondValue' => '1'
+                'value' => '43',
+                'secondValue' => '60',
+                'durationCode' => 'bnb'
             ],
             [
                 'code' => 'duration',
-                'value' => '1',
-                'secondValue' => '50'
+                'value' => '45',
+                'secondValue' => '90',
+                'durationCode' => 'bnb'
             ],
             [
                 'code' => 'duration',
-                'value' => '7',
-                'secondValue' => '30'
+                'value' => '13',
+                'secondValue' => '1',
+                'durationCode' => 'eth'
             ],
             [
                 'code' => 'duration',
-                'value' => '30',
-                'secondValue' => '22'
+                'value' => '21',
+                'secondValue' => '7',
+                'durationCode' => 'eth'
             ],
             [
                 'code' => 'duration',
-                'value' => '60',
-                'secondValue' => '25'
+                'value' => '36',
+                'secondValue' => '30',
+                'durationCode' => 'eth'
             ],
             [
                 'code' => 'duration',
-                'value' => '90',
-                'secondValue' => '60'
+                'value' => '43',
+                'secondValue' => '60',
+                'durationCode' => 'eth'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '47',
+                'secondValue' => '90',
+                'durationCode' => 'eth'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '10',
+                'secondValue' => '1',
+                'durationCode' => 'celo'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '20',
+                'secondValue' => '7',
+                'durationCode' => 'celo'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '31',
+                'secondValue' => '30',
+                'durationCode' => 'celo'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '37',
+                'secondValue' => '60',
+                'durationCode' => 'celo'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '40',
+                'secondValue' => '90',
+                'durationCode' => 'celo'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '11',
+                'secondValue' => '1',
+                'durationCode' => 'matic'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '21',
+                'secondValue' => '7',
+                'durationCode' => 'matic'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '32',
+                'secondValue' => '30',
+                'durationCode' => 'matic'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '38',
+                'secondValue' => '60',
+                'durationCode' => 'matic'
+            ],
+            [
+                'code' => 'duration',
+                'value' => '41',
+                'secondValue' => '90',
+                'durationCode' => 'matic'
             ],
         ];
 
@@ -236,6 +233,7 @@ class AppFixtures extends Fixture
             $stakesChooser->setCode($chooser['code']);
             $stakesChooser->setValue($chooser['value']);
             $stakesChooser->setSecondValue($chooser['secondValue']);
+            $stakesChooser->setDurationCode($chooser['durationCode']);
             $manager->persist($stakesChooser);
             $manager->flush();
         }

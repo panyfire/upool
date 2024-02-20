@@ -31,19 +31,14 @@ class StakingController extends AbstractController
             throw new Exception('Stakes does not exists.', 404);
         }
 
-        $percentsDb = $manager->getRepository(StakesChooser::class)->findBy(['code' => 'percent']);
-        $percents = [];
-        foreach ($percentsDb as $percent) {
-            $percents[] = $percent->getValue();
-        }
-
-        $durationsDb = $manager->getRepository(StakesChooser::class)->findBy(['code' => 'duration']);
-        $durations = [];
-        foreach ($durationsDb as $duration) {
-            $durations[] = [
-                'type' => $duration->getValue(),
-                'value' => $duration->getSecondValue()
-            ];
+        $choosers = $manager->getRepository(StakesChooser::class)->findAll();
+        $aprData = [];
+        foreach ($choosers as $chooser) {
+            $aprData[$chooser->getDurationCode()][] =
+                [
+                    'apr' => $chooser->getValue(),
+                    'duration' => $chooser->getSecondValue()
+                ];
         }
 
         $stakingResult = [];
@@ -55,8 +50,7 @@ class StakingController extends AbstractController
                 'minArpPercent' => $staking->getMinArpPercent(),
                 'maxArpPercent' => $staking->getMaxArpPercent(),
                 'subHeader' => $staking->getSubHeader(),
-                'percents' => $percents,
-                'durations' => $durations,
+                'aprData' => $aprData[$staking->getDurationCode()],
                 'apr' => $staking->getApr(),
                 'duration' => $staking->getDuration(),
                 'coinToBeLocked' => $staking->getCoinToBeLocked(),
@@ -78,6 +72,10 @@ class StakingController extends AbstractController
         $staking = current($manager->getRepository(Staking::class)->createQueryBuilder('s')
             ->where('s.id = :id')->setParameter('id', $id)
         ->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY));
+
+        $staking['aprData'] = $manager->getRepository(StakesChooser::class)->createQueryBuilder('s')
+            ->where('s.durationCode = :durationCode')->setParameter('durationCode', $staking['durationCode'])
+            ->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
 
         $staking['startLocking'] = (new \DateTime('now'))->format('M dS, Y H:m');
         $staking['endLocking'] = (new \DateTime('now'))->modify('+30 days')->format('M dS, Y H:m');
