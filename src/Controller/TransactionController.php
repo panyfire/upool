@@ -38,7 +38,7 @@ class TransactionController  extends AbstractController
             'imgHash'
         ];
         $params = $request->request->all();
-        (new ImgHash($params['imgHash']))->validate($params);
+        (new ImgHash($params['imgHash']))->validate($params, $this->getParameter('phpsalt'));
         foreach ($params as $nameParam => $paramValue) {
             if (!in_array($nameParam, $mapping) && !empty($paramValue)) {
                 throw new Exception($nameParam . ' параметр пуст - заполните все поля запроса.');
@@ -49,7 +49,7 @@ class TransactionController  extends AbstractController
         $transaction->setStartLocking((new \DateTime())->format('d/m/Y'));
         $transaction->setEndLocking((new \DateTime())
             ->modify('+' . $params['duration'] . ' days')->format('d/m/Y'));
-
+        unset($params['imgHash']);
         foreach ($params as $nameParam => $valueParam) {
             $methodName = 'set' . ucfirst($nameParam);
             $transaction->$methodName($valueParam);
