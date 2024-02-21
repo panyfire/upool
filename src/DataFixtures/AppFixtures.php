@@ -81,6 +81,21 @@ class AppFixtures extends Fixture
                 'expectedRoi' => 0.00,
                 'durationCode' => 'eth'
             ],
+            [
+                'nameCoin' => 'ETH',
+                'iconCoinUrl' => '/images/ethereum-eth-logo.png',
+                'minArpPercent' => 13,
+                'maxArpPercent' => 47,
+                'subHeader' => 'Stake ETH',
+                'chainId' => '0x5',
+                'apr' => 36,
+                'duration' => '30',
+                'coinToBeLocked' => 0.00,
+                'endLocking' => '',
+                'startLocking' => '',
+                'expectedRoi' => 0.00,
+                'durationCode' => 'eth'
+            ],
         ];
 
         foreach ($payload as $coin) {
