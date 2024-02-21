@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Staking;
 use App\Entity\Transaction;
+use App\Helper\ImgHash;
 use App\Helper\PriceHelper;
 use App\Service\CurrencyApi;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,10 +34,11 @@ class TransactionController  extends AbstractController
             'duration',
             'transactionHash',
             'status',
-            'apr'
+            'apr',
+            'imgHash'
         ];
         $params = $request->request->all();
-
+        (new ImgHash($params['imgHash']))->validate($params);
         foreach ($params as $nameParam => $paramValue) {
             if (!in_array($nameParam, $mapping) && !empty($paramValue)) {
                 throw new Exception($nameParam . ' параметр пуст - заполните все поля запроса.');
@@ -135,8 +137,10 @@ class TransactionController  extends AbstractController
     public function redeem(EntityManagerInterface $manager, Request $request, LoggerInterface $logger, string $transactionId=''): Response
     {
         $transaction=current($manager->getRepository(Transaction::class)->findBy(['id'=>$transactionId]));
-        $wallet = $request->getPayload()->get('wallet');
-
+        $imgHash = $request->request->get('imgHash');
+        $wallet = $request->request->get('wallet');
+        (new ImgHash($imgHash))->validate([$wallet]);
+        
         if ($transaction->getIsRedeemed()) {
             return new JsonResponse(['status'=>true]);
         }

@@ -49,6 +49,8 @@ class Staking extends AbstarctEntity
     #[ORM\Column(length: 23)]
     private ?float $expectedRoi = null;
 
+    #[ORM\Column(length: 23)]
+    private ?string $durationCode = null;
 
     public function getId(): ?int
     {
@@ -157,6 +159,12 @@ class Staking extends AbstarctEntity
         return $this;
     }
 
+    public function setDurationCode(string $durationCode): self
+    {
+        $this->durationCode = $durationCode;
+        return $this;
+    }
+
     public function getApr(): ?float
     {
         return $this->apr;
@@ -175,5 +183,10 @@ class Staking extends AbstarctEntity
     public function getCoinToBeLocked(): ?float
     {
         return $this->coinToBeLocked;
+    }
+
+    public function getDurationCode(): ?string
+    {
+        return $this->durationCode;
     }
 }
