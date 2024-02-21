@@ -33,7 +33,6 @@ class TransactionController  extends AbstractController
             'amount',
             'duration',
             'transactionHash',
-            'status',
             'apr',
             'imgHash'
         ];
