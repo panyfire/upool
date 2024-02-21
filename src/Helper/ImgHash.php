@@ -18,12 +18,12 @@ class ImgHash
     /**
      * @throws Exception
      */
-    public function validate(array $data): bool
+    public function validate(array $data, string $phpSalt): bool
     {
         $localData = $data;
         unset($localData['imgHash']);
         $localDataJson = json_encode($localData, true);
-        $hash = hash_hmac('sha256', $localDataJson, getenv('PHP_SALT'));
+        $hash = hash_hmac('sha256', $localDataJson, $phpSalt);
 
         if ($this->imgHash !== $hash) {
             throw new Exception('No Access', 403);
