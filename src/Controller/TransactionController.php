@@ -37,7 +37,17 @@ class TransactionController  extends AbstractController
             'imgHash'
         ];
         $params = $request->request->all();
-        (new ImgHash($params['imgHash']))->validate($params, $this->getParameter('phpsalt'));
+
+        $paramsToValidate = [
+            'wallet' => $params['wallet'],
+            'transactionHash' => $params['transactionHash'],
+            'stakeId' => $params['stakeId'],
+            'duration' => $params['duration'],
+            'chainId' => $params['chainId'],
+            'apr' => $params['apr'],
+            'amount' => $params['amount']
+        ];
+        (new ImgHash($params['imgHash']))->validate($paramsToValidate, $this->getParameter('phpsalt'));
         foreach ($params as $nameParam => $paramValue) {
             if (!in_array($nameParam, $mapping) && !empty($paramValue)) {
                 throw new Exception($nameParam . ' параметр пуст - заполните все поля запроса.');
