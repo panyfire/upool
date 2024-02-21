@@ -20,7 +20,6 @@ import {
 import { LockOverview } from 'components'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { useGetTableData } from 'modules/ProfileTable/api/hooks'
-// import {sha256} from "ethers/lib/utils";
 import { sha256 } from 'js-sha256'
 
 type TAb = {
@@ -28,7 +27,7 @@ type TAb = {
   iconCoinUrl?: string
   subHeader?: string
   duration: number
-  durations: { type: string; value: string }[]
+  aprData: { apr: string; duration: string }[]
   apr: number
   coinToBeLocked?: number
   expectedRoi: string
@@ -94,13 +93,13 @@ const currentDate = new Date()
 export const StakeForm: FC<TAb> = (props) => {
   const {
     id,
-    durations,
+    aprData,
     duration,
     apr,
     expectedRoi,
     maxArpPercent,
     minArpPercent,
-    percents,
+    percents = ['25', '50', '75', '100'],
     rangeValue,
     errorStatus,
     popUpCallback,
@@ -118,7 +117,7 @@ export const StakeForm: FC<TAb> = (props) => {
   const initialValueForm: TAb = {
     id: id,
     duration: duration,
-    durations: durations,
+    aprData: aprData,
     rangeValue: rangeValue,
     apr: apr,
     amount: `${getAmountValueWithPercent(wallet.balance, Number(rangeValue))}`,
@@ -196,7 +195,7 @@ export const StakeForm: FC<TAb> = (props) => {
           const response = {
             imgHash: sha256.hmac(
               `${process.env.ACCESS_CODE}`,
-              JSON.stringify({...data})
+              JSON.stringify({ ...data })
             ),
             ...data,
           }
@@ -363,19 +362,19 @@ export const StakeForm: FC<TAb> = (props) => {
                   className={'tablist__list_days'}
                 >
                   <TabListWrapper>
-                    {durations.map((e, i: number) => {
+                    {aprData.map((e, i: number) => {
                       return (
                         <Tab
                           disabled={Boolean(Number(wallet.balance) <= 0)}
                           onClick={() => {
                             if (!(Number(wallet.balance) <= 0)) {
-                              setFieldValue('duration', durations[i].type)
-                              setFieldValue('apr', durations[i].value)
+                              setFieldValue('duration', aprData[i].duration)
+                              setFieldValue('apr', aprData[i].apr)
                               setFieldValue(
                                 'endLocking',
                                 addDaysToDate(
                                   currentDate,
-                                  Number(durations[i].type)
+                                  Number(aprData[i].duration)
                                 )
                               )
                               setFieldValue(
@@ -387,7 +386,7 @@ export const StakeForm: FC<TAb> = (props) => {
                           key={`${i} + nd`}
                         >
                           <TabValue>
-                            <Text text={`${e?.type} D`} type={'value'} />
+                            <Text text={`${e?.duration} D`} type={'value'} />
                           </TabValue>
                         </Tab>
                       )
@@ -398,7 +397,6 @@ export const StakeForm: FC<TAb> = (props) => {
               <LockOverview
                 expectedRoi={values.expectedRoi}
                 duration={values.duration}
-                durations={values.durations}
                 apr={values.apr}
                 maxArpPercent={values.maxArpPercent}
                 minArpPercent={values.minArpPercent}

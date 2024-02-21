@@ -15,7 +15,7 @@ type TResponse = {
   iconCoinUrl: string
   subHeader: string
   duration: number
-  durations: { type: string; value: string }[]
+  aprData: { apr: string; duration: string }[]
   apr: number
   expectedRoi: number
   maxArpPercent: string
@@ -77,7 +77,7 @@ export const StakeListing: FC = () => {
                       <StakeForm
                         id={data.id}
                         duration={data.duration}
-                        durations={data.durations}
+                        aprData={data.aprData}
                         apr={data.apr}
                         expectedRoi={String(data.expectedRoi)}
                         maxArpPercent={data.maxArpPercent}

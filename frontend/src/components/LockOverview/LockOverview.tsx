@@ -7,7 +7,6 @@ type TAb = {
   iconCoinUrl?: string
   subHeader?: string
   duration: number
-  durations: { type: string; value: string }[]
   apr: number
   expectedRoi: string
   maxArpPercent: string
