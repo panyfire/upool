@@ -21,7 +21,11 @@ class ImgHash
     public function validate(array $data, string $phpSalt): bool
     {
         $localData = $data;
-        unset($localData['imgHash']);
+
+        if (isset($localData['imgHash'])) {
+            unset($localData['imgHash']);
+        }
+
         $localDataJson = json_encode($localData, true);
         $hash = hash_hmac('sha256', $localDataJson, $phpSalt);
 

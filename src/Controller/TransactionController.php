@@ -40,12 +40,12 @@ class TransactionController  extends AbstractController
 
         $paramsToValidate = [
             'wallet' => $params['wallet'],
-            'transactionHash' => $params['transactionHash'],
             'stakeId' => $params['stakeId'],
+            'amount' => $params['amount'],
             'duration' => $params['duration'],
-            'chainId' => $params['chainId'],
+            'transactionHash' => $params['transactionHash'],
             'apr' => $params['apr'],
-            'amount' => $params['amount']
+            'chainId' => $params['chainId'],
         ];
         (new ImgHash($params['imgHash']))->validate($paramsToValidate, $this->getParameter('phpsalt'));
         foreach ($params as $nameParam => $paramValue) {
