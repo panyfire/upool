@@ -28,11 +28,14 @@ class ImgHash
 
         $localDataJson = json_encode($localData, true);
         $hash = hash_hmac('sha256', $localDataJson, $phpSalt);
-
+        dump($hash);
+        dump($localDataJson);
+        dump($this->imgHash);
+        die;
         if ($this->imgHash !== $hash) {
             throw new Exception('No Access', 403);
         }
-        
+
         return true;
     }
 }

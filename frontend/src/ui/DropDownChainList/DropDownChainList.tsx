@@ -35,30 +35,6 @@ export const DropDownChainList: FC<IButton> = (props) => {
       iconUrls: ['https://path.to.your.icon.eth'],
     },
     {
-      chainId: '0xa4b1',
-      chainName: 'Arbitrum One',
-      nativeCurrency: {
-        name: 'Arbitrum Token',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://arbitrum-mainnet.infura.io/'],
-      blockExplorerUrls: ['https://explorer.arbitrum.io'],
-      iconUrls: ['https://path.to.your.icon.arb'],
-    },
-    // {
-    //   chainId: '0x420',
-    //   chainName: 'Optimism',
-    //   nativeCurrency: {
-    //     name: 'Optimism Ether',
-    //     symbol: 'OETH',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://mainnet.optimism.io'],
-    //   blockExplorerUrls: ['https://optimistic.etherscan.io/'],
-    //   iconUrls: ['https://path.to.your.icon.op'],
-    // },
-    {
       chainId: '0x38',
       chainName: 'BNB Chain',
       nativeCurrency: {
@@ -70,30 +46,32 @@ export const DropDownChainList: FC<IButton> = (props) => {
       blockExplorerUrls: ['https://bscscan.com/blockExplorer'],
       iconUrls: ['https://path.to.your.icon.bnb'],
     },
-    // {
-    //   chainId: '0x5',
-    //   chainName: 'Goerli',
-    //   nativeCurrency: {
-    //     name: 'Ether',
-    //     symbol: 'ETH',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://goerli.infura.io/v3/02792ae49747452b85ca01aa16981682'],
-    //   blockExplorerUrls: ['https://etherscan.io'],
-    //   iconUrls: ['https://path.to.your.icon.eth'],
-    // },
-    // {
-    //   chainId: '97',
-    //   chainName: 'BNB Chain Testnet',
-    //   nativeCurrency: {
-    //     name: 'BNB Chain Testnet',
-    //     symbol: 'tBNB',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-    //   blockExplorerUrls: ['https://testnet.bscscan.com'],
-    //   iconUrls: ['https://path.to.your.icon.bnb'],
-    // },
+    {
+      chainId: '0xa4ec',
+      chainName: 'Celo Mainnet',
+      nativeCurrency: {
+        name: 'Celo',
+        symbol: 'CELO',
+        decimals: 18,
+      },
+      rpcUrls: ['https://forno.celo.org'],
+      blockExplorerUrls: ['https://celoscan.io/'],
+      iconUrls: ['https://celoscan.io/images/CELO.png'],
+    },
+    {
+      chainId: '0x89',
+      chainName: 'Polygon Mainnet',
+      nativeCurrency: {
+        name: 'Polygon',
+        symbol: 'MATIC',
+        decimals: 18,
+      },
+      rpcUrls: ['https://polygon-bor-rpc.publicnode.com'],
+      blockExplorerUrls: ['https://polygonscan.com/'],
+      iconUrls: [
+        'https://raw.githubusercontent.com/maticnetwork/polygon-assets/master/tokens/matic.svg/',
+      ],
+    },
   ]
 
   type InactiveCurrency = {

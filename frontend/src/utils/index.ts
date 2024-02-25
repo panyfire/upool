@@ -15,9 +15,9 @@ export const formatAddress = (addr: string) => {
 export const chainIdName = (hash: string) => {
   switch (hash) {
     case '0xe708':
-      return 'Linea Mainnet'
+      return 'Linea'
     case '0x1':
-      return 'Ethereum Mainnet'
+      return 'Ethereum'
     case '0x5':
       return 'Goerli'
     case '0x38':
@@ -30,6 +30,8 @@ export const chainIdName = (hash: string) => {
       return 'Arbitrum'
     case '0x2':
       return 'Bitcoin'
+    case '0xa4ec':
+      return 'Celo'
   }
 }
 
@@ -42,13 +44,15 @@ export const chainIdIcon = (hash: string) => {
     case '0x38':
       return '/images/bnb-bnb-logo.png'
     case '0x89':
-      return 'Polygon'
+      return '/images/polygon-matic-logo.png'
     case '0xa869':
       return '/images/optimism-ethereum-op-logo.png'
     case '0xa4b1':
       return '/images/arbitrum-arb-logo.png'
     case '0x2':
       return '/images/bitcoin-btc-logo.png'
+    case '0xa4ec':
+      return '/images/celo-celo-logo.png'
   }
 }
 

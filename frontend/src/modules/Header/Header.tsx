@@ -15,7 +15,7 @@ export const Header: FC = () => {
   return (
     <HeaderStyled>
       <LogoWrapper>
-        <img src={logo} width={70} alt="" />
+        <img src={logo} width={40} alt="" />
         <Text text="SafetyStaking" type="h2" />
       </LogoWrapper>
       <Menu>

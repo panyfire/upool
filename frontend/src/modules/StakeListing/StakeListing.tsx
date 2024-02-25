@@ -34,6 +34,7 @@ export const StakeListing: FC = () => {
   const [error, setError] = useState<string | null>(null)
   const a = dataResponse.status === 'error' && dataResponse.error
 
+  //TODO: Позже убрать нахрен
   useEffect(() => {
     setError(null)
     if (wallet.chainId) {
@@ -42,10 +43,11 @@ export const StakeListing: FC = () => {
   }, [wallet.chainId])
 
   useEffect(() => {
-    if (a && dataResponse?.data?.data?.length > 0) {
+    if (a && Array.isArray(dataResponse.data) && dataResponse.data.length > 0) {
       setError('NO DATA')
     }
   }, [a])
+
   return (
     <Layout>
       <LoaderWrapper isLoad={dataResponse.isLoading && !wallet}>

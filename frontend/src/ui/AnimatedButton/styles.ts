@@ -41,7 +41,7 @@ export const ButtonStyled = styled.button`
     0 100%,
     -10% var(--edge-size)
   );
-  transition: color 250ms;
+  transition: all 250ms ease-in;
   &.isAnimated {
     height: 44px;
     width: 154px;
@@ -52,8 +52,10 @@ export const ButtonStyled = styled.button`
       font-weight: 400;
       line-height: 16px;
       text-transform: none;
-      color: rgb(0, 0, 0);
     }
+  }
+  &:hover {
+    background: linear-gradient(160deg, #f3c3c6 20%, #b0fec7 105%);;
   }
 `
 

@@ -41,7 +41,7 @@ export const Footer: FC = () => {
           </div>
         </LinksWrapper>
         <LogoWrapper>
-          <img src={logo} width={70} alt="" />
+          <img src={logo} width={40} alt="" />
           <Text text="SafetyStaking" type={'h2'} />
         </LogoWrapper>
       </ContentWrapper>

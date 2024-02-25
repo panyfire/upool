@@ -19,7 +19,7 @@ export const Additional = styled.div`
 export const Dropdowns = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `
 
 export const Menu = styled.div`
@@ -57,6 +57,7 @@ export const LogoWrapper = styled.div`
   display: flex;
   align-items: center; 
   padding: 0 16px;
+  gap: 20px;
   & p {
     @media ${device.tabletL} {
       display: none;
