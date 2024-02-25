@@ -15,7 +15,7 @@ import { BtnWrapper } from './styles'
 export const PrivacyPolicy: FC = () => {
   const { wallet } = useMetaMask()
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
-  const navigate = useNavigate()
+    const navigate = useNavigate()
   const { isLoading } = dataResponse
   return (
     <GradientBackground>

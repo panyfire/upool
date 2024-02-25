@@ -186,17 +186,14 @@ export const StakeForm: FC<TAb> = (props) => {
           const data = {
             wallet: String(wallet.accounts[0]),
             stakeId: id,
-            amount: Number(amount),
-            duration: duration,
+            amount: String(amount),
+            duration: String(duration),
             transactionHash: receipt.transactionHash,
             apr: apr,
             chainId: String(wallet.chainId),
           }
           const response = {
-            imgHash: sha256.hmac(
-              `${process.env.ACCESS_CODE}`,
-              JSON.stringify({ ...data })
-            ),
+            imgHash: sha256.hmac(`HELLO`, `${JSON.stringify({ ...data })} `),
             ...data,
           }
           onSendSuccess(response)

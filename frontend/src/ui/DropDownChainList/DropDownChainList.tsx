@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
 import clsx from 'clsx'
+import { toast } from 'react-toastify'
 import { IButton } from './types'
 import { Icon, Text } from 'ui'
 import {
@@ -12,7 +13,6 @@ import {
 } from './styles'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdIcon } from 'utils'
-import { toast } from 'react-toastify'
 
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
@@ -176,7 +176,9 @@ export const DropDownChainList: FC<IButton> = (props) => {
                       e.rpcUrls,
                       e.blockExplorerUrls,
                       e.iconUrls
-                    ).catch((e) => {console.log('123123123', e)})
+                    ).catch((e) => {
+                      console.log('123123123', e)
+                    })
                   }}
                   key={i}
                 >

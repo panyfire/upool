@@ -10,7 +10,7 @@ export const Home = () => {
 
   useEffect(() => {
     const interval = setTimeout(() => {
-      if (transactionResponse !== 'null') {
+      if (transactionResponse) {
         checkTransactionStatus(String(transactionResponse))
       }
     }, 3000)

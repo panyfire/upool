@@ -30,20 +30,18 @@ export const LoaderWrapper: FC<ILoader> = ({ isLoad, children }) => (
     {isLoad ? (
       <div
         style={{
-          // position: 'absolute',
+          position: 'absolute',
           width: '100%',
-          height: '300px',
+          // height: '300px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
-          // left: 0,
-          // top: 0,
+          left: '50%',
+          top: 0,
         }}
       >
-        <div style={{ position: 'relative', display: 'inline-flex' }}>
-          <Loader />
-        </div>
+        <Loader />
       </div>
     ) : (
       ''

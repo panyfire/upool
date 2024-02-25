@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect } from 'react'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { StakeForm } from 'modules'
 import { useMetaMask } from 'hooks/useMetaMask'
@@ -28,25 +27,28 @@ type TResponse = {
 export const StakeListing: FC = () => {
   const [stakeModalStatus, setStakeModal] = useState(false)
   const { wallet, connectMetaMask } = useMetaMask()
-  const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
+  const dataResponse = useGetStakeList(
+    wallet.chainId ? `${wallet.chainId}` : ''
+  )
   const [data, setData] = useState<TResponse>({} as TResponse)
   const [error, setError] = useState<string | null>(null)
   const a = dataResponse.status === 'error' && dataResponse.error
 
   useEffect(() => {
     setError(null)
-    dataResponse.refetch()
+    if (wallet.chainId) {
+      dataResponse.refetch()
+    }
   }, [wallet.chainId])
 
   useEffect(() => {
-    if (a) {
+    if (a && dataResponse?.data?.data?.length > 0) {
       setError('NO DATA')
     }
-  }, [dataResponse.status])
-
+  }, [a])
   return (
-    <LoaderWrapper isLoad={dataResponse.isLoading && !wallet}>
-      <Layout>
+    <Layout>
+      <LoaderWrapper isLoad={dataResponse.isLoading && !wallet}>
         <ListingWrapper>
           {Array.isArray(dataResponse.data) &&
           dataResponse.data.length &&
@@ -100,20 +102,8 @@ export const StakeListing: FC = () => {
           ) : (
             <Text text={error ? error : ''} type={'h1'} />
           )}
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
         </ListingWrapper>
-      </Layout>
-    </LoaderWrapper>
+      </LoaderWrapper>
+    </Layout>
   )
 }

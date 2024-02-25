@@ -14,7 +14,7 @@ import { ConfirmButton } from 'ui'
 export const FAQ: FC = () => {
   const { wallet } = useMetaMask()
   const dataResponse = useGetStakeList(`${wallet?.chainId}` || '')
-  const { isLoading } = dataResponse
+    const { isLoading } = dataResponse
   const navigate = useNavigate()
   return (
     <GradientBackground>

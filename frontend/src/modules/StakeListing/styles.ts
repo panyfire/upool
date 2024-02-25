@@ -7,7 +7,6 @@ export const ListingWrapper = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 60px;
-  position: relative;
 `
 
 export const ItemWrapper = styled.div`

@@ -68,17 +68,18 @@ export const checkTransactionStatus = async (
   transactionHash: string,
   callback?: () => void
 ) => {
-  const transaction = localStorage.getItem('transactionHash')
-  if (transaction !== 'null' && transaction) {
+  const transaction = localStorage.getItem('transactionResponse')
+
+  if (transaction) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const provider = new ethers.providers.Web3Provider(window?.ethereum)
+    const receipt = await provider.getTransactionReceipt(transactionHash)
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const receipt = await provider.getTransactionReceipt(transactionHash)
       if (receipt && receipt.blockNumber) {
         // Транзакция была успешно подтверждена
         notify('Transaction confirmed')
-        localStorage.setItem('transactionResponse', 'null')
+        localStorage.removeItem('transactionResponse')
         if (callback) {
           callback()
         }
@@ -88,7 +89,7 @@ export const checkTransactionStatus = async (
       //   console.log('Транзакция еще не подтверждена')
       // }
     } catch (error) {
-      console.error('Ошибка при проверке статуса транзакции:', error)
+      console.error('ERROR:', error)
     }
   }
 }
