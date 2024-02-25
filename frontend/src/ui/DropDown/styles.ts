@@ -131,6 +131,9 @@ export const MenuItem = styled.div`
   align-items: center;
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  @media ${device.tabletL} {
+    justify-content: center;
+  }
   &:nth-child(2) {
     border-bottom: none;
   }

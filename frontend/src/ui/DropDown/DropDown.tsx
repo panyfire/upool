@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
+import { useMobileDisplaySize } from 'hooks/useMobileDisplaySize'
 import { IButton } from './types'
 import { Icon, Text } from 'ui'
 import {
@@ -11,10 +12,24 @@ import {
   Menu,
   MenuItem,
 } from './styles'
+import { toast } from 'react-toastify'
+
+const notify = (text: string) =>
+  toast(text, {
+    position: 'bottom-right',
+    autoClose: 3500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'dark',
+  })
 
 export const DropDown: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
+  const { width } = useMobileDisplaySize()
 
   const handleLogout = async () => {
     try {
@@ -35,7 +50,7 @@ export const DropDown: FC<IButton> = (props) => {
         })
       }
     } catch (error) {
-      console.error(error)
+      notify(`${error}`)
     }
   }
 
@@ -64,13 +79,13 @@ export const DropDown: FC<IButton> = (props) => {
           <MeniList>
             <Link to="/profile" relative="route">
               <MenuItem>
-                <Text text={'My Wallet'} type={'default'} />
+                {width > 920 && <Text text={'My Wallet'} type={'default'} />}
                 <Icon size={'32'} name={'user'} />
               </MenuItem>
             </Link>
             <MenuItem onClick={() => handleLogout().then(() => setOpen(false))}>
-              <div onClick={() => handleLogout()}>
-                <Text text="Disconnect" type="default" />
+              <div onClick={handleLogout}>
+                {width > 920 && <Text text="Disconnect" type="default" />}
               </div>
               <Icon size="32" name="exit" />
             </MenuItem>

@@ -10,13 +10,16 @@ import {
   MeniList,
   Menu,
   MenuItem,
+  MenuItemInner,
 } from './styles'
 import { useMetaMask } from 'hooks/useMetaMask'
 import { chainIdIcon } from 'utils'
+import { useMobileDisplaySize } from 'hooks/useMobileDisplaySize'
 
 export const DropDownChainList: FC<IButton> = (props) => {
   const { text, ...other } = props
   const [open, setOpen] = useState<boolean>(false)
+  const { width } = useMobileDisplaySize()
   const { wallet } = useMetaMask()
 
   const chainIDS = [
@@ -121,18 +124,9 @@ export const DropDownChainList: FC<IButton> = (props) => {
   }
 
   return (
-    <div
-      onMouseLeave={() => {
-        setOpen(false)
-      }}
-      style={{ position: 'relative' }}
-    >
+    <div onMouseLeave={() => setOpen(false)} style={{ position: 'relative' }}>
       <ButtonStyled {...other}>
-        <ButtonWrapper
-          onMouseEnter={() => {
-            setOpen(true)
-          }}
-        >
+        <ButtonWrapper onMouseEnter={() => setOpen(true)}>
           <img width={35} src={chainIdIcon(String(wallet.chainId))} alt="" />
           <Text text={text ?? ''} type="default" />
           <IconWrapper className={clsx({ isActive: open })}>
@@ -146,7 +140,9 @@ export const DropDownChainList: FC<IButton> = (props) => {
             {chainIDS.map((e, i) => {
               return (
                 <MenuItem
+                  key={i}
                   onClick={() => {
+                    setOpen(false)
                     handleChangeChainId(
                       e.chainId,
                       e.chainName,
@@ -154,13 +150,21 @@ export const DropDownChainList: FC<IButton> = (props) => {
                       e.rpcUrls,
                       e.blockExplorerUrls,
                       e.iconUrls
-                    ).catch((e) => {
-                      console.log('123123123', e)
+                    ).catch(() => {
+                      notify(`could not to switch`)
                     })
                   }}
-                  key={i}
                 >
-                  <Text text={e.chainName} type={'default'} />
+                  <MenuItemInner>
+                    {width > 920 && (
+                      <Text text={e.chainName} type={'default'} />
+                    )}
+                    <img
+                      width={25}
+                      src={chainIdIcon(String(e.chainId))}
+                      alt={e.chainName}
+                    />
+                  </MenuItemInner>
                 </MenuItem>
               )
             })}

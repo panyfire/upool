@@ -125,12 +125,19 @@ export const MenuItem = styled.div`
   padding: 15px 12px;
   width: 100%;
   height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   &:last-child {
     border-bottom: none
+  }
+`
+
+export const MenuItemInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+  @media ${device.tabletL} {
+    justify-content: center;
   }
 `
